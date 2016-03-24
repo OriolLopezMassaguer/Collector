@@ -1,0 +1,68 @@
+#   
+#     Collector is a tool for obtaining bioactivity data from the Open PHACTS platform.
+#     Copyright (C) 2013 UPF
+#     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol L. Massaguer(olopez@imim.es). 
+# 
+#    This file is part of Collector.
+#
+#    Collector is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Collector is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Collector.  If not, see <http://www.gnu.org/licenses/>.   
+# 
+
+GET     /                           controllers.Application.main
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /js/*file               controllers.Assets.at(path="/public/javascripts", file) 
+
+GET     /assets/*file               controllers.Assets.at(path="/public/assets", file) 
+
+POST	/data/protocol								controllers.Application.protocolnew
+POST    /data/newjob							    controllers.Application.jobnew
+
+GET     /data/job									controllers.Application.jobsAll(page:Int,start:Int,limit:Int)
+GET     /data/jobdelete/:job_id						controllers.Application.jobDelete(job_id:Int)
+
+GET     /data/jobexecutions							controllers.Application.jobexecutionsAll(filter:String)
+
+GET     /data/jobdataraw							controllers.Application.jobdatadetailed(page:Int,start:Int,limit:Int,filter:String,filtered:Boolean=false)
+GET     /data/jobdatafiltered						controllers.Application.jobdatadetailed(page:Int,start:Int,limit:Int,filter:String,filtered:Boolean=true)
+
+GET     /data/jobdatarawsdf/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=false,format:String="sdf")
+GET     /data/jobdatafilteredsdf/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=false,format:String="sdf")
+
+GET     /data/jobdatarawsdfag/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=true,format:String="sdf")
+GET     /data/jobdatafilteredsdfag/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=true,format:String="sdf")
+
+GET     /data/jobdatarawcsv/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=false,format:String="csv")
+GET     /data/jobdatafilteredcsv/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=false,format:String="csv")
+
+GET     /data/jobdatarawcsvag/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=true,format:String="csv")
+GET     /data/jobdatafilteredcsvag/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=true,format:String="csv")
+
+GET     /data/jobexec/:job_id						controllers.Application.jobExecAsync(job_id:Int)
+
+GET     /data/jobexecdelete/:job_execution_id		controllers.Application.jobExecutionDelete(job_execution_id:Int)
+
+GET     /data/jobstatistics							controllers.Application.getJobStatistics(page:Int,start:Int,limit:Int,filter:String)
+
+GET     /data/jobstatisticshistogram				controllers.Application.getJobStatisticsHistogram(page:Int,start:Int,limit:Int,filter:String)
+
+GET     /data/jobcbnlinkout/:job_execution_id       controllers.Application.getURLForCBNFiltered(job_execution_id:Int)
+GET     /data/jobcbnlinkoutraw/:job_execution_id       controllers.Application.getURLForCBNRAW(job_execution_id:Int)
+
+GET 	/data/protocolsforstring					controllers.Application.getProtocolsForString(page:Int,start:Int,limit:Int,protocol_string:String)
+GET 	/data/filtersforstring						controllers.Application.getFilters(page:Int,start:Int,limit:Int,filter_string:String)
+
+GET 	/data/protocol								controllers.Application.getAllProtocols(page:Int,start:Int,limit:Int)
+
+
