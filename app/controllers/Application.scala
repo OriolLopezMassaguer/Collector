@@ -55,13 +55,13 @@ import play.Play
 import scala.concurrent.Future
 import es.imim.phi.collector.model.database_eTOXOPS
 import es.imim.phi.collector.model.db2JSON
-import padeldescriptor.PaDELDescriptorApp
+//import padeldescriptor.PaDELDescriptorApp
 import play.api.libs.iteratee.Enumerator
 //import es.imim.phi.collector.compounds.CompoundUtil
 
 object Application extends Controller {
-  val s = System.load("/opt/collector/lib/libGraphMolWrap.so")
-  val app = PaDELDescriptorApp.getApplication()
+//  val s = System.load("/opt/collector/lib/libGraphMolWrap.so")
+//  val app = PaDELDescriptorApp.getApplication()
   var logger = play.api.Logger
   //Logger.info("Home: " + System.getenv("COLLECTOR_HOME"))
   ExtractionEngine.initEngine(System.getenv("COLLECTOR_HOME"))
