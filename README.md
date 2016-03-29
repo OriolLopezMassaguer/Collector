@@ -1,6 +1,7 @@
 Installation of Collector version 1.4
 March 2016
 
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 
 Before you start
 ----------------
