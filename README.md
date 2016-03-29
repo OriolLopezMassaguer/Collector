@@ -1,5 +1,5 @@
-Installation of Collector version 1.3
-June 2013
+Installation of Collector version 1.4
+March 2016
 
 
 Before you start
