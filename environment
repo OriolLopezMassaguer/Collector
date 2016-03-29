@@ -1,0 +1,36 @@
+#!/bin/bash
+#   
+#     Collector is a tool for obtaining bioactivity data from the Open PHACTS platform.
+#     Copyright (C) 2013 UPF
+#     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol L. Massaguer(olopez@imim.es). 
+# 
+#    This file is part of Collector.
+#
+#    Collector is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Collector is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Collector.  If not, see <http://www.gnu.org/licenses/>.   
+# 
+
+# to be adapted to the environment
+export JDK_KEYSTORE_PWD=changeit # JDK default keystore value
+export PGPASSWORD=postgres # password of postgres user
+export COLLECTOR_HOME=/opt/collector # place where collector.tgz is uncompressed
+export JAVA_HOME=$COLLECTOR_HOME/jdk # HOME of JDK. By default points to jdk bundled with collector
+export PG_HOME=/opt/PostgreSQL/9.3 # Location of Postgres installation
+
+# do not modify below this point
+export PGDATABASE=
+export PGHOST=localhost
+export PGPORT=5432
+export PGUSER=postgres
+export PATH=$COLLECTOR_HOME:$JAVA_HOME/bin:$PG_HOME/bin:$PATH 
+

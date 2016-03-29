@@ -1,0 +1,49 @@
+#!/bin/bash
+#   
+#     Collector is a tool for obtaining bioactivity data from the Open PHACTS platform.
+#     Copyright (C) 2013 UPF
+#     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol L. Massaguer(olopez@imim.es). 
+# 
+#    This file is part of Collector.
+#
+#    Collector is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Collector is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Collector.  If not, see <http://www.gnu.org/licenses/>.   
+# 
+
+COLLECTOR_INSTALL=$(dirname $0)
+source $COLLECTOR_INSTALL/environment
+# Checking intallation parameters
+$COLLECTOR_INSTALL/check_installation
+
+if [ $? -eq 0 ]
+then
+	echo "Installation parameters passed"
+else
+	echo "Installation aborted. Review environment file and re-execute."
+	exit 1
+fi
+
+# Creating collector database
+psql --echo-queries < $COLLECTOR_HOME/database/create_database_v1.4.sql
+
+# creating the schema and populating it
+export PGDATABASE=collector
+$PG_HOME/bin/psql -q < $COLLECTOR_HOME/database/schema_v1.4.sql
+$PG_HOME/bin/psql -q < $COLLECTOR_HOME/database/initial_data_v1.4.sql
+
+# import certificate
+$JAVA_HOME/bin/keytool -delete -alias ops_dev -keystore $JAVA_HOME/jre/lib/security/cacerts -noprompt -storepass $JDK_KEYSTORE_PWD
+$JAVA_HOME/bin/keytool -delete -alias ops_prod -keystore $JAVA_HOME/jre/lib/security/cacerts -noprompt -storepass $JDK_KEYSTORE_PWD
+$JAVA_HOME/bin/keytool -trustcacerts -import -alias ops_dev -keystore $JAVA_HOME/jre/lib/security/cacerts -noprompt -storepass $JDK_KEYSTORE_PWD -file $COLLECTOR_HOME/certs/ops2.few.vu.nl 
+$JAVA_HOME/bin/keytool -trustcacerts -import -alias ops_prod -keystore $JAVA_HOME/jre/lib/security/cacerts -noprompt -storepass $JDK_KEYSTORE_PWD -file $COLLECTOR_HOME/certs/openphacts.org 
+
