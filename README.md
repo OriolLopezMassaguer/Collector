@@ -1,13 +1,13 @@
 
 Collector is a tool that allows extracting from the Open PHACTS Discovery platform series of compounds annotated with experimental data that can be used directly for building QSAR predictive models. Currently it is being used in the framework of the eTOX project.
 
-Collector implements a flexible collection of filters for selecting the target, the biological data ranges and the physicochemical properties of the compounds.
-
-Collector was intended to be installed locally and implements a local database for keeping record of the data extracted. The application provides a web based user a command line user interface. 
-
 ![OPS logo ] (http://www.openphacts.org/2/images/OP_logo_300dpi.jpg)
 
 ![eTOX logo ] (http://84.89.134.131/etox-web/img/ETOX_Project_logo.png)
+
+Collector implements a flexible collection of filters for selecting the target, the biological data ranges and the physicochemical properties of the compounds.
+
+Collector was intended to be installed locally and implements a local database for keeping record of the data extracted. The application provides a web based user a command line user interface. 
 
 Installation of Collector version 1.4
 March 2016
