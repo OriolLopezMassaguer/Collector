@@ -88,7 +88,7 @@ object ExtractionEngine {
 
   def readProperties() {
     Logger.info("Reading Properties")
-    val defaultProps = FileUtils.readPropertiesFile(appBasePath + "/collector.properties")
+    val defaultProps = FileUtils.readPropertiesFile("conf/collector.properties")
     //ExtractionEngine.dbURL = defaultProps.getProperty("dbURL")
     //ExtractionEngine.dbURL="jdbc:"+sys.env("DATABASE_URL")
 
