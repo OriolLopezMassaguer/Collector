@@ -93,7 +93,8 @@ object ExtractionEngine {
   def readProperties() {
     Logger.info("Reading Properties")
     val defaultProps = FileUtils.readPropertiesFile(appBasePath + "/collector.properties")
-    ExtractionEngine.dbURL = defaultProps.getProperty("dbURL")
+    //ExtractionEngine.dbURL = defaultProps.getProperty("dbURL")
+    ExtractionEngine.dbURL="jdbc:"+sys.env("DATABASE_URL")
     Logger.info("dbURL:" + ExtractionEngine.dbURL)
     ExtractionEngine.dbUser = defaultProps.getProperty("dbUser")
     Logger.info("dbUser: " + ExtractionEngine.dbUser)
@@ -120,18 +121,18 @@ object ExtractionEngine {
     this.opsAPI = new OPSLDAScala(ExtractionEngine.OPSAPIURL, ExtractionEngine.appKey, ExtractionEngine.appId, true, ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword, ExtractionEngine.cachedapi)
   }
 
-//  def computeSDF(jobExecutionId: String) = {
-//    database_eTOXOPS.db withDynSession {
-//      database_eTOXOPS.GetRAWDataJobExecutionForSDF(jobExecutionId.toInt).foreach {
-//        case (jobExecutionId, job_data_raw_id, cs_id, smiles, sdf2d) => {
-//          var sdf = CompoundUtil.getSDFFromSmiles(smiles, false)
-//          val q1 = for (msg <- database_eTOXOPS.job_data_raw_for_sdf if msg.job_data_raw_id === job_data_raw_id)
-//            yield (msg.sdf2d)
-//          q1.update(Option(sdf))
-//        }
-//      }
-//    }
-//  }
+  def computeSDF(jobExecutionId: String) = {
+    database_eTOXOPS.db withDynSession {
+      database_eTOXOPS.GetRAWDataJobExecutionForSDF(jobExecutionId.toInt).foreach {
+        case (jobExecutionId, job_data_raw_id, cs_id, smiles, sdf2d) => {
+          var sdf = CompoundUtil.getSDFFromSmiles(smiles, false)
+          val q1 = for (msg <- database_eTOXOPS.job_data_raw_for_sdf if msg.job_data_raw_id === job_data_raw_id)
+            yield (msg.sdf2d)
+          q1.update(Option(sdf))
+        }
+      }
+    }
+  }
 
 //  def getDataSDF(jobExecutionId: String, job_series_id: Int) = {
 //    var fieldMapLDASDF = new java.util.HashMap[String, String]
@@ -201,7 +202,7 @@ object ExtractionEngine {
     //}
     database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_extraction_date=CURRENT_TIMESTAMP where job_execution_id=" + jobExecutionId)
     //Logger.info("Computing SDF 2D")
-    //computeSDF(jobExecutionId)
+    computeSDF(jobExecutionId)
   }
 
   //  def obtainInitialData_v14(jobId : Int, jobExecutionId : String) : Int = {

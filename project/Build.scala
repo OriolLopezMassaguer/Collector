@@ -27,12 +27,14 @@ import PlayKeys._
 
 object ApplicationBuild extends Build {
   val appName = "Collector"
-  val appVersion = "1.4"
+  val appVersion = "1.4.1"
 
   val appDependencies = Seq(
     //"org.apache.commons" % "commons-lang3" % "3.1",
     //"com.yammer.metrics" % "metrics-core" % "2.2.0",
     //"org.slf4j" % "slf4j-nop" % "1.6.4",
+    "org.openscience.cdk" % "cdk-bundle" % "1.5.13",
+    "com.github.OriolLopezMassaguer" % "dataframe_2.11" % "1.2.1" classifier "assembly",
     "com.github.scopt" %% "scopt" % "3.3.0",
      "org.postgresql" % "postgresql" % "9.4.1208.jre7",
     "commons-io" %"commons-io" % "2.4",
