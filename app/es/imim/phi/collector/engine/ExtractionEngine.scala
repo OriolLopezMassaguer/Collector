@@ -92,17 +92,17 @@ object ExtractionEngine {
     //ExtractionEngine.dbURL = defaultProps.getProperty("dbURL")
     //ExtractionEngine.dbURL="jdbc:"+sys.env("DATABASE_URL")
 
-    val dbUri = new java.net.URI(System.getenv("DATABASE_URL"))
-    val username = dbUri.getUserInfo().split(":")(0)
-    val password = dbUri.getUserInfo().split(":")(0)
+    //val dbUri = new java.net.URI(System.getenv("DATABASE_URL"))
+    //val username = dbUri.getUserInfo().split(":")(0)
+    //val password = dbUri.getUserInfo().split(":")(0)
 
     //ExtractionEngine.dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
     
      ExtractionEngine.dbURL=System.getenv("JDBC_DATABASE_URL")
 
-    database_eTOXOPS.db = Database.forURL(ExtractionEngine.dbURL, username, password)
+    database_eTOXOPS.db = Database.forURL(ExtractionEngine.dbURL)
     Class.forName("org.postgresql.Driver");
-    var con = DriverManager.getConnection(ExtractionEngine.dbURL, username, password)
+    var con = DriverManager.getConnection(ExtractionEngine.dbURL)
     database_eTOXOPS.sqlConnection = con
 
     //
