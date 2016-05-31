@@ -96,7 +96,9 @@ object ExtractionEngine {
     val username = dbUri.getUserInfo().split(":")(0)
     val password = dbUri.getUserInfo().split(":")(0)
 
-    ExtractionEngine.dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
+    //ExtractionEngine.dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
+    
+     ExtractionEngine.dbURL=System.getenv("JDBC_DATABASE_URL")
 
     database_eTOXOPS.db = Database.forURL(ExtractionEngine.dbURL, username, password)
     Class.forName("org.postgresql.Driver");
