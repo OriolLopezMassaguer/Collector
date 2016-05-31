@@ -34,5 +34,6 @@ export PGPORT=5432
 export PGUSER=postgres
 export PATH=$COLLECTOR_HOME:$JAVA_HOME/bin:$PG_HOME/bin:$PATH
 #export DATABASE_URL=postgres://hxtmvcgbwvgqbf:gs8tJULCQanabRbLg9l3N6IyZT@ec2-184-73-194-13.compute-1.amazonaws.com:5432/dcvrbjbo071
-export DATABASE_URL=postgres://postgres:postgres@localhost:5432/collector
+export DATABASE_URL="postgres://postgres:postgres@localhost:5432/collector"
+export JDBC_DATABASE_URL="jdbc:postgresql://localhost:5432/collector?user=postgres&password=postgres"
 
