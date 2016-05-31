@@ -122,7 +122,7 @@ object CDKutils {
 object CompoundUtil {
   
   models.chemistry.CompoundUtil.getMWfromSMILES("CCC")
-  val noStructureIMGFixed = noStructureIMG
+  lazy val noStructureIMGFixed = noStructureIMG
   def noStructureIMG = {
     val f = new File(resourceDir + "/no_structure.png")
     val bi = ImageIO.read(f)
