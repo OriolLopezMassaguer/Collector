@@ -116,7 +116,8 @@ object ExtractionEngine {
     Logger.info("dbPassword: " + ExtractionEngine.dbPassword)
     ExtractionEngine.OPSAPIURL = defaultProps.getProperty("opsLDA_API_URL")
     Logger.info("OPS API URL: " + ExtractionEngine.OPSAPIURL)
-    ExtractionEngine.exportDataDir = appBasePath + defaultProps.getProperty("exportDatadir")
+    //ExtractionEngine.exportDataDir = appBasePath + defaultProps.getProperty("exportDatadir")
+    ExtractionEngine.exportDataDir = "logs/"
     Logger.info("export data dir: " + ExtractionEngine.exportDataDir)
     ExtractionEngine.inputDatadir = appBasePath + defaultProps.getProperty("inputDatadir")
     Logger.info("input data dir: " + ExtractionEngine.inputDatadir)
