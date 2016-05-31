@@ -79,10 +79,6 @@ object ExtractionEngine {
     appBasePath = home_path
     externalToolsBasePath = appBasePath + "/external_tools"
     this.readProperties()
-    database_eTOXOPS.db = Database.forURL(dbURL, dbUser, dbPassword)
-    Class.forName("org.postgresql.Driver");
-    var con = DriverManager.getConnection(dbURL, dbUser, dbPassword)
-    database_eTOXOPS.sqlConnection = con
 
   }
 
@@ -94,11 +90,27 @@ object ExtractionEngine {
     Logger.info("Reading Properties")
     val defaultProps = FileUtils.readPropertiesFile(appBasePath + "/collector.properties")
     //ExtractionEngine.dbURL = defaultProps.getProperty("dbURL")
-    ExtractionEngine.dbURL="jdbc:"+sys.env("DATABASE_URL")
-    Logger.info("dbURL:" + ExtractionEngine.dbURL)
-    ExtractionEngine.dbUser = defaultProps.getProperty("dbUser")
+    //ExtractionEngine.dbURL="jdbc:"+sys.env("DATABASE_URL")
+
+    val dbUri = new java.net.URI(System.getenv("DATABASE_URL"))
+    val username = dbUri.getUserInfo().split(":")(0)
+    val password = dbUri.getUserInfo().split(":")(0)
+
+    ExtractionEngine.dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
+
+    database_eTOXOPS.db = Database.forURL(ExtractionEngine.dbURL, username, password)
+    Class.forName("org.postgresql.Driver");
+    var con = DriverManager.getConnection(ExtractionEngine.dbURL, username, password)
+    database_eTOXOPS.sqlConnection = con
+
+    //
+    //String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
+    //return DriverManager.getConnection(dbUrl, username, password);
+
+    //ExtractionEngine.dbUser = defaultProps.getProperty("dbUser")
     Logger.info("dbUser: " + ExtractionEngine.dbUser)
-    ExtractionEngine.dbPassword = defaultProps.getProperty("dbPassword")
+    //ExtractionEngine.dbPassword = defaultProps.getProperty("dbPassword")
     Logger.info("dbPassword: " + ExtractionEngine.dbPassword)
     ExtractionEngine.OPSAPIURL = defaultProps.getProperty("opsLDA_API_URL")
     Logger.info("OPS API URL: " + ExtractionEngine.OPSAPIURL)
@@ -134,48 +146,48 @@ object ExtractionEngine {
     }
   }
 
-//  def getDataSDF(jobExecutionId: String, job_series_id: Int) = {
-//    var fieldMapLDASDF = new java.util.HashMap[String, String]
-//    val fieldMapTypeSDF = new java.util.HashMap[String, String]
-//    fieldMapLDASDF.put("relation", "relation")
-//    fieldMapLDASDF.put("standard_units", "standard_units")
-//    fieldMapLDASDF.put("standard_value", "standard_value")
-//    fieldMapLDASDF.put("activity_type", "activity_type")
-//    fieldMapLDASDF.put("inchi", "inchi")
-//    fieldMapLDASDF.put("inchikey", "inchikey")
-//    fieldMapLDASDF.put("smiles", "smiles")
-//    fieldMapLDASDF.put("job_execution_id", "job_execution_id")
-//    fieldMapTypeSDF.put("relation", "STRING")
-//    fieldMapTypeSDF.put("standard_units", "STRING")
-//    fieldMapTypeSDF.put("standard_value", "FLOAT")
-//    fieldMapTypeSDF.put("activity_type", "STRING")
-//    fieldMapTypeSDF.put("inchi", "STRING")
-//    fieldMapTypeSDF.put("inchikey", "STRING")
-//    fieldMapTypeSDF.put("smiles", "STRING")
-//    fieldMapTypeSDF.put("job_execution_id", "INTEGER")
-//    val q = "SELECT activities_id, activities_series_id, relation, standard_units," +
-//      "       standard_value, activity_type, inchi, inchikey, smiles, data," +
-//      "    sdf2d, sdf3d" +
-//      "  FROM activities where activities_series_id=" + job_series_id + " ;"
-//
-//    val rs = database_eTOXOPS.doQuerySQL(q)
-//    var acts = new scala.collection.mutable.LinkedList[Map[String, String]]()
-//    while (rs.next()) {
-//      val data = rs.getString("data")
-//      val js = Json.parse(data)
-//      val jso = js.as[JsObject]
-//      val flds = jso.fields
-//      val dict = for ((f, v) <- flds)
-//        yield ({
-//        val v1 = v.as[JsString].value
-//        f -> v1
-//      })
-//      val dict2 = dict.toMap
-//      acts = acts :+ dict2
-//    }
-//    Logger.info("Activities obtained: " + acts.size)
-//    database_eTOXOPS.MoveLDAResults2SQL(acts, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
-//  }
+  //  def getDataSDF(jobExecutionId: String, job_series_id: Int) = {
+  //    var fieldMapLDASDF = new java.util.HashMap[String, String]
+  //    val fieldMapTypeSDF = new java.util.HashMap[String, String]
+  //    fieldMapLDASDF.put("relation", "relation")
+  //    fieldMapLDASDF.put("standard_units", "standard_units")
+  //    fieldMapLDASDF.put("standard_value", "standard_value")
+  //    fieldMapLDASDF.put("activity_type", "activity_type")
+  //    fieldMapLDASDF.put("inchi", "inchi")
+  //    fieldMapLDASDF.put("inchikey", "inchikey")
+  //    fieldMapLDASDF.put("smiles", "smiles")
+  //    fieldMapLDASDF.put("job_execution_id", "job_execution_id")
+  //    fieldMapTypeSDF.put("relation", "STRING")
+  //    fieldMapTypeSDF.put("standard_units", "STRING")
+  //    fieldMapTypeSDF.put("standard_value", "FLOAT")
+  //    fieldMapTypeSDF.put("activity_type", "STRING")
+  //    fieldMapTypeSDF.put("inchi", "STRING")
+  //    fieldMapTypeSDF.put("inchikey", "STRING")
+  //    fieldMapTypeSDF.put("smiles", "STRING")
+  //    fieldMapTypeSDF.put("job_execution_id", "INTEGER")
+  //    val q = "SELECT activities_id, activities_series_id, relation, standard_units," +
+  //      "       standard_value, activity_type, inchi, inchikey, smiles, data," +
+  //      "    sdf2d, sdf3d" +
+  //      "  FROM activities where activities_series_id=" + job_series_id + " ;"
+  //
+  //    val rs = database_eTOXOPS.doQuerySQL(q)
+  //    var acts = new scala.collection.mutable.LinkedList[Map[String, String]]()
+  //    while (rs.next()) {
+  //      val data = rs.getString("data")
+  //      val js = Json.parse(data)
+  //      val jso = js.as[JsObject]
+  //      val flds = jso.fields
+  //      val dict = for ((f, v) <- flds)
+  //        yield ({
+  //        val v1 = v.as[JsString].value
+  //        f -> v1
+  //      })
+  //      val dict2 = dict.toMap
+  //      acts = acts :+ dict2
+  //    }
+  //    Logger.info("Activities obtained: " + acts.size)
+  //    database_eTOXOPS.MoveLDAResults2SQL(acts, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
+  //  }
 
   def executeExtraction(jobExecutionId: String, basket: Map[String, String]) = {
     Logger.info("Basket:")
@@ -236,7 +248,7 @@ object ExtractionEngine {
       database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
       obtainInitialData(jobId, jobExecutionId)
       Logger.info("Obtaining filters")
-      val filters = getFilters(jobId)      
+      val filters = getFilters(jobId)
       Logger.info("Executing filtering")
       executeFiltering(jobExecutionId, filters)
       database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='OK' where job_execution_id=" + jobExecutionId)
@@ -340,10 +352,9 @@ object ExtractionEngine {
         val q = database_eTOXOPS.GetRAWDataJobExecution(jobExecutionId.toInt)
         val l = q.buildColl
         Logger.info("Size: " + l.size)
-        
 
         q.foreach {
-          case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle,activity_id) =>
+          case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle, activity_id) =>
             var activity = new Activity(job_execution_id, job_data_raw_id, activity_type, smiles.getOrElse(""))
             var compound = new Compound(activity)
             for ((filter_id, filter, filtering_id) <- filters) {
