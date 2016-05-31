@@ -136,7 +136,8 @@ object CompoundUtil {
     imageString
   }
 
-  def tmpDir = System.getenv("COLLECTOR_HOME") + "/temp"
+  //def tmpDir = System.getenv("COLLECTOR_HOME") + "/temp"
+  lazy val tmpDir = System.getenv("COLLECTOR_HOME") + "/logs"
   def resourceDir = System.getenv("COLLECTOR_HOME") + "/resources"
   def pythonIMGScript = System.getenv("COLLECTOR_HOME") + "/scripts/generate_img.py"
   def pythonIMGScriptSDF = System.getenv("COLLECTOR_HOME") + "/scripts/generate_img_sdf.py"
