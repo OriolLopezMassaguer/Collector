@@ -66,7 +66,7 @@ Ext
 										},
 										{
 											xtype : 'button',
-											text : 'Download as SDF v2',
+											text : 'Download as SDF',
 											margin : '5 5 5 5',
 											handler : function() {
 
