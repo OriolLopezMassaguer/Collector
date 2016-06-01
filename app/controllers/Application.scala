@@ -255,6 +255,8 @@ object Application extends Controller {
   
     def testRDKit = Action {
     val comp = es.imim.phi.collector.compounds.CompoundUtil
+    
+    println(models.chemistry.CompoundUtil.getMWfromSMILES("CCC"))
     val sdf = comp.getSDFFromSMiles_RDKit("CCCC")
     Ok("{sdf:" + sdf + "}")
   }
