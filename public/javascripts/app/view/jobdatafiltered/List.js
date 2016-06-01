@@ -64,40 +64,40 @@ Ext
 												id : 'Compounds2',
 											}, ]
 										},
-//										{
-//											xtype : 'button',
-//											text : 'Download as SDF',
-//											margin : '5 5 5 5',
-//											handler : function() {
-//
-//												console.log('Downloading SDF');
-//												var fieldjobexecutionid = Ext.ComponentQuery
-//														.query('#jobexecutionid');
-//												console
-//														.log(fieldjobexecutionid[0]
-//																.getValue())
-//
-//												if (Ext.getCmp('Activities2')
-//														.getValue()) {
-//													window
-//															.open('/data/jobdatafilteredsdf/'
-//																	+ fieldjobexecutionid[0]
-//																			.getValue())																			
-//																			
-//												}
-//												;
-//
-//												if (Ext.getCmp('Compounds2')
-//														.getValue()) {
-//													window
-//															.open('/data/jobdatafilteredsdfag/'
-//																	+ fieldjobexecutionid[0]
-//																			.getValue())																			
-//												}
-//												;
-//
-//											}
-//										},
+										{
+											xtype : 'button',
+											text : 'Download as SDF',
+											margin : '5 5 5 5',
+											handler : function() {
+
+												console.log('Downloading SDF');
+												var fieldjobexecutionid = Ext.ComponentQuery
+														.query('#jobexecutionid');
+												console
+														.log(fieldjobexecutionid[0]
+																.getValue())
+
+												if (Ext.getCmp('Activities2')
+														.getValue()) {
+													window
+															.open('/data/jobdatafilteredsdf/'
+																	+ fieldjobexecutionid[0]
+																			.getValue())																			
+																			
+												}
+												;
+
+												if (Ext.getCmp('Compounds2')
+														.getValue()) {
+													window
+															.open('/data/jobdatafilteredsdfag/'
+																	+ fieldjobexecutionid[0]
+																			.getValue())																			
+												}
+												;
+
+											}
+										},
 										{
 											xtype : 'button',
 											text : 'Download as CSV',

@@ -65,37 +65,37 @@ Ext
 												id : 'Compounds'
 											}, ]
 										},
-//										{
-//											xtype : 'button',
-//											text : 'Download as SDF',
-//											margin: '5 5 5 5',
-//											handler : function() {
-//
-//												console.log('Downloading SDF');
-//												var fieldjobexecutionid = Ext.ComponentQuery
-//														.query('#jobexecutionid');
-//												console
-//														.log(fieldjobexecutionid[0]
-//																.getValue())
-//
-//												if (Ext.getCmp('Activities').getValue()) {
-//													window
-//															.open( '/data/jobdatarawsdf/'
-//																	+ fieldjobexecutionid[0]
-//																			.getValue())
-//												}
-//												;
-//
-//												if (Ext.getCmp('Compounds').getValue()) {
-//													window
-//															.open( '/data/jobdatarawsdfag/'
-//																	+ fieldjobexecutionid[0]
-//																			.getValue())
-//												}
-//												;
-//
-//											}
-//										},
+										{
+											xtype : 'button',
+											text : 'Download as SDF',
+											margin: '5 5 5 5',
+											handler : function() {
+
+												console.log('Downloading SDF');
+												var fieldjobexecutionid = Ext.ComponentQuery
+														.query('#jobexecutionid');
+												console
+														.log(fieldjobexecutionid[0]
+																.getValue())
+
+												if (Ext.getCmp('Activities').getValue()) {
+													window
+															.open( '/data/jobdatarawsdf/'
+																	+ fieldjobexecutionid[0]
+																			.getValue())
+												}
+												;
+
+												if (Ext.getCmp('Compounds').getValue()) {
+													window
+															.open( '/data/jobdatarawsdfag/'
+																	+ fieldjobexecutionid[0]
+																			.getValue())
+												}
+												;
+
+											}
+										},
 										{
 											xtype : 'button',
 											text : 'Download as CSV',

@@ -1,51 +1,949 @@
-2016-06-01 09:45:35,349 - [INFO] - from play in pool-8-thread-1 
+2016-06-01 10:03:09,033 - [INFO] - from play in pool-8-thread-3 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2016-06-01 09:45:49,451 - [INFO] - from play in play-internal-execution-context-1 
+2016-06-01 10:03:32,519 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2016-06-01 09:45:49,540 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,606 - [INFO] - from application in New I/O worker #1 
 Initializing collector v1.4
 
-2016-06-01 09:45:49,543 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,609 - [INFO] - from application in New I/O worker #1 
 Application path /opt/collector
 
-2016-06-01 09:45:49,544 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,610 - [INFO] - from application in New I/O worker #1 
 Reading Properties
 
-2016-06-01 09:45:49,856 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,989 - [INFO] - from application in New I/O worker #1 
 dbUser: 
 
-2016-06-01 09:45:49,857 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,990 - [INFO] - from application in New I/O worker #1 
 dbPassword: 
 
-2016-06-01 09:45:49,858 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,991 - [INFO] - from application in New I/O worker #1 
 OPS API URL: https://beta.openphacts.org/1.5
 
-2016-06-01 09:45:49,860 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,992 - [INFO] - from application in New I/O worker #1 
 export data dir: logs/
 
-2016-06-01 09:45:49,861 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,993 - [INFO] - from application in New I/O worker #1 
 input data dir: /opt/collector/input
 
-2016-06-01 09:45:49,861 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,994 - [INFO] - from application in New I/O worker #1 
 URL CBN: http://cbn.zbh.uni-hamburg.de/?ops_uris=
 
-2016-06-01 09:45:49,862 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,997 - [INFO] - from application in New I/O worker #1 
 Number compounds CBN: 100
 
-2016-06-01 09:45:49,863 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:32,998 - [INFO] - from application in New I/O worker #1 
 AppId: 4eb73c98
 
-2016-06-01 09:45:49,863 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:33,000 - [INFO] - from application in New I/O worker #1 
 AppKey: c237c00c011138cbb5c2ccf8279c5cc6
 
-2016-06-01 09:45:49,864 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:33,001 - [INFO] - from application in New I/O worker #1 
 Cached Api: true
 
-2016-06-01 09:45:49,865 - [INFO] - from application in New I/O worker #1 
+2016-06-01 10:03:33,002 - [INFO] - from application in New I/O worker #1 
 Bucket API size: 10
 
-2016-06-01 09:45:50,176 - [INFO] - from akka.event.slf4j.Slf4jLogger in play-akka.actor.default-dispatcher-2 
+2016-06-01 10:03:33,358 - [INFO] - from akka.event.slf4j.Slf4jLogger in play-akka.actor.default-dispatcher-2 
 Slf4jLogger started
+
+2016-06-01 10:03:35,822 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Action get all jobs info
+
+2016-06-01 10:03:37,447 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Action get job info
+
+2016-06-01 10:03:37,448 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:03:37,448 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Parsing filters
+
+2016-06-01 10:03:37,670 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+ListBuffer((job_id,2))
+
+2016-06-01 10:03:37,671 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Job id:2
+
+2016-06-01 10:03:38,873 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Action get job info
+
+2016-06-01 10:03:38,873 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: [{"property":"job_id","value":"6"}]
+
+2016-06-01 10:03:38,873 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Parsing filters
+
+2016-06-01 10:03:38,874 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+ListBuffer((job_id,6))
+
+2016-06-01 10:03:38,874 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Job id:6
+
+2016-06-01 10:03:39,761 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Action get job info
+
+2016-06-01 10:03:39,761 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:03:39,762 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Parsing filters
+
+2016-06-01 10:03:39,762 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+ListBuffer((job_id,2))
+
+2016-06-01 10:03:39,763 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Job id:2
+
+2016-06-01 10:03:41,438 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Parsing filters
+
+2016-06-01 10:03:41,438 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+ListBuffer((job_execution_id,15))
+
+2016-06-01 10:03:41,439 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Action job statistics: 
+
+2016-06-01 10:03:41,440 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+job execution id: 15
+
+2016-06-01 10:03:41,459 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action job execution histogram statistics
+
+2016-06-01 10:03:41,459 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2016-06-01 10:03:41,463 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_execution_id,15))
+
+2016-06-01 10:03:41,495 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job execution id:15
+
+2016-06-01 10:03:41,500 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Histogram data:
+
+2016-06-01 10:03:41,533 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Parsing filters
+
+2016-06-01 10:03:41,533 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+ListBuffer((job_execution_id,15))
+
+2016-06-01 10:03:41,544 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:03:41,544 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_execution_id,15))
+
+2016-06-01 10:03:41,544 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job execution info job execution id:15
+
+2016-06-01 10:03:41,544 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Action get job execution info job execution id:15
+
+2016-06-01 10:03:41,546 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+getQueryJSONPaging: 
+SELECT * from job_data_raw_vw where job_execution_id=15 order by job_data_raw_id
+
+2016-06-01 10:03:41,549 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+getQueryJSONPaging: 
+SELECT * from job_data_filtered_vw where job_execution_id=15 order by job_data_raw_id
+
+2016-06-01 10:03:42,254 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+GetFiltersForJobExecutionId query:  SELECT t1.job_id,t1.job_filtering_id,t2.filter_id,t2.filter_description, t2.filter_class,t3.curation_order  FROM job_filtering_filter t3,job_filtering t4, job_execution t6, job t1, filter t2 WHERE (t1.job_filtering_id=t4.job_filtering_id)  AND (t3.filter_id=t2.filter_id) AND (t3.job_filtering_id = t4.job_filtering_id )  AND ((t1.job_id=t6.job_id)  and (t6.job_execution_id=?)) order by curation_order ASC 
+
+2016-06-01 10:03:43,183 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: 15 (2,2,5,Activity,es.imim.phi.collector.compounds.CompoundFilterActivity,1)
+
+2016-06-01 10:03:43,413 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: 15 (2,2,2,LipinskiRo5,es.imim.phi.collector.compounds.CompoundFilterRuleOf5,2)
+
+2016-06-01 10:03:43,538 - [INFO] - from application in play-akka.actor.default-dispatcher-2 
+Parsing filters
+
+2016-06-01 10:03:43,538 - [INFO] - from application in play-akka.actor.default-dispatcher-2 
+ListBuffer((job_execution_id,15))
+
+2016-06-01 10:03:43,538 - [INFO] - from application in play-akka.actor.default-dispatcher-2 
+Action get job execution info job execution id:15
+
+2016-06-01 10:03:43,538 - [INFO] - from application in play-akka.actor.default-dispatcher-2 
+getQueryJSONPaging: 
+SELECT * from job_data_filtered_vw where job_execution_id=15 order by job_data_raw_id
+
+2016-06-01 10:03:43,801 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: 15 (2,2,4,ValidateAtoms,es.imim.phi.collector.compounds.CompoundFilterValidAtoms,3)
+
+2016-06-01 10:03:43,827 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Job Statistics: 
+[{"job_execution_id":"15","filter":"raw","activities":"1186","compounds":"544"},{"job_execution_id":"15","filter":"Activity","activities":"233","compounds":"127"},{"job_execution_id":"15","filter":"LipinskiRo5","activities":"233","compounds":"127"},{"job_execution_id":"15","filter":"ValidateAtoms","activities":"233","compounds":"127"}]
+
+2016-06-01 10:03:43,843 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+GetFiltersForJobExecutionId query:  SELECT t1.job_id,t1.job_filtering_id,t2.filter_id,t2.filter_description, t2.filter_class,t3.curation_order  FROM job_filtering_filter t3,job_filtering t4, job_execution t6, job t1, filter t2 WHERE (t1.job_filtering_id=t4.job_filtering_id)  AND (t3.filter_id=t2.filter_id) AND (t3.job_filtering_id = t4.job_filtering_id )  AND ((t1.job_id=t6.job_id)  and (t6.job_execution_id=?)) order by curation_order ASC 
+
+2016-06-01 10:03:43,964 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: 15 (2,2,5,Activity,es.imim.phi.collector.compounds.CompoundFilterActivity,1)
+
+2016-06-01 10:03:44,156 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: 15 (2,2,2,LipinskiRo5,es.imim.phi.collector.compounds.CompoundFilterRuleOf5,2)
+
+2016-06-01 10:03:44,159 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Histogram Q2:
+
+
+2016-06-01 10:03:45,087 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Filter: 15 (2,2,4,ValidateAtoms,es.imim.phi.collector.compounds.CompoundFilterValidAtoms,3)
+
+2016-06-01 10:03:45,088 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Histogram Q2:
+
+
+2016-06-01 10:03:45,097 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+JSON Histogram Statistics:
+
+2016-06-01 10:03:45,101 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+{success: true,total: 0, jobstatistics:[] }
+
+2016-06-01 10:03:46,135 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action Download job execution info job execution id:15
+
+2016-06-01 10:03:46,136 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Filtered
+
+2016-06-01 10:03:46,136 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Activities
+
+2016-06-01 10:03:46,137 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+sdf
+
+2016-06-01 10:03:51,113 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Result!
+
+2016-06-01 10:03:51,114 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Result!
+
+2016-06-01 10:04:15,312 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Parsing filters
+
+2016-06-01 10:04:15,313 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+ListBuffer((job_execution_id,143))
+
+2016-06-01 10:04:15,313 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Action job statistics: 
+
+2016-06-01 10:04:15,313 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+job execution id: 143
+
+2016-06-01 10:04:15,350 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action job execution histogram statistics
+
+2016-06-01 10:04:15,350 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:15,350 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_execution_id,143))
+
+2016-06-01 10:04:15,350 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job execution id:143
+
+2016-06-01 10:04:15,351 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Histogram data:
+
+2016-06-01 10:04:15,369 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Parsing filters
+
+2016-06-01 10:04:15,370 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+ListBuffer((job_execution_id,143))
+
+2016-06-01 10:04:15,370 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Action get job execution info job execution id:143
+
+2016-06-01 10:04:15,370 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+getQueryJSONPaging: 
+SELECT * from job_data_raw_vw where job_execution_id=143 order by job_data_raw_id
+
+2016-06-01 10:04:15,475 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Parsing filters
+
+2016-06-01 10:04:15,476 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+ListBuffer((job_execution_id,143))
+
+2016-06-01 10:04:15,476 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Action get job execution info job execution id:143
+
+2016-06-01 10:04:15,476 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+getQueryJSONPaging: 
+SELECT * from job_data_filtered_vw where job_execution_id=143 order by job_data_raw_id
+
+2016-06-01 10:04:15,535 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+GetFiltersForJobExecutionId query:  SELECT t1.job_id,t1.job_filtering_id,t2.filter_id,t2.filter_description, t2.filter_class,t3.curation_order  FROM job_filtering_filter t3,job_filtering t4, job_execution t6, job t1, filter t2 WHERE (t1.job_filtering_id=t4.job_filtering_id)  AND (t3.filter_id=t2.filter_id) AND (t3.job_filtering_id = t4.job_filtering_id )  AND ((t1.job_id=t6.job_id)  and (t6.job_execution_id=?)) order by curation_order ASC 
+
+2016-06-01 10:04:15,729 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: 143 (2,2,5,Activity,es.imim.phi.collector.compounds.CompoundFilterActivity,1)
+
+2016-06-01 10:04:15,916 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: 143 (2,2,2,LipinskiRo5,es.imim.phi.collector.compounds.CompoundFilterRuleOf5,2)
+
+2016-06-01 10:04:16,158 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: 143 (2,2,4,ValidateAtoms,es.imim.phi.collector.compounds.CompoundFilterValidAtoms,3)
+
+2016-06-01 10:04:16,159 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Job Statistics: 
+[{"job_execution_id":"143","filter":"raw","activities":"1099","compounds":"544"},{"job_execution_id":"143","filter":"Activity","activities":"233","compounds":"127"},{"job_execution_id":"143","filter":"LipinskiRo5","activities":"233","compounds":"127"},{"job_execution_id":"143","filter":"ValidateAtoms","activities":"233","compounds":"127"}]
+
+2016-06-01 10:04:16,174 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+GetFiltersForJobExecutionId query:  SELECT t1.job_id,t1.job_filtering_id,t2.filter_id,t2.filter_description, t2.filter_class,t3.curation_order  FROM job_filtering_filter t3,job_filtering t4, job_execution t6, job t1, filter t2 WHERE (t1.job_filtering_id=t4.job_filtering_id)  AND (t3.filter_id=t2.filter_id) AND (t3.job_filtering_id = t4.job_filtering_id )  AND ((t1.job_id=t6.job_id)  and (t6.job_execution_id=?)) order by curation_order ASC 
+
+2016-06-01 10:04:16,281 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Histogram Q2:
+
+
+2016-06-01 10:04:16,294 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: 143 (2,2,5,Activity,es.imim.phi.collector.compounds.CompoundFilterActivity,1)
+
+2016-06-01 10:04:16,554 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: 143 (2,2,2,LipinskiRo5,es.imim.phi.collector.compounds.CompoundFilterRuleOf5,2)
+
+2016-06-01 10:04:16,789 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: 143 (2,2,4,ValidateAtoms,es.imim.phi.collector.compounds.CompoundFilterValidAtoms,3)
+
+2016-06-01 10:04:16,883 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Histogram Q2:
+
+
+2016-06-01 10:04:16,883 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+JSON Histogram Statistics:
+
+2016-06-01 10:04:16,883 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+{success: true,total: 0, jobstatistics:[] }
+
+2016-06-01 10:04:17,831 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Action get job info
+
+2016-06-01 10:04:17,832 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Filter: [{"property":"job_id","value":"6"}]
+
+2016-06-01 10:04:17,832 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Parsing filters
+
+2016-06-01 10:04:17,832 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+ListBuffer((job_id,6))
+
+2016-06-01 10:04:17,832 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Job id:6
+
+2016-06-01 10:04:19,155 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Action get job info
+
+2016-06-01 10:04:19,155 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:19,155 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Parsing filters
+
+2016-06-01 10:04:19,156 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:19,156 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Job id:2
+
+2016-06-01 10:04:21,766 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Action get job info
+
+2016-06-01 10:04:21,766 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:21,766 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Parsing filters
+
+2016-06-01 10:04:21,766 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:21,766 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Job id:2
+
+2016-06-01 10:04:21,775 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Executing job: 2
+
+2016-06-01 10:04:21,859 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+JobExecutionId inserted:154
+
+2016-06-01 10:04:21,875 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Obtaining parameters
+
+2016-06-01 10:04:21,876 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+OPS case
+
+2016-06-01 10:04:21,877 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Executing extraction
+
+2016-06-01 10:04:21,887 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Basket:
+
+2016-06-01 10:04:21,888 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Query for target id new id: http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5
+
+2016-06-01 10:04:21,888 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/count?
+
+2016-06-01 10:04:21,888 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/count?
+
+2016-06-01 10:04:21,892 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5)
+
+2016-06-01 10:04:21,895 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/count?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&app_id=4eb73c98&app_key=c237c00c011138cbb5c2ccf8279c5cc6&_format=json
+
+2016-06-01 10:04:21,981 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:21,982 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:21,982 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 1)
+
+2016-06-01 10:04:21,982 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=1&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,342 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,342 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,342 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 2)
+
+2016-06-01 10:04:22,343 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=2&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,411 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,411 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,411 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 3)
+
+2016-06-01 10:04:22,411 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=3&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,472 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,473 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,473 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 4)
+
+2016-06-01 10:04:22,473 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=4&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,528 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,528 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,528 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 5)
+
+2016-06-01 10:04:22,529 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=5&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,585 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,585 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,585 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 6)
+
+2016-06-01 10:04:22,585 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=6&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,627 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,628 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,628 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 7)
+
+2016-06-01 10:04:22,628 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=7&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,659 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,659 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,659 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 8)
+
+2016-06-01 10:04:22,659 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=8&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,677 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,678 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,678 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 9)
+
+2016-06-01 10:04:22,678 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=9&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,695 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,695 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,695 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 10)
+
+2016-06-01 10:04:22,696 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=10&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,719 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,719 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,719 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 11)
+
+2016-06-01 10:04:22,720 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=11&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,753 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,753 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,753 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 12)
+
+2016-06-01 10:04:22,754 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=12&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,774 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,775 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,775 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 13)
+
+2016-06-01 10:04:22,775 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=13&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,781 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Action get job info
+
+2016-06-01 10:04:22,781 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:22,781 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Parsing filters
+
+2016-06-01 10:04:22,781 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:22,782 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Job id:2
+
+2016-06-01 10:04:22,802 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,802 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,803 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 14)
+
+2016-06-01 10:04:22,803 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=14&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,824 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+URLcall: https://beta.openphacts.org/1.5/target/pharmacology/pages?
+
+2016-06-01 10:04:22,825 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Pattern: /target/pharmacology/pages?
+
+2016-06-01 10:04:22,825 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Params: Map(uri -> http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5, _pageSize -> 100, _page -> 15)
+
+2016-06-01 10:04:22,825 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+makeCall URL: https://beta.openphacts.org/1.5/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5&_page=15&_pageSize=100&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2016-06-01 10:04:22,852 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Open PHACTS LDA results 1099
+
+2016-06-01 10:04:25,338 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Inserted 1099 records
+
+2016-06-01 10:04:26,393 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Action get job info
+
+2016-06-01 10:04:26,394 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Filter: [{"property":"job_id","value":"6"}]
+
+2016-06-01 10:04:26,394 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Parsing filters
+
+2016-06-01 10:04:26,394 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+ListBuffer((job_id,6))
+
+2016-06-01 10:04:26,394 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Job id:6
+
+2016-06-01 10:04:26,880 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Action get job info
+
+2016-06-01 10:04:26,880 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:26,880 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Parsing filters
+
+2016-06-01 10:04:26,880 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:26,880 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Job id:2
+
+2016-06-01 10:04:28,458 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2016-06-01 10:04:28,458 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"6"}]
+
+2016-06-01 10:04:28,458 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:28,458 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,6))
+
+2016-06-01 10:04:28,458 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:6
+
+2016-06-01 10:04:29,102 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2016-06-01 10:04:29,102 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:29,102 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:29,102 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:29,102 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:2
+
+2016-06-01 10:04:29,971 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Obtaining filters
+
+2016-06-01 10:04:29,972 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Query get filters:  SELECT   job.job_id,  job.job_filtering_id,  filter.filter_id,  filter.filter_description,   filter.filter_class,  job_filtering_filter.curation_order  FROM   public.filter,  public.job,   public.job_filtering_filter WHERE   job_filtering_filter.filter_id = filter.filter_id AND  job_filtering_filter.job_filtering_id = job.job_filtering_id  AND job_id=2 ORDER BY curation_order ;
+
+2016-06-01 10:04:29,985 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: Activity
+
+2016-06-01 10:04:29,986 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: LipinskiRo5
+
+2016-06-01 10:04:29,987 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: ValidateAtoms
+
+2016-06-01 10:04:29,988 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Executing filtering
+
+2016-06-01 10:04:29,989 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filters: LinkedList((5,FilterActivityTypeActivity,2), (2,LipinskiRo5,2), (4,FilterAtoms:Set(Cl, N, F, I, P, Br, C, H, O, S),2))
+
+2016-06-01 10:04:30,029 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Size: 1099
+
+2016-06-01 10:04:30,362 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2016-06-01 10:04:30,362 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"6"}]
+
+2016-06-01 10:04:30,362 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:30,362 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,6))
+
+2016-06-01 10:04:30,362 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:6
+
+2016-06-01 10:04:30,928 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2016-06-01 10:04:30,928 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:30,928 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:30,928 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:30,928 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:2
+
+2016-06-01 10:04:31,623 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2016-06-01 10:04:31,624 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:31,624 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:31,624 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:31,624 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:2
+
+2016-06-01 10:04:31,935 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2016-06-01 10:04:31,935 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"6"}]
+
+2016-06-01 10:04:31,935 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:31,936 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,6))
+
+2016-06-01 10:04:31,936 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:6
+
+2016-06-01 10:04:32,460 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Action get job info
+
+2016-06-01 10:04:32,460 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:32,460 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Parsing filters
+
+2016-06-01 10:04:32,460 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:32,460 - [INFO] - from application in play-akka.actor.default-dispatcher-6 
+Job id:2
+
+2016-06-01 10:04:32,559 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Succesful execution jobId:2 jobExecutionId:154
+
+2016-06-01 10:04:32,631 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2016-06-01 10:04:32,631 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:32,631 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:32,632 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:32,632 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:2
+
+2016-06-01 10:04:35,151 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2016-06-01 10:04:35,152 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_execution_id,154))
+
+2016-06-01 10:04:35,152 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action job statistics: 
+
+2016-06-01 10:04:35,152 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+job execution id: 154
+
+2016-06-01 10:04:35,174 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+GetFiltersForJobExecutionId query:  SELECT t1.job_id,t1.job_filtering_id,t2.filter_id,t2.filter_description, t2.filter_class,t3.curation_order  FROM job_filtering_filter t3,job_filtering t4, job_execution t6, job t1, filter t2 WHERE (t1.job_filtering_id=t4.job_filtering_id)  AND (t3.filter_id=t2.filter_id) AND (t3.job_filtering_id = t4.job_filtering_id )  AND ((t1.job_id=t6.job_id)  and (t6.job_execution_id=?)) order by curation_order ASC 
+
+2016-06-01 10:04:35,200 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Action job execution histogram statistics
+
+2016-06-01 10:04:35,200 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Parsing filters
+
+2016-06-01 10:04:35,200 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+ListBuffer((job_execution_id,154))
+
+2016-06-01 10:04:35,200 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Job execution id:154
+
+2016-06-01 10:04:35,200 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Histogram data:
+
+2016-06-01 10:04:35,214 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Parsing filters
+
+2016-06-01 10:04:35,214 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+ListBuffer((job_execution_id,154))
+
+2016-06-01 10:04:35,214 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Action get job execution info job execution id:154
+
+2016-06-01 10:04:35,214 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+getQueryJSONPaging: 
+SELECT * from job_data_raw_vw where job_execution_id=154 order by job_data_raw_id
+
+2016-06-01 10:04:35,295 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Parsing filters
+
+2016-06-01 10:04:35,295 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+ListBuffer((job_execution_id,154))
+
+2016-06-01 10:04:35,295 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Action get job execution info job execution id:154
+
+2016-06-01 10:04:35,295 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+getQueryJSONPaging: 
+SELECT * from job_data_filtered_vw where job_execution_id=154 order by job_data_raw_id
+
+2016-06-01 10:04:35,349 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: 154 (2,2,5,Activity,es.imim.phi.collector.compounds.CompoundFilterActivity,1)
+
+2016-06-01 10:04:35,604 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: 154 (2,2,2,LipinskiRo5,es.imim.phi.collector.compounds.CompoundFilterRuleOf5,2)
+
+2016-06-01 10:04:35,883 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: 154 (2,2,4,ValidateAtoms,es.imim.phi.collector.compounds.CompoundFilterValidAtoms,3)
+
+2016-06-01 10:04:35,883 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job Statistics: 
+[{"job_execution_id":"154","filter":"raw","activities":"1099","compounds":"544"},{"job_execution_id":"154","filter":"Activity","activities":"233","compounds":"127"},{"job_execution_id":"154","filter":"LipinskiRo5","activities":"233","compounds":"127"},{"job_execution_id":"154","filter":"ValidateAtoms","activities":"233","compounds":"127"}]
+
+2016-06-01 10:04:35,898 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+GetFiltersForJobExecutionId query:  SELECT t1.job_id,t1.job_filtering_id,t2.filter_id,t2.filter_description, t2.filter_class,t3.curation_order  FROM job_filtering_filter t3,job_filtering t4, job_execution t6, job t1, filter t2 WHERE (t1.job_filtering_id=t4.job_filtering_id)  AND (t3.filter_id=t2.filter_id) AND (t3.job_filtering_id = t4.job_filtering_id )  AND ((t1.job_id=t6.job_id)  and (t6.job_execution_id=?)) order by curation_order ASC 
+
+2016-06-01 10:04:36,020 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: 154 (2,2,5,Activity,es.imim.phi.collector.compounds.CompoundFilterActivity,1)
+
+2016-06-01 10:04:36,243 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Histogram Q2:
+
+
+2016-06-01 10:04:36,258 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: 154 (2,2,2,LipinskiRo5,es.imim.phi.collector.compounds.CompoundFilterRuleOf5,2)
+
+2016-06-01 10:04:36,988 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: 154 (2,2,4,ValidateAtoms,es.imim.phi.collector.compounds.CompoundFilterValidAtoms,3)
+
+2016-06-01 10:04:37,103 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Histogram Q2:
+
+
+2016-06-01 10:04:37,103 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+JSON Histogram Statistics:
+
+2016-06-01 10:04:37,103 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+{success: true,total: 0, jobstatistics:[] }
+
+2016-06-01 10:04:40,103 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Action Download job execution info job execution id:154
+
+2016-06-01 10:04:40,104 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filtered
+
+2016-06-01 10:04:40,104 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Activities
+
+2016-06-01 10:04:40,104 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+sdf
+
+2016-06-01 10:04:41,649 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Action get job info
+
+2016-06-01 10:04:41,649 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:41,649 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Parsing filters
+
+2016-06-01 10:04:41,649 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:41,649 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Job id:2
+
+2016-06-01 10:04:42,971 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Result!
+
+2016-06-01 10:04:42,971 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Result!
+
+2016-06-01 10:04:51,662 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Action get job info
+
+2016-06-01 10:04:51,663 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:04:51,663 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Parsing filters
+
+2016-06-01 10:04:51,663 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+ListBuffer((job_id,2))
+
+2016-06-01 10:04:51,663 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Job id:2
+
+2016-06-01 10:05:01,670 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Action get job info
+
+2016-06-01 10:05:01,670 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: [{"property":"job_id","value":"2"}]
+
+2016-06-01 10:05:01,670 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Parsing filters
+
+2016-06-01 10:05:01,671 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+ListBuffer((job_id,2))
+
+2016-06-01 10:05:01,671 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Job id:2
+
+2016-06-01 10:05:04,356 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Action get job info
+
+2016-06-01 10:05:04,356 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Filter: [{"property":"job_id","value":"6"}]
+
+2016-06-01 10:05:04,356 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Parsing filters
+
+2016-06-01 10:05:04,356 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+ListBuffer((job_id,6))
+
+2016-06-01 10:05:04,357 - [INFO] - from application in play-akka.actor.default-dispatcher-9 
+Job id:6
 
