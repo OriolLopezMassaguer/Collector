@@ -1,3 +1,51 @@
-2016-03-25 01:06:54,998 - [INFO] - from play in pool-8-thread-4 
+2016-06-01 09:45:35,349 - [INFO] - from play in pool-8-thread-1 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+2016-06-01 09:45:49,451 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2016-06-01 09:45:49,540 - [INFO] - from application in New I/O worker #1 
+Initializing collector v1.4
+
+2016-06-01 09:45:49,543 - [INFO] - from application in New I/O worker #1 
+Application path /opt/collector
+
+2016-06-01 09:45:49,544 - [INFO] - from application in New I/O worker #1 
+Reading Properties
+
+2016-06-01 09:45:49,856 - [INFO] - from application in New I/O worker #1 
+dbUser: 
+
+2016-06-01 09:45:49,857 - [INFO] - from application in New I/O worker #1 
+dbPassword: 
+
+2016-06-01 09:45:49,858 - [INFO] - from application in New I/O worker #1 
+OPS API URL: https://beta.openphacts.org/1.5
+
+2016-06-01 09:45:49,860 - [INFO] - from application in New I/O worker #1 
+export data dir: logs/
+
+2016-06-01 09:45:49,861 - [INFO] - from application in New I/O worker #1 
+input data dir: /opt/collector/input
+
+2016-06-01 09:45:49,861 - [INFO] - from application in New I/O worker #1 
+URL CBN: http://cbn.zbh.uni-hamburg.de/?ops_uris=
+
+2016-06-01 09:45:49,862 - [INFO] - from application in New I/O worker #1 
+Number compounds CBN: 100
+
+2016-06-01 09:45:49,863 - [INFO] - from application in New I/O worker #1 
+AppId: 4eb73c98
+
+2016-06-01 09:45:49,863 - [INFO] - from application in New I/O worker #1 
+AppKey: c237c00c011138cbb5c2ccf8279c5cc6
+
+2016-06-01 09:45:49,864 - [INFO] - from application in New I/O worker #1 
+Cached Api: true
+
+2016-06-01 09:45:49,865 - [INFO] - from application in New I/O worker #1 
+Bucket API size: 10
+
+2016-06-01 09:45:50,176 - [INFO] - from akka.event.slf4j.Slf4jLogger in play-akka.actor.default-dispatcher-2 
+Slf4jLogger started
 

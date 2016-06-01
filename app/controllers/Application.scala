@@ -60,8 +60,8 @@ import play.api.libs.iteratee.Enumerator
 //import es.imim.phi.collector.compounds.CompoundUtil
 
 object Application extends Controller {
-//  val s = System.load("/opt/collector/lib/libGraphMolWrap.so")
-//  val app = PaDELDescriptorApp.getApplication()
+  //  val s = System.load("/opt/collector/lib/libGraphMolWrap.so")
+  //  val app = PaDELDescriptorApp.getApplication()
   var logger = play.api.Logger
   //Logger.info("Home: " + System.getenv("COLLECTOR_HOME"))
   ExtractionEngine.initEngine(System.getenv("COLLECTOR_HOME"))
@@ -245,6 +245,18 @@ object Application extends Controller {
     Logger.debug(cbnurls)
     println(cbnurls)
     Ok("{success: true, url:\"" + cbnurls + "\"}")
+  }
+
+  def testCDK = Action {
+    val comp = es.imim.phi.collector.compounds.CompoundUtil
+    val sdf = comp.getSDFFromSMiles_CDK("CCCHC")
+    Ok("{sdf:" + sdf + "}")
+  }
+  
+    def testRDKit = Action {
+    val comp = es.imim.phi.collector.compounds.CompoundUtil
+    val sdf = comp.getSDFFromSMiles_RDKit("CCCC")
+    Ok("{sdf:" + sdf + "}")
   }
 
   def getFilters(page: Int, start: Int, limit: Int, filter_string: String) = Action {
