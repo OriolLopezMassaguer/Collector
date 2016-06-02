@@ -68,16 +68,16 @@ Ext
 								// + '</a>';
 								// }
 								// },
-								{
-									header : 'compound_cwiki',
-									dataIndex : 'compound_cwiki',
-									flex : 1,
-									renderer : function(val, meta, record) {
-										return '<a href="' + val
-												+ '" target="_blank" >' + val
-												+ '</a>';
-									}
-								},
+//								{
+//									header : 'compound_cwiki',
+//									dataIndex : 'compound_cwiki',
+//									flex : 1,
+//									renderer : function(val, meta, record) {
+//										return '<a href="' + val
+//												+ '" target="_blank" >' + val
+//												+ '</a>';
+//									}
+//								},
 								{
 									header : 'activity_id',
 									dataIndex : 'activity_id',

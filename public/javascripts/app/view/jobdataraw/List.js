@@ -121,7 +121,7 @@ Ext
 												}
 												;
 											}
-										},
+										}
 //										{
 //											xtype : 'button',
 //											text : 'View in CBN',

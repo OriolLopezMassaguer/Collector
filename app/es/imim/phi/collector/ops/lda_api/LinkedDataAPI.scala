@@ -24,6 +24,7 @@ package es.imim.phi.collector.ops.lda_api
 
 //import collection.JavaConversions._
 import java.net.URLEncoder
+
 import java.net.URL
 import java.net.HttpURLConnection
 import scala.collection.mutable.LinkedList
@@ -43,6 +44,60 @@ import scalaz.Memo
 import java.sql.DriverManager
 import scala.Array.canBuildFrom
 import es.imim.phi.collector.compounds._
+
+object CHEMBLAPI {
+
+  private def urlcall(call: String): String =
+    {
+      Logger.debug("urlcall Call :[ " + call + " ]")
+      val url = new URL(call);
+      val conn = url.openConnection().asInstanceOf[HttpURLConnection]
+      conn.setInstanceFollowRedirects(true)
+      conn.setDoInput(true)
+      conn.setRequestMethod("GET")
+      conn.connect()
+      val responseCode = conn.getResponseCode()
+      responseCode match {
+        case 404 => {
+          println("Empty response")
+          ""
+        }
+        case 200 => {
+          val is = conn.getInputStream()
+          val writer = new StringWriter();
+          IOUtils.copy(is, writer, "UTF-8");
+          var str = writer.toString()
+          str
+        }
+        case _ => {
+          println("Unexpected return: " + conn.getResponseCode())
+          ""
+        }
+      }
+    }
+
+  def GetCompoundInfo(id: String) = {
+    println("GetCompoundInfo:" + id)
+    val l = id.split("/")
+    val ll = l.toList
+    val id2 = ll.reverse.head
+    val url = "https://www.ebi.ac.uk/chemblws/compounds/" + id2 + ".json"
+    println(url)
+    val r = this.urlcall(url)
+    println("Response: " + r)
+    if (r != "") {
+      val json = Json.parse(r)
+      val v = (json \ "compound" \ "smiles")
+      v.asOpt[String].getOrElse("").toString
+    } else
+      ""
+  }
+
+  def test = {
+    val smiles = this.GetCompoundInfo("http://rdf.ebi.ac.uk/resource/chembl/molecule/CHEMBL2074638")
+    println(smiles)
+  }
+}
 
 class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale: Boolean, connURL: String, user: String, password: String, cachedapi: Boolean) {
 
@@ -193,19 +248,20 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
           val csdata = (forMolecule \ "exactMatch") match {
             case arrayitems: JsArray => {
               val fields = arrayitems.value.filter(m => convert(m \ "inDataset").equalsIgnoreCase("http://ops.rsc.org"))
-              val r: JsValue = if (fields.isEmpty)
-                {
-                  println("Undef")
-                  excludedActivities = excludedActivities + 1
-                  play.api.libs.json.JsUndefined("Undef")
-                }
-              else fields.head
+              val r: JsValue = if (fields.isEmpty) {
+                println
+                println("Excluded")
+                println(forMolecule)
+                excludedActivities = excludedActivities + 1
+                play.api.libs.json.JsUndefined("Undef")
+              } else fields.head
               r
             }
             case obj: JsObject => obj
             case a => {
-              //println("No match")
-              //println(forMolecule)
+              println
+              println("Excluded")
+              println(forMolecule)
               excludedActivities = excludedActivities + 1
               a
             }
@@ -215,10 +271,18 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
           //val cwdata = molEM.filter(m => convert(m \ "inDataset").equalsIgnoreCase("http://www.conceptwiki.org")).head
           //println("MW:" + csdata \ "molweight")
           //println
+          val molid = convert(forMolecule \ "_about")
+
+          def getSmiles = {
+            val smiles = convert(csdata \ "smiles")
+            if (smiles == "") CHEMBLAPI.GetCompoundInfo(molid) else smiles
+          }
+
           Map(
             "inchi" -> convert(csdata \ "inchi"),
             "inchikey" -> convert(csdata \ "inchikey"),
-            "smiles" -> convert(csdata \ "smiles"),
+            //"smiles" -> convert(csdata \ "smiles"),
+            "smiles" -> getSmiles,
             "ro5violations" -> convertInt(csdata \ "ro5_violations"),
             "cs_id" -> convert(csdata \ "_about"),
             "compound_cwiki" -> "",
@@ -247,7 +311,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
 
       def extractItems(array: JsArray) = {
 
-        println("Items: "+ array.value.size)
+        println("Items: " + array.value.size)
         (for (item <- array.value)
           yield ({
           //println("Item: " + item)
@@ -277,7 +341,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
 
       println("GetPharmaByTarget: " + targetURI)
 
-      val r = for (page <- Range(1, numPages+1)) yield ({
+      val r = for (page <- Range(1, numPages + 1)) yield ({
         val response = makeAPICall("/target/pharmacology/pages?", true, Map("uri" -> targetURI, "_pageSize" -> pageSize.toString, "_page" -> page.toString))
         if (response == "") {
           Logger.debug("Activities obtained: 0")
@@ -287,11 +351,13 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
           val items = json \ "result" \ "items"
           val is = items match {
             case arrayitems: JsArray => extractItems(arrayitems)
-            case _                   => List()
+            case _ => List()
           }
           Logger.debug("Activities obtained: " + is.size)
-          println("Excluded activities: "+excludedActivities)
+          println("Excluded activities: " + excludedActivities)
+
           //println()
+          //val is2 = for (row <- is) yield row
           val is2 = for (row <- is if (row("smiles") != "")) yield row
           //println("Page: " + page)
           //println("Size: " + is2.size)
@@ -310,7 +376,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
     def getValues(j: JsValue) = {
       j match {
         case j: JsArray => j
-        case _          => new JsArray(List(j))
+        case _ => new JsArray(List(j))
       }
     }
     var matchesList = LinkedList[Map[String, String]]()

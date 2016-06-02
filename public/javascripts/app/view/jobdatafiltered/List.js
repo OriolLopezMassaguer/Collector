@@ -125,31 +125,32 @@ Ext
 												}
 												;
 											}
-										},
-										{
-											xtype : 'button',
-											text : 'View in CBN',
-											margin : '5 5 5 5',
-											handler : function() {											
-												console.log("View data in CBN");
-												var fieldjobexecutionid = Ext.ComponentQuery.query('#jobexecutionid');
-											    Ext.Ajax.request({
-											        //url: AM.config.Settings.hostAppServer+'/data/jobcbnlinkout/'+fieldjobexecutionid[0].getValue(),
-											        url: '/data/jobcbnlinkout/'+fieldjobexecutionid[0].getValue(),
-											        success: function(response, opts) {
-											        	console.log('CBN link!');	        	
-											            var obj = Ext.decode(response.responseText)
-											            console.log(response.responseText)
-											            console.log(obj)
-											            console.log(obj.url)
-											            window.open(obj.url)	            
-											        },
-											        failure: function(response, opts) {
-											            console.log('server-side failure with status code ' + response.status);
-											        }
-											    });
-											},
-										}]
+										}
+//										{
+//											xtype : 'button',
+//											text : 'View in CBN',
+//											margin : '5 5 5 5',
+//											handler : function() {											
+//												console.log("View data in CBN");
+//												var fieldjobexecutionid = Ext.ComponentQuery.query('#jobexecutionid');
+//											    Ext.Ajax.request({
+//											        //url: AM.config.Settings.hostAppServer+'/data/jobcbnlinkout/'+fieldjobexecutionid[0].getValue(),
+//											        url: '/data/jobcbnlinkout/'+fieldjobexecutionid[0].getValue(),
+//											        success: function(response, opts) {
+//											        	console.log('CBN link!');	        	
+//											            var obj = Ext.decode(response.responseText)
+//											            console.log(response.responseText)
+//											            console.log(obj)
+//											            console.log(obj.url)
+//											            window.open(obj.url)	            
+//											        },
+//											        failure: function(response, opts) {
+//											            console.log('server-side failure with status code ' + response.status);
+//											        }
+//											    });
+//											},
+//										}
+										]
 							},
 
 							{
