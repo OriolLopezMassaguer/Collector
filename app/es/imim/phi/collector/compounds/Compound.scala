@@ -120,7 +120,7 @@ object CDKutils {
 }
 
 object CompoundUtil {
-  
+
   models.chemistry.CompoundUtil.getMWfromSMILES("CCC")
   lazy val noStructureIMGFixed = noStructureIMG
   def noStructureIMG = {
@@ -351,6 +351,7 @@ object CompoundUtil {
       smi
     }
     val mol = sp.parseSmiles(smiles)
+    
     val writer = new StringWriter()
     val molSet = new AtomContainerSet()
     val molecule = mol
@@ -366,7 +367,7 @@ object CompoundUtil {
     sdfWriter.write(molSet)
     sdfWriter.close()
     writer.toString()
-    
+
     //    def molToSDF(mol: IMolecule) = {
     //      var customSettings = new Properties()
     //      var listener = new PropertiesListener(customSettings)
@@ -386,7 +387,7 @@ object CompoundUtil {
 
     //    val mol = sp.parseSmiles(smiles)
     //    molToSDF(mol)
-    
+
   }
 
   //  private def molToSmiles(mol: IMolecule) = {
@@ -437,10 +438,10 @@ object CompoundUtil {
 class Compound(activity: es.imim.phi.collector.compounds.Activity) {
   val activ = activity
   val strSmiles = activ.smiles
-  //val smilesParser = CDKutils.smilesParser
+  val smilesParser = CDKutils.smilesParser
   //val moleculeCA = MolImporter.importMol(strSmiles.getBytes())
   //val strSDF = MolExporter.exportToFormat(moleculeCA, "sdf")
-  //val moleculeCDK = smilesParser.parseSmiles(this.strSmiles)
+  val moleculeCDK = smilesParser.parseSmiles(this.strSmiles)
 
   //  def exportToSDF(filename: String) {
   //    var out = new FileOutputStream(filename)
@@ -450,25 +451,23 @@ class Compound(activity: es.imim.phi.collector.compounds.Activity) {
 
   def containsValidAtoms(validAtoms: Set[String]) =
     {
-      //      //      moleculeCA.getAtomArray().map(atom => validAtoms.contains(atom.getSymbol())).fold(true)(_ && _)
-      //      val listatoms = moleculeCDK.atoms().toList
-      //      Logger.debug(listatoms.map(atom => atom.getSymbol()).mkString)
-      //      val b = listatoms.map(atom => validAtoms.contains(atom.getSymbol())).fold(true)(_ && _)
-      //      Logger.debug(b.toString())
-      //      b
-      true
+      //      moleculeCA.getAtomArray().map(atom => validAtoms.contains(atom.getSymbol())).fold(true)(_ && _)
+      val listatoms = moleculeCDK.atoms().toList
+      Logger.debug(listatoms.map(atom => atom.getSymbol()).mkString)
+      val b = listatoms.map(atom => validAtoms.contains(atom.getSymbol())).fold(true)(_ && _)
+      Logger.debug(b.toString())
+      b
     }
   def passesRuleOf5 = {
-    //    val ro5Descriptor = new RuleOfFiveDescriptor()
-    //    var numviolations = 0
-    //    numviolations = try {
-    //      val calc = ro5Descriptor.calculate(moleculeCDK)
-    //      Integer.valueOf(calc.getValue().toString())
-    //    } catch {
-    //      case _ : Throwable => 1
-    //    }
-    //    numviolations < 2
-    true
+        val ro5Descriptor = new RuleOfFiveDescriptor()
+        var numviolations = 0
+        numviolations = try {
+          val calc = ro5Descriptor.calculate(moleculeCDK)
+          Integer.valueOf(calc.getValue().toString())
+        } catch {
+          case _ : Throwable => 1
+        }
+        numviolations < 2    
   }
 
   def filterByActivityType(activityType: String): Boolean = {

@@ -77,6 +77,14 @@ object CollectorCommandLine {
     newJob(job_description, cwres("uri"), cwres("prefLabel"), protocol_id)
   }
 
+  def executeAllJobs = {
+    database_eTOXOPS.db withDynSession {
+      val jobids = (for (j <- database_eTOXOPS.job) yield (j.job_id)).list
+      for (id <- jobids)
+        this.executeJob(id.toString())
+    }
+  }
+
   def executeJob(job_id: String) = {
     val result = ExtractionEngine.executejob(job_id.toInt)
     val js = Json.parse(result)
@@ -184,7 +192,7 @@ object CollectorCommandLine {
     //var logger = LoggerFactory.getLogger((classOf[CollectorCommandLine2].getName()))
 
     //println("Load RDKit lib")
-    System.load("/opt/collector/lib/libGraphMolWrap.so")
+    //System.load("/opt/collector/lib/libGraphMolWrap.so")
     ExtractionEngine.initEngine(System.getenv("COLLECTOR_HOME"))
 
     api = new OPSLDAScala(
@@ -206,6 +214,7 @@ object CollectorCommandLine {
           cf.mode match {
 
             case "newjobuniprotid" => newJobByUniprotAccession(cf.jobdescription, cf.uniprotid, cf.protocolid.toString())
+            case "executealljobs" => executeAllJobs
             case "executejob" => {
               database_eTOXOPS.db withDynSession {
                 val l = database_eTOXOPS.GetJobIdForJobDescription(cf.jobdescription.toString()).list
@@ -233,14 +242,14 @@ object CollectorCommandLine {
                     else
                       cf.jobexecutionid
                   }
-                println("Job execution id: "+job_execution_id)
+                println("Job execution id: " + job_execution_id)
 
                 val actcomps = cf.datatoexport
                 val sdfcsv = cf.exportformat
-                val filename = cf.filename                
+                val filename = cf.filename
                 actcomps match {
                   case "activities" => exportExecutionDataActs(job_execution_id.toString, sdfcsv, filename, cf.filtered)
-                  case "compounds"  => exportExecutionDataComps(job_execution_id.toString, sdfcsv, filename, cf.filtered)
+                  case "compounds" => exportExecutionDataComps(job_execution_id.toString, sdfcsv, filename, cf.filtered)
                 }
               }
 
@@ -261,17 +270,17 @@ object CollectorCommandLine {
                 }
               }
             }
-            case "listprotocols"               => listprotocols
-            case "listfilters"                 => listfilters
-            case "listjobs"                    => listjobs
-            case "listjobexecutions"           => listjobexecutions(cf.jobid.toString)
+            case "listprotocols" => listprotocols
+            case "listfilters" => listfilters
+            case "listjobs" => listjobs
+            case "listjobexecutions" => listjobexecutions(cf.jobid.toString)
             //case "filterdataseries"            => filterdataseries(cf.dataseriesid, cf.protocolid.toInt)
             //case "deletedataseries"            => deletedataseries(cf.dataseriesid)
-            case "deletejob"                   => deleteJob(cf.jobid)
-            case "deletejobexecution"          => deleteJobExecution(cf.jobexecutionid)
+            case "deletejob" => deleteJob(cf.jobid)
+            case "deletejobexecution" => deleteJobExecution(cf.jobexecutionid)
             case "deletejobexecutionsforjobid" => deleteJobExecutions(cf.jobid)
-            case "getsdffromuniprotid"         => this.getSDFForUnitprot(cf.uniprotid, cf.filename)
-            case _                             => CommandLineParser.parser.showUsage
+            case "getsdffromuniprotid" => this.getSDFForUnitprot(cf.uniprotid, cf.filename)
+            case _ => CommandLineParser.parser.showUsage
           }
         }
       case None => CommandLineParser.parser.showUsage

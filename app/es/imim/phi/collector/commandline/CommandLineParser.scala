@@ -75,6 +75,10 @@ object CommandLineParser {
       c.copy(mode = "listprotocols")
     } text ("listprotocols is a command.\n")
 
+    cmd("executealljobs") action { (_, c) =>
+      c.copy(mode = "executealljobs")
+    } text ("executealljobs is a command.\n")
+
     cmd("listjobs") action { (_, c) =>
       c.copy(mode = "listjobs")
     } text ("listjobs is a command.\n")

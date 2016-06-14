@@ -34,15 +34,15 @@ Ext
 						store : 'JobDataFiltered',
 						dock : 'top'
 					} ],
-					listeners : {
-						render : function(grid) {
-							// grid.body.mask('Loading...');
-							var store = this.getStore();
-							console.log(store);
-							store.load();
-						},
-						delay : 200
-					},
+//					listeners : {
+//						render : function(grid) {
+//							// grid.body.mask('Loading...');
+//							var store = this.getStore();
+//							console.log(store);
+//							store.load();
+//						},
+//						delay : 200
+//					},
 					initComponent : function() {
 
 						this.columns = [

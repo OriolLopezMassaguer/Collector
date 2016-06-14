@@ -23,7 +23,7 @@
 COLLECTOR_INSTALL=$(dirname $0)
 source $COLLECTOR_INSTALL/environment
 
-java -Xmx2000m  -Dlogback.configurationFile=$COLLECTOR_HOME/conf/application-logger_cl.xml -Dlogback.debug -Djavax.net.ssl.trustStore=$COLLECTOR_HOME/certs/cacerts -classpath /$COLLECTOR_HOME/target/scala-2.11/collector_2.11-1.4.jar:$COLLECTOR_HOME/target/universal/stage/lib/* es.imim.phi.collector.commandline.CollectorCommandLine $*
+java -Xmx4G  -Dlogback.configurationFile=$COLLECTOR_HOME/conf/application-logger_cl.xml -Dlogback.debug -Djavax.net.ssl.trustStore=$COLLECTOR_HOME/certs/cacerts -classpath /$COLLECTOR_HOME/target/scala-2.11/collector_2.11-1.4.jar:$COLLECTOR_HOME/target/universal/stage/lib/* es.imim.phi.collector.commandline.CollectorCommandLine $*
 
 
 
