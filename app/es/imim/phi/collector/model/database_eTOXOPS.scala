@@ -580,41 +580,39 @@ object database_eTOXOPS {
 
   def GetJobExecutionDataForHistogram(job_execution_id: Int) = {
 
-    def qnolog = (min_value: Double, max_value: Double, buckets: Int, bucket_size: Double) => Q.query[(Int), (Int, Int, String)](
-      "select count(*)," +
-        " width_bucket(standard_value, " + min_value + "," + max_value + "," + buckets + ")," +
-        "  cast(cast(((width_bucket(standard_value , " + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
-        " from	job_data_filtered_vw_norm  where job_execution_id = ? " +
-        " group by" +
-        "  width_bucket(standard_value, " + min_value + ", " + max_value + ", " + buckets + ") ," +
-        " cast(cast(((width_bucket(standard_value," + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
-        " order by width_bucket(standard_value," + min_value + ", " + max_value + ", " + buckets + ")")
-    def qlog = (min_value: Double, max_value: Double, buckets: Int, bucket_size: Double) => Q.query[(Int), (Int, Int, String)](
-      "select count(*)," +
-        " width_bucket(log(standard_value) + 9, " + min_value + "," + max_value + "," + buckets + ")," +
-        "  cast(cast(((width_bucket(log(standard_value) + 9, " + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
-        " from	job_data_filtered_vw_norm  " +
-        " where job_execution_id = ? " +
-        " and standard_value>0 " +
-        " group by" +
-        "  width_bucket(log(standard_value) + 9, " + min_value + ", " + max_value + ", " + buckets + ") ," +
-        " cast(cast(((width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
-        " order by width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + ")")
-
+    //    def qnolog = (min_value: Double, max_value: Double, buckets: Int, bucket_size: Double) => Q.query[(Int), (Int, Int, String)](
+    //      "select count(*)," +
+    //        " width_bucket(standard_value, " + min_value + "," + max_value + "," + buckets + ")," +
+    //        "  cast(cast(((width_bucket(standard_value , " + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
+    //        " from	job_data_filtered_vw_norm  where job_execution_id = ? " +
+    //        " group by" +
+    //        "  width_bucket(standard_value, " + min_value + ", " + max_value + ", " + buckets + ") ," +
+    //        " cast(cast(((width_bucket(standard_value," + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
+    //        " order by width_bucket(standard_value," + min_value + ", " + max_value + ", " + buckets + ")")
     def getqlog(min_value: String, max_value: String, buckets: String, bucket_size: String) = {
-      "select count(*)," +
+      " select " +
+        " 	vals.count, " +
+        " 	cast (buckets.bucket_order * 2 as int), " +
+        " 	buckets.bucket " +
+        " from " +
+        " (select count(*)," +
         " width_bucket(log(standard_value) + 9, " + min_value + "," + max_value + "," + buckets + ")," +
-        "  cast(cast(((width_bucket(log(standard_value) + 9, " + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
+        "  cast(cast(((width_bucket(log(standard_value) + 9, " + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar) bucket" +
         " from	job_data_filtered_vw_norm  " +
         " where job_execution_id = ? " +
         " and standard_value>0 " +
         " group by" +
         "  width_bucket(log(standard_value) + 9, " + min_value + ", " + max_value + ", " + buckets + ") ," +
         " cast(cast(((width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
-        " order by width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + ")"
+        " order by width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + ")" +
+        ") vals right join buckets on (vals.bucket=buckets.bucket)"+
+        "order by buckets.bucket_order" 
     }
 
-    val num_bucks = 20  
+    def qlog = (min_value: Double, max_value: Double, buckets: Int, bucket_size: Double) => Q.query[(Int), (Int, Int, String)](
+      getqlog(min_value.toString(), max_value.toString(), buckets.toString(), bucket_size.toString))
+
+    val num_bucks = 20
     val activities_type_for_histogram = List("AC50", "Kd", "Potency", "IC50", "Activity", "Ki", "EC50", "Potency")
     val pq = (qlog, 6.0, 18.0, num_bucks, 0.5)
 
@@ -631,12 +629,12 @@ object database_eTOXOPS {
       val bucks = (Range(0, buckets).map(a => a * bucket_size)) zip (Range(1, buckets + 1).map(_ * bucket_size))
       val buckStr = bucks.map(a => a._1.toString() + "-" + a._2.toString())
       val mp = ((Range(1, buckets + 1) zip buckStr).toMap).withDefaultValue("")
+      println(mp)
       val qq = pq._1(pq._2, pq._3, pq._4, pq._5)
       Logger.info("Histogram Q2:\n")
-      //Logger.info(qq)
-
       var l = qq(job_execution_id).list
-
+      
+      println(mp.keys.toList.sorted)
       var res =
         for ((activities, bucket, descriptor) <- l)
           yield (Map(
@@ -644,6 +642,8 @@ object database_eTOXOPS {
           "activities" -> activities.toString,
           "bucket" -> bucket.toString,
           "descriptor" -> mp(bucket).toString()))
+          
+      
       res
     }
   }

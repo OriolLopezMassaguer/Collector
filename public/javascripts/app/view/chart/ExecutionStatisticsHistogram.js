@@ -25,16 +25,17 @@ Ext.define('AM.view.chart.ExecutionStatisticsHistogram', {
 	extend : "Ext.chart.Chart",
 	alias : 'widget.statisticshistogram',
 	store : 'ExecutionStatisticsHistogram',
-	width : 900,
+	width : 1000,
 	height : 400,
-	padding: '50 50 50 50',
+	
 	autoRender : true,
 	axes : [ {
 		title : 'Activities',
 		type : 'Numeric',
 		position : 'left',
 		fields : [ 'activities' ],
-	 minimum : 0
+	    minimum : 0,
+	    adjustMaximumByMajorUnit : true
 	}, {
 		title : 'pActivity',
 		type : 'Category',
