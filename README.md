@@ -9,7 +9,7 @@ Collector implements a flexible collection of filters for selecting the target, 
 
 Collector was intended to be installed locally and implements a local database for keeping record of the data extracted. The application provides a web based user a command line user interface. 
 
-Installation of Collector version 1.4.1
+Installation of Collector version 1.4.2
 
 June 2016
 
