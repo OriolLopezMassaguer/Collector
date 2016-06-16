@@ -27,6 +27,7 @@ Ext.define('AM.view.chart.ExecutionStatisticsHistogramGrid', {
     autoScroll: true,
     width: 1000,
     height: 500,
+    padding: '50 50 50 50',
     initComponent: function() {
     	console.log("histogram view init!!!");
         this.columns = [

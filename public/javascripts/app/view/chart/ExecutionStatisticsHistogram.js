@@ -27,7 +27,7 @@ Ext.define('AM.view.chart.ExecutionStatisticsHistogram', {
 	store : 'ExecutionStatisticsHistogram',
 	width : 900,
 	height : 400,
-	//autoScroll : true,
+	padding: '50 50 50 50',
 	autoRender : true,
 	axes : [ {
 		title : 'Activities',
