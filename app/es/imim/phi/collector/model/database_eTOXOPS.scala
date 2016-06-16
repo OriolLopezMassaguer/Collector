@@ -378,19 +378,19 @@ object database_eTOXOPS {
       val l = for (jexec <- GetJobExecutions if jexec._1 === jobid && jexec._4 === "OK")
         yield (jexec._3, jexec._7)
       println(l.selectStatement)
-      val l2=for ((jeid,timestamp) <- l.list)
-        yield(jeid,timestamp.get.getTime)
-      val jeids=for(p <- l2.sortBy(_._2).reverse)
-        yield(p._1)
+      val l2 = for ((jeid, timestamp) <- l.list)
+        yield (jeid, timestamp.get.getTime)
+      val jeids = for (p <- l2.sortBy(_._2).reverse)
+        yield (p._1)
       println(jeids.head)
       jeids.head
     }
   }
-  
+
   def GetJobExecutions =
     for {
       j <- job
-      je <- job_execution if j.job_id===je.job_id
+      je <- job_execution if j.job_id === je.job_id
     } yield (j.job_id, j.job_description, je.job_execution_id, je.job_execution_status, je.job_execution_init_date, je.job_execution_finish_extraction_date, je.job_execution_finish_filtering_date)
 
   def GetFilteringProtocols =
@@ -601,56 +601,42 @@ object database_eTOXOPS {
         " cast(cast(((width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
         " order by width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + ")")
 
-    val num_bucks = 20
-    val activityToQ = Map(
-      "IC50" -> (qlog, 6.0, 18.0, num_bucks, 0.5),
-      "Activity" -> (qlog, 6.0, 18.0, num_bucks, 0.5),
-      "Inhibition" -> (qnolog, 0.0, 100.0, 20, 5.0),
-      "Ki" -> (qlog, 6.0, 18.0, num_bucks, 0.5))
-
-    Logger.info("Histogram data:")
-    database_eTOXOPS.db withDynSession {
-      //update2015
-      var q = for {
-        data <- GetFilteredDataJobExecution(job_execution_id)
-      } yield (data._10)
-
-      val activityTypes = q.take(1).list
-
-      //recuperamos activity type
-
-      //      Logger.info("Query Histogram:\n ")
-      //      Logger.info(q.selectStatement)
-      //update2015
-      //     var dataForJob = q.list
-      //update2015
-      //val activity_type = dataForJob(0).get.toString()
-      val activity_type = activityTypes.head
-
-      val pq = activityToQ(activity_type)
-      val min_value = pq._2
-      val max_value = pq._3
-      val buckets = pq._4 + 1
-      val bucket_size = pq._5
-
-      var st = "select count(*)," +
+    def getqlog(min_value: String, max_value: String, buckets: String, bucket_size: String) = {
+      "select count(*)," +
         " width_bucket(log(standard_value) + 9, " + min_value + "," + max_value + "," + buckets + ")," +
         "  cast(cast(((width_bucket(log(standard_value) + 9, " + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
-        " from	job_data_filtered_vw_norm  where job_execution_id = ? " +
+        " from	job_data_filtered_vw_norm  " +
+        " where job_execution_id = ? " +
+        " and standard_value>0 " +
         " group by" +
         "  width_bucket(log(standard_value) + 9, " + min_value + ", " + max_value + ", " + buckets + ") ," +
         " cast(cast(((width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
         " order by width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + ")"
+    }
+
+    val num_bucks = 20  
+    val activities_type_for_histogram = List("AC50", "Kd", "Potency", "IC50", "Activity", "Ki", "EC50", "Potency")
+    val pq = (qlog, 6.0, 18.0, num_bucks, 0.5)
+
+    println(getqlog("6.0", "18.0", num_bucks.toString, "0.5"))
+
+    Logger.info("Histogram data:")
+    database_eTOXOPS.db withDynSession {
+
+      val min_value = pq._2
+      val max_value = pq._3
+      val buckets = pq._4 + 1
+      val bucket_size = pq._5
 
       val bucks = (Range(0, buckets).map(a => a * bucket_size)) zip (Range(1, buckets + 1).map(_ * bucket_size))
       val buckStr = bucks.map(a => a._1.toString() + "-" + a._2.toString())
       val mp = ((Range(1, buckets + 1) zip buckStr).toMap).withDefaultValue("")
       val qq = pq._1(pq._2, pq._3, pq._4, pq._5)
       Logger.info("Histogram Q2:\n")
-      //      Logger.info(qq.getStatement)
+      //Logger.info(qq)
+
       var l = qq(job_execution_id).list
-      Logger.info("Histogram Q2:\n")
-      //Logger.info(qq.getStatement)
+
       var res =
         for ((activities, bucket, descriptor) <- l)
           yield (Map(
@@ -832,7 +818,7 @@ object database_eTOXOPS {
           t match {
             case java.sql.Types.INTEGER => insertStatement.setInt(pos, Integer.parseInt(v))
             case java.sql.Types.VARCHAR => insertStatement.setString(pos, v)
-            case java.sql.Types.FLOAT   => insertStatement.setFloat(pos, java.lang.Float.parseFloat(v))
+            case java.sql.Types.FLOAT => insertStatement.setFloat(pos, java.lang.Float.parseFloat(v))
           }
         } catch {
           case _: Throwable => insertStatement.setNull(pos, t)
@@ -893,17 +879,17 @@ object database_eTOXOPS {
       }
     }
 
-//    def UpdateFieldSmiles(activity: activityType) = {
-//      val smi = es.imim.phi.collector.compounds.CompoundUtil.getSmilesFromSDF(activity._4.get)
-//      val q = for { act <- database_eTOXOPS.activities if act.activities_id === activity._1 } yield act.smiles
-//      q.update(Some(smi))
-//    }
-//
-//    def UpdateFieldInchi(activity: activityType) = {
-//      val (inchi, inchikey) = es.imim.phi.collector.compounds.CompoundUtil.getInChIFromSMILES(activity._5.getOrElse(""))
-//      val q = for { act <- database_eTOXOPS.activities if act.activities_id === activity._1 } yield (act.inchi, act.inchikey)
-//      q.update(Some(inchi), Some(inchikey))
-//    }
+    //    def UpdateFieldSmiles(activity: activityType) = {
+    //      val smi = es.imim.phi.collector.compounds.CompoundUtil.getSmilesFromSDF(activity._4.get)
+    //      val q = for { act <- database_eTOXOPS.activities if act.activities_id === activity._1 } yield act.smiles
+    //      q.update(Some(smi))
+    //    }
+    //
+    //    def UpdateFieldInchi(activity: activityType) = {
+    //      val (inchi, inchikey) = es.imim.phi.collector.compounds.CompoundUtil.getInChIFromSMILES(activity._5.getOrElse(""))
+    //      val q = for { act <- database_eTOXOPS.activities if act.activities_id === activity._1 } yield (act.inchi, act.inchikey)
+    //      q.update(Some(inchi), Some(inchikey))
+    //    }
 
     def UpdateActivityField(field: String)(activity: activityType) =
       {
@@ -949,25 +935,25 @@ object database_eTOXOPS {
     println("Updating smiles")
     //CompleteDataSeriesFieldsFunc(activities_series_id, UpdateFieldSmiles _)
     println("Updating Inchi")
-   // CompleteDataSeriesFieldsFunc(activities_series_id, UpdateFieldInchi _)
+    // CompleteDataSeriesFieldsFunc(activities_series_id, UpdateFieldInchi _)
     println("Updating activity")
     mapping("activity_field") match {
       case ("field", field) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateActivityField(field) _)
-      case _                => Application.logger.error("Activity field not specified")
+      case _ => Application.logger.error("Activity field not specified")
     }
 
     println("Updating activity units ")
     mapping("activity_units") match {
       case ("field", field) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateUnitsField(field) _)
       case ("value", value) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateUnitsValue(value) _)
-      case _                => Application.logger.error("Activity units field or value not specified")
+      case _ => Application.logger.error("Activity units field or value not specified")
     }
 
     println("Updating activity type")
     mapping("activity_type") match {
       case ("field", field) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateActivityTypeField(field) _)
       case ("value", value) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateActivityTypeValue(value) _)
-      case _                => Application.logger.error("Activity units field or value not specified")
+      case _ => Application.logger.error("Activity units field or value not specified")
     }
   }
 
