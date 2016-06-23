@@ -44,6 +44,7 @@ import scalaz.Memo
 import java.sql.DriverManager
 import scala.Array.canBuildFrom
 import es.imim.phi.collector.compounds._
+import es.imim.phi.collector.model._
 
 object CHEMBLAPI {
 
@@ -223,7 +224,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
     results.asInstanceOf[play.api.libs.json.JsNumber].value.toInt
   }
 
-  def GetPharmacologyByTargetLDA(targetURI: String): Seq[Map[String, String]] =
+  def GetPharmacologyByTargetLDA_new(targetURI: String,jobExecutionId: String, c: java.sql.Connection, destinationTable: String) =
     {
 
       var excludedActivities = 0
@@ -341,7 +342,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
 
       println("GetPharmaByTarget: " + targetURI)
 
-      val r = for (page <- Range(1, numPages + 1)) yield ({
+      for (page <- Range(1, numPages + 1)) yield ({
         val response = makeAPICall("/target/pharmacology/pages?", true, Map("uri" -> targetURI, "_pageSize" -> pageSize.toString, "_page" -> page.toString))
         if (response == "") {
           Logger.debug("Activities obtained: 0")
@@ -359,12 +360,13 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
           //println()
           //val is2 = for (row <- is) yield row
           val is2 = for (row <- is if (row("smiles") != "")) yield row
-          //println("Page: " + page)
-          //println("Size: " + is2.size)
-          is2
+          println("Page: " + page)
+          println("Size: " + is2.size)
+
+          database_eTOXOPS.MoveLDAResults2SQL(is2, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
         }
       })
-      r.flatten
+      //r.flatten
     }
 
   def CW_Search_Protein_RAW(q: String): String = makeAPICall("/search/byTag?", true, Map("uuid" -> "eeaec894-d856-4106-9fa1-662b1dc6c6f1", "q" -> q))

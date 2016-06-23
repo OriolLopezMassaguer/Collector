@@ -192,13 +192,22 @@ object ExtractionEngine {
   //    database_eTOXOPS.MoveLDAResults2SQL(acts, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
   //  }
 
+//  def executeExtraction_old(jobExecutionId: String, basket: Map[String, String]) = {
+//    Logger.info("Basket:")
+//    val target_cwiki = basket("target_cwiki")
+//    Logger.info("Query for target id new id: " + target_cwiki)
+//    var res = opsAPI.GetPharmacologyByTargetLDA(target_cwiki)
+//    println("Activities obtained: " + res.size.toString())
+//    
+//  }
+  
   def executeExtraction(jobExecutionId: String, basket: Map[String, String]) = {
     Logger.info("Basket:")
     val target_cwiki = basket("target_cwiki")
     Logger.info("Query for target id new id: " + target_cwiki)
-    var res = opsAPI.GetPharmacologyByTargetLDA(target_cwiki)
-    println("Activities obtained: " + res.size.toString())
-    database_eTOXOPS.MoveLDAResults2SQL(res, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
+    var res = opsAPI.GetPharmacologyByTargetLDA_new(target_cwiki, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
+    //println("Activities obtained: " + res.size.toString())
+    //database_eTOXOPS.MoveLDAResults2SQL()
   }
 
   def obtainInitialData(jobId: Int, jobExecutionId: String) = {
@@ -220,27 +229,7 @@ object ExtractionEngine {
     computeSDF(jobExecutionId)
   }
 
-  //  def obtainInitialData_v14(jobId : Int, jobExecutionId : String) : Int = {
-  //    Logger.info("Obtaining parameters")
-  //    val job_series_id = database_eTOXOPS.GetJobInformation2(jobId)
-  //    //obtain initial data series
-  //    //
-  //
-  //    val jobParameters = getJobParameterValues(jobId)
-  //    val OPScase = job_series_id.equals(0)
-  //
-  //    val initialDataSeries =if (OPScase) {
-  //      //Get Initial data
-  //      val target_cwiki = jobParameters("target_cwiki")
-  //      CompoundDataSeries.newSeriesFromOPS(target_cwiki, "seriesName", true, Map())
-  //    } else {
-  //    	0
-  //    }
-  //
-  //    //Update status
-  //    println("Initial Data Obtained")
-  //    initialDataSeries
-  //  }
+
 
   def executejob(jobId: Int) = {
     Logger.info("Executing job: " + jobId)
