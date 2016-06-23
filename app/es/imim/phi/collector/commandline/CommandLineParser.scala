@@ -29,7 +29,7 @@ case class ConfigCollector(
 object CommandLineParser {
 
   val parser = new scopt.OptionParser[ConfigCollector]("Collector") {
-    head("Collector", "v1.4.2")
+    head("Collector", es.imim.phi.collector.engine.ExtractionEngine.version)
 
     cmd("newjobuniprotid") action { (_, c) =>
       c.copy(mode = "newjobuniprotid")

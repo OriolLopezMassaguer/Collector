@@ -72,9 +72,10 @@ object ExtractionEngine {
   var opsAPI: OPSLDAScala = null
   var cachedapi: Boolean = false
   var bucketAPISize = 10
+  var version= "1.4.3"
 
   def initEngine(home_path: String) = {
-    Logger.info("Initializing collector v1.4")
+    Logger.info("Initializing collector "+this.version)
     Logger.info("Application path " + home_path)
     appBasePath = home_path
     externalToolsBasePath = appBasePath + "/external_tools"
