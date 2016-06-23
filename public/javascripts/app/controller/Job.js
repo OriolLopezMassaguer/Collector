@@ -81,13 +81,13 @@ Ext.define('AM.controller.Job', {
 	executeJob : function() {
 		console.log(" Execute!!!!");
 		var je = this.getJobExecutionStore();
-		var task = new Ext.util.DelayedTask(function(){
-			console.log("Filter Job Delayed");	
-			je.load();
-			task.delay(10000);
-		});
-		
-		task.delay(10000);
+//		var task = new Ext.util.DelayedTask(function(){
+//			console.log("Filter Job Delayed");	
+//			je.load();
+//			task.delay(10000);
+//		});
+//		
+//		task.delay(10000);
 		
 		var grid = Ext.ComponentQuery.query('#jobgrid')[0];
 		console.log(grid);
@@ -111,14 +111,14 @@ Ext.define('AM.controller.Job', {
             	console.log("Job finished!");
             	jobexecutionstore.load();
             },
-//            failure: function(response, opts) {
-//            	Ext.Msg.alert('FailureSuccess', 'Job failed. Contact administrator.');
-//            	console.log("Job failed!");
-//            	console.log(response.status);
-//            	jobexecutionstore.load();
-//            },
+            failure: function(response, opts) {
+            	Ext.Msg.alert('FailureSuccess', 'Job failed. Contact administrator.');
+            	console.log("Job failed!");
+            	console.log(response.status);
+            	jobexecutionstore.load();
+            },
 		});
-		//setTimeout(function(){jobexecutionstore.load();},1000);		
+		setTimeout(function(){jobexecutionstore.load();},1000);		
 		console.log('request');
 	},
 
