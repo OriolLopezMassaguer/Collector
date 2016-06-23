@@ -133,7 +133,9 @@ object Application extends Controller {
   //  }
 
   def jobexecutionsAll(filter: String) = Action {
+    
     Logger.info("Action get job info")
+    println("Action get job info")
     Logger.info("Filter: " + filter)
     val filterparameters = parseJsonFilters(filter)
     //Logger.info(filterparameters.toString())

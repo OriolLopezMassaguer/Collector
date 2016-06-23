@@ -231,7 +231,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
 
       val (numPages, pageSize) = {
         val numActivities = GetPharmacologyByTargetLDA_count(targetURI)
-        val pageSize = 100
+        val pageSize = es.imim.phi.collector.engine.ExtractionEngine.bucketAPISize
         val numPages = (numActivities / pageSize) + 1
         println("Activities: " + numActivities)
         println("Pages: " + numPages)

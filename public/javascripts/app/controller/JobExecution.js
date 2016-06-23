@@ -132,7 +132,7 @@ Ext.define('AM.controller.JobExecution', {
 		    		jobexecutionstore.load();
 		        }
 		    });
-		    setTimeout(function(){jobexecutionstore.load();},30000);	
+		    //setTimeout(function(){jobexecutionstore.load();},30000);	
    }
      
 });

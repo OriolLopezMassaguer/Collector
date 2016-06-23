@@ -118,7 +118,7 @@ Ext.define('AM.controller.Job', {
 //            	jobexecutionstore.load();
 //            },
 		});
-		setTimeout(function(){jobexecutionstore.load();},1000);		
+		//setTimeout(function(){jobexecutionstore.load();},1000);		
 		console.log('request');
 	},
 
