@@ -85,7 +85,7 @@ object CHEMBLAPI {
     val url = "https://www.ebi.ac.uk/chemblws/compounds/" + id2 + ".json"
     println(url)
     val r = this.urlcall(url)
-    println("Response: " + r)
+    //println("Response: " + r)
     if (r != "") {
       val json = Json.parse(r)
       val v = (json \ "compound" \ "smiles")
@@ -250,9 +250,9 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
             case arrayitems: JsArray => {
               val fields = arrayitems.value.filter(m => convert(m \ "inDataset").equalsIgnoreCase("http://ops.rsc.org"))
               val r: JsValue = if (fields.isEmpty) {
-                println
-                println("Excluded")
-                println(forMolecule)
+                //println
+                //println("Excluded")
+                //println(forMolecule)
                 excludedActivities = excludedActivities + 1
                 play.api.libs.json.JsUndefined("Undef")
               } else fields.head
@@ -262,7 +262,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
             case a => {
               println
               println("Excluded")
-              println(forMolecule)
+              //println(forMolecule)
               excludedActivities = excludedActivities + 1
               a
             }

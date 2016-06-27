@@ -342,7 +342,8 @@ object CompoundUtil {
 
   def getSDFFromSMiles_CDK(smi: String) = {
     import org.openscience.cdk.silent.SilentChemObjectBuilder;
-    val sp = new org.openscience.cdk.smiles.SmilesParser(SilentChemObjectBuilder.getInstance())
+    val sp=CDKutils.smilesParser
+    //val sp = new org.openscience.cdk.smiles.SmilesParser(SilentChemObjectBuilder.getInstance())
 
     var smiles = if (smi.contains(".")) {
       val smis = smi.split('.').sortBy(w => w.size).reverse
