@@ -87,7 +87,9 @@ object db2JSON {
       statement.execute(query)
       var resultSetCount = statement.getResultSet()
       resultSetCount.last()
-      "{success: true,total: " + resultSetCount.getRow().toString() + " , " + jsonlabel + ":[" + json + "] }"
+      val v=resultSetCount.getRow().toString()
+      resultSetCount.close()
+      "{success: true,total: " + v + " , " + jsonlabel + ":[" + json + "] }"
     }
   }
 
@@ -120,10 +122,12 @@ object db2JSON {
         else
           json.append(lines(i) + ",")
       }
-      var statement = sqlConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)
-      statement.execute(query)
-      var resultSetCount = statement.getResultSet()
-      resultSetCount.last()
+      //var statement = sqlConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)
+      //statement.execute(query)
+      //var resultSetCount = statement.getResultSet()
+      //resultSetCount.last()
+      resultSet.close()
+      //resultSetCount.close()
       "[" + json + "]"
     }
   }

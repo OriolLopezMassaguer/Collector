@@ -724,6 +724,7 @@ object database_eTOXOPS {
       }
       out.println()
     }
+    statement.close
   }
 
   def doQuerySQL2TextSDF(rs: ResultSet, out: PrintStream) = {

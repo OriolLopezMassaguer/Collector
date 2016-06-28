@@ -94,13 +94,16 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
             insertStatement.setTimestamp(3, ts)
             //println("To execute")
             insertStatement.execute()
+            insertStatement.close()
             //println("Execution!")
             v2
           } catch {
             case _: Throwable => {
               val q = "select * from ops_api_cached_calls where call='" + k + "'"
               val rs = conncachedb.createStatement().executeQuery(q)
-              rs.getString(2)
+              val s=rs.getString(2)
+              rs.close()
+              s
             }
           }
           r
