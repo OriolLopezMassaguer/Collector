@@ -254,7 +254,7 @@ object ExtractionEngine {
     } catch {
       case e: Exception => {
         Logger.info("error")
-        Logger.info("Failed execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
+        Logger.info("Fthisailed execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
         println(e.getMessage())
         println(e.getStackTraceString)
         database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='Error' where job_execution_id=" + jobExecutionId)

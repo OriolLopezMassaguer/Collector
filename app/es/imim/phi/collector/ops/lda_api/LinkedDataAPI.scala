@@ -48,35 +48,6 @@ import es.imim.phi.collector.model._
 
 object CHEMBLAPI {
 
-  private def urlcall(call: String): String =
-    {
-      Logger.debug("urlcall Call :[ " + call + " ]")
-      val url = new URL(call);
-      val conn = url.openConnection().asInstanceOf[HttpURLConnection]
-      conn.setInstanceFollowRedirects(true)
-      conn.setDoInput(true)
-      conn.setRequestMethod("GET")
-      conn.connect()
-      val responseCode = conn.getResponseCode()
-      responseCode match {
-        case 404 => {
-          println("Empty response")
-          ""
-        }
-        case 200 => {
-          val is = conn.getInputStream()
-          val writer = new StringWriter();
-          IOUtils.copy(is, writer, "UTF-8");
-          var str = writer.toString()
-          str
-        }
-        case _ => {
-          println("Unexpected return: " + conn.getResponseCode())
-          ""
-        }
-      }
-    }
-
   def GetCompoundInfo(id: String) = {
     println("GetCompoundInfo:" + id)
     val l = id.split("/")
@@ -84,7 +55,7 @@ object CHEMBLAPI {
     val id2 = ll.reverse.head
     val url = "https://www.ebi.ac.uk/chemblws/compounds/" + id2 + ".json"
     println(url)
-    val r = this.urlcall(url)
+    val r = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.urlCall(url)
     //println("Response: " + r)
     if (r != "") {
       val json = Json.parse(r)
@@ -178,24 +149,38 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
         }
         case 200 => {
           val is = conn.getInputStream()
-          val writer = new StringWriter();
-          IOUtils.copy(is, writer, "UTF-8");
-          var str = writer.toString()
+          //val writer = new StringWriter()
+          //IOUtils.copy(is, writer, "UTF-8")
+          //var str = writer.toString()         
+          //writer.close()
+          val inr = new java.io.InputStreamReader(is)
+          val str = com.google.common.io.CharStreams.toString(inr)
+
+          is.close()
+
+          conn.disconnect()
           str
         }
         case _ => {
           println("Unexpected return: " + conn.getResponseCode())
+          conn.disconnect()
           ""
         }
       }
     }
 
-  private def makeCall_out(urlCall: String, parameters: Map[String, String]) = {
-    var params = for ((parameter, value) <- parameters) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
-    var call = urlCall + params.mkString("&")
-    println("URL: " + call)
-    //memoizedurlcall(call)
-    urlcall(call)
+  //  private def makeCall_out(urlCall: String, parameters: Map[String, String]) = {
+  //    var params = for ((parameter, value) <- parameters) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
+  //    var call = urlCall + params.mkString("&")
+  //    println("URL: " + call)
+  //    urlcall(call)
+  //  }
+
+  def urlCall(call: String) = {
+    if (cachedapi)
+      memoizedurlcall(call)
+    else
+      urlcall(call)
   }
 
   private def makeCall(urlCall: String, parameters: Map[String, String], threescale: Boolean): String = {
@@ -203,10 +188,8 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
     var call = urlCall + params.mkString("&")
     println("makeCall URL: " + call)
     Logger.info("makeCall URL: " + call)
-    if (cachedapi)
-      memoizedurlcall(call)
-    else
-      urlcall(call)
+
+    this.urlCall(call)
   }
 
   private def makeAPICall(urlpattern: String, threescale: Boolean, params: Map[String, String]): String = {
@@ -224,7 +207,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
     results.asInstanceOf[play.api.libs.json.JsNumber].value.toInt
   }
 
-  def GetPharmacologyByTargetLDA_new(targetURI: String,jobExecutionId: String, c: java.sql.Connection, destinationTable: String) =
+  def GetPharmacologyByTargetLDA_new(targetURI: String, jobExecutionId: String, c: java.sql.Connection, destinationTable: String) =
     {
 
       var excludedActivities = 0
