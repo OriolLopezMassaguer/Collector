@@ -696,7 +696,7 @@ object database_eTOXOPS {
     Logger.debug("doQuerySQL: \n" + query)
     var statement = sqlConnection.createStatement()
     statement.execute(query)
-    statement.getResultSet()
+    statement.getResultSet()    
   }
 
   def doQuerySQLInsert(query: String) = {
@@ -826,6 +826,7 @@ object database_eTOXOPS {
       }
       Logger.debug(insertStatement.toString())
       insertStatement.execute()
+      insertStatement.close
       numRecords += 1
     }
     Logger.info("Inserted " + numRecords + " records")

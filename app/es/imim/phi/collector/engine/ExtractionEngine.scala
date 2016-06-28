@@ -356,6 +356,7 @@ object ExtractionEngine {
                 "VALUES (" + filtering_id + "," + filter_id + "," + jobExecutionId + "," + activity.job_data_raw_id + "," + filterPass + ")"
               try {
                 var resultset = database_eTOXOPS.doQuerySQLInsert(query)
+                resultset.close()                
               } catch {
                 case e: Exception => {
                   println(e.getMessage())
