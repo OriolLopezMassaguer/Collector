@@ -155,7 +155,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
           //writer.close()
           val inr = new java.io.InputStreamReader(is)
           val str = com.google.common.io.CharStreams.toString(inr)
-
+          inr.close()
           is.close()
 
           conn.disconnect()
