@@ -163,10 +163,11 @@ object Application extends Controller {
     getFileResultFromFile(file._1, file._2)
   }
 
-  def jobExecAsync(job_id: Int) = Action.async {
+  def jobExecAsync(job_id: Int) = Action{
     val res: Future[String] = scala.concurrent.Future { ExtractionEngine.executejob(job_id) }
     val futureResult: Future[SimpleResult] = res.map { resst => Ok("PI value computed: " + resst) }
-    futureResult
+    //futureResult
+    Ok("")
   }
 
   def jobExec(job_id: Int) = Action {
