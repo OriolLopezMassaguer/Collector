@@ -201,9 +201,9 @@ object Application extends Controller {
     Logger.info("Action job statistics: ")
     Logger.info("job execution id: " + filterparameters("job_execution_id"))
     database_eTOXOPS.db withDynSession {
-      val l = database_eTOXOPS.GetStatisticsForJobExecutionOldId(filterparameters("job_execution_id").toInt)
-      Logger.info("Job Statistics: \n" + Json.toJson(l))
-      val js = database_eTOXOPS.GetStatisticsForJobExecutionIdJSON(filterparameters("job_execution_id").toInt)
+      //val l = database_eTOXOPS.GetStatisticsForJobExecutionOldId(filterparameters("job_execution_id").toInt)
+      //Logger.info("Job Statistics: \n" + Json.toJson(l))
+      val (l,js) = database_eTOXOPS.GetStatisticsForJobExecutionIdJSON(filterparameters("job_execution_id").toInt)
       Ok("{success: true, total: " + l.size + ",jobstatistics:" + js + "}")
       //Ok("")
     }

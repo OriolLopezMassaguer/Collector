@@ -512,11 +512,15 @@ object database_eTOXOPS {
   }
 
   def GetStatisticsForJobExecutionOldId(job_execution_id: Int) = {
-    var qAll = Q.query[(Int), (Int, Int)]("    select count(distinct job_data_raw_id), count(distinct smiles) " +
-      "    		 from job_data_raw" +
-      "    		 WHERE job_execution_id = ?")
+    //    var qAll = Q.query[(Int), (Int, Int)]("    select count(distinct job_data_raw_id), count(distinct smiles) " +
+    //      "    		 from job_data_raw" +
+    //      "    		 WHERE job_execution_id = ?")
 
-    var qq = qAll(job_execution_id).list
+    var qAllnew = Q.query[(Int), (Int, Int)](" SELECT  activities_raw, compounds_raw " +
+      " FROM job_execution_vw_mater" +
+      " WHERE job_execution_id = ?")
+
+    var qq = qAllnew(job_execution_id).list
 
     var res = List(Map("job_execution_id" -> job_execution_id.toString, "filter" -> "raw", "activities" -> qq(0)._1.toString, "compounds" -> qq(0)._2.toString))
 
@@ -530,39 +534,48 @@ object database_eTOXOPS {
           "    		 order by job_data_raw_id) t " +
           "	where passed=true")
         val l = q(rec._6, job_execution_id).list
-        Logger.info("Filter: " + job_execution_id + " " + rec)
+        Logger.info("Old Filter: " + job_execution_id + " " + rec)
+        for(r<-l)
+          println(r)
         res = res :+ Map("job_execution_id" -> job_execution_id.toString, "filter" -> rec._4.toString(), "activities" -> l(0)._1.toString, "compounds" -> l(0)._2.toString)
       }
     }
     res
   }
 
-  def GetStatisticsForJobExecutionId(job_execution_id: Int) = {
-    var qAll = Q.query[(Int), (Int, Int)]("    select count(distinct job_data_raw_id), count(distinct smiles) " +
-      "    		 from job_data_raw" +
-      "    		 WHERE job_execution_id = ?")
-    var qq = qAll(job_execution_id).list
-    var res = List(Map("job_execution_id" -> job_execution_id, "filter" -> "raw", "activities" -> qq(0)._1, "compounds" -> qq(0)._2))
-
-    database_eTOXOPS.GetFiltersForJobExecutionId(job_execution_id).foreach { rec =>
-      {
-        var q = Q.query[(Int, Int), (Int, Int)]("select  count(distinct job_data_raw_id), count(distinct smiles) from" +
-          "   		 (select job_data_raw_id, job_execution_id,activity_id, smiles,  bool_and(filter_passed) passed" +
-          "    		 from job_data_statistics_base_vw" +
-          "    		 WHERE curation_order <=  ? and job_execution_id = ?" +
-          "    		 group by job_data_raw_id, job_execution_id,activity_id, smiles" +
-          "    		 order by job_data_raw_id) t " +
-          "	where passed=true")
-        val l = q(rec._6, job_execution_id).list
-        Logger.info("Filter: " + job_execution_id + " " + rec)
-        res = res :+ Map("job_execution_id" -> job_execution_id, "filter" -> rec._4.toString(), "activities" -> l(0)._1, "compounds" -> l(0)._2)
-      }
-    }
-    res
-  }
+//  def GetStatisticsForJobExecutionId(job_execution_id: Int) = {
+//    //    var qAll = Q.query[(Int), (Int, Int)]("    select count(distinct job_data_raw_id), count(distinct smiles) " +
+//    //      "    		 from job_data_raw" +
+//    //      "    		 WHERE job_execution_id = ?")
+//
+//    var qAllnew = Q.query[(Int), (Int, Int)](" SELECT  activities_raw, compounds_raw " +
+//      " FROM job_execution_vw_mater" +
+//      " WHERE job_execution_id = ?")
+//    var qq = qAllnew(job_execution_id).list
+//    var res = List(Map("job_execution_id" -> job_execution_id, "filter" -> "raw", "activities" -> qq(0)._1, "compounds" -> qq(0)._2))
+//
+//    database_eTOXOPS.GetFiltersForJobExecutionId(job_execution_id).foreach { rec =>
+//      {
+//        
+//        var q = Q.query[(Int, Int), (Int, Int)]("select  count(distinct job_data_raw_id), count(distinct smiles) from" +
+//          "   		 (select job_data_raw_id, job_execution_id,activity_id, smiles,  bool_and(filter_passed) passed" +
+//          "    		 from job_data_statistics_base_vw" +
+//          "    		 WHERE curation_order <=  ? and job_execution_id = ?" +
+//          "    		 group by job_data_raw_id, job_execution_id,activity_id, smiles" +
+//          "    		 order by job_data_raw_id) t " +
+//          "	where passed=true")
+//        val l = q(rec._6, job_execution_id).list
+//        Logger.info("Filter: " + job_execution_id + " " + rec)
+//        for(r<-l)
+//          println(r)
+//        res = res :+ Map("job_execution_id" -> job_execution_id, "filter" -> rec._4.toString(), "activities" -> l(0)._1, "compounds" -> l(0)._2)
+//      }
+//    }
+//    res
+//  }
 
   def GetStatisticsForJobExecutionIdJSON(job_execution_id: Int) = {
-    var lmps = GetStatisticsForJobExecutionId(job_execution_id)
+    var lmps = GetStatisticsForJobExecutionOldId(job_execution_id)
     var l2 = for (mp <- lmps) yield (
       {
         val l = for ((k, v) <- mp) yield (
@@ -575,7 +588,7 @@ object database_eTOXOPS {
 
         "{" + l.mkString(",") + "}"
       })
-    "[" + l2.mkString(",") + "]"
+    (lmps,"[" + l2.mkString(",") + "]")
   }
 
   def GetJobExecutionDataForHistogram(job_execution_id: Int) = {
@@ -605,8 +618,8 @@ object database_eTOXOPS {
         "  width_bucket(log(standard_value) + 9, " + min_value + ", " + max_value + ", " + buckets + ") ," +
         " cast(cast(((width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + "))*" + bucket_size + ") as numeric(10,2)) as varchar)" +
         " order by width_bucket(log(standard_value) + 9," + min_value + ", " + max_value + ", " + buckets + ")" +
-        ") vals right join buckets on (vals.bucket=buckets.bucket)"+
-        "order by buckets.bucket_order" 
+        ") vals right join buckets on (vals.bucket=buckets.bucket)" +
+        "order by buckets.bucket_order"
     }
 
     def qlog = (min_value: Double, max_value: Double, buckets: Int, bucket_size: Double) => Q.query[(Int), (Int, Int, String)](
@@ -633,7 +646,7 @@ object database_eTOXOPS {
       val qq = pq._1(pq._2, pq._3, pq._4, pq._5)
       Logger.info("Histogram Q2:\n")
       var l = qq(job_execution_id).list
-      
+
       println(mp.keys.toList.sorted)
       var res =
         for ((activities, bucket, descriptor) <- l)
@@ -642,8 +655,7 @@ object database_eTOXOPS {
           "activities" -> activities.toString,
           "bucket" -> bucket.toString,
           "descriptor" -> mp(bucket).toString()))
-          
-      
+
       res
     }
   }
@@ -696,7 +708,7 @@ object database_eTOXOPS {
     Logger.debug("doQuerySQL: \n" + query)
     var statement = sqlConnection.createStatement()
     statement.execute(query)
-    statement.getResultSet()    
+    statement.getResultSet()
   }
 
   def doQuerySQLInsert(query: String) = {
