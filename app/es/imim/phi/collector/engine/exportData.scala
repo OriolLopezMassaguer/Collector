@@ -94,6 +94,7 @@ object exportData {
         out.println(sdf.replaceAll("\\$\\$\\$\\$", "") + strSDF + "$$$$")
       }
     }
+    resultSet.close()
     out.close()
     var s = fileName.toList.reverse.takeWhile(c => (c != '/'))
     //println(s.reverse.toList.mkString)
@@ -133,7 +134,7 @@ object exportData {
     var query = queryExport(job_execution_id, filtered, agregated: Boolean)
     Logger.debug("Query to export:\n" + query)
     var out = new PrintStream(fileName)
-    database_eTOXOPS.doQuerySQL2Text(query, out)
+    database_eTOXOPS.doQuerySQL2Text(query, out)    
     out.close
     var s = fileName.toList.reverse.takeWhile(c => (c != '/'))
     (fileName, s.reverse.toList.mkString)

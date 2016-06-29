@@ -71,11 +71,11 @@ object ExtractionEngine {
   var appId = ""
   var opsAPI: OPSLDAScala = null
   var cachedapi: Boolean = false
-  var bucketAPISize = 10
-  var version= "1.4.3"
+  var bucketAPISize = -1
+  var version = "1.4.3"
 
   def initEngine(home_path: String) = {
-    Logger.info("Initializing collector "+this.version)
+    Logger.info("Initializing collector " + this.version)
     Logger.info("Application path " + home_path)
     appBasePath = home_path
     externalToolsBasePath = appBasePath + "/external_tools"
@@ -98,8 +98,8 @@ object ExtractionEngine {
     //val password = dbUri.getUserInfo().split(":")(0)
 
     //ExtractionEngine.dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
-    
-     ExtractionEngine.dbURL=System.getenv("JDBC_DATABASE_URL")
+
+    ExtractionEngine.dbURL = System.getenv("JDBC_DATABASE_URL")
 
     database_eTOXOPS.db = Database.forURL(ExtractionEngine.dbURL)
     Class.forName("org.postgresql.Driver");
@@ -193,44 +193,31 @@ object ExtractionEngine {
   //    database_eTOXOPS.MoveLDAResults2SQL(acts, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
   //  }
 
-//  def executeExtraction_old(jobExecutionId: String, basket: Map[String, String]) = {
-//    Logger.info("Basket:")
-//    val target_cwiki = basket("target_cwiki")
-//    Logger.info("Query for target id new id: " + target_cwiki)
-//    var res = opsAPI.GetPharmacologyByTargetLDA(target_cwiki)
-//    println("Activities obtained: " + res.size.toString())
-//    
-//  }
-  
+  //  def executeExtraction_old(jobExecutionId: String, basket: Map[String, String]) = {
+  //    Logger.info("Basket:")
+  //    val target_cwiki = basket("target_cwiki")
+  //    Logger.info("Query for target id new id: " + target_cwiki)
+  //    var res = opsAPI.GetPharmacologyByTargetLDA(target_cwiki)
+  //    println("Activities obtained: " + res.size.toString())
+  //    
+  //  }
+
   def executeExtraction(jobExecutionId: String, basket: Map[String, String]) = {
     Logger.info("Basket:")
     val target_cwiki = basket("target_cwiki")
     Logger.info("Query for target id new id: " + target_cwiki)
     var res = opsAPI.GetPharmacologyByTargetLDA_new(target_cwiki, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
-    //println("Activities obtained: " + res.size.toString())
-    //database_eTOXOPS.MoveLDAResults2SQL()
+
   }
 
   def obtainInitialData(jobId: Int, jobExecutionId: String) = {
     Logger.info("Obtaining parameters")
-    // val job_series_id = database_eTOXOPS.GetJobInformation2(jobId)
-
-    //    if (!job_series_id.equals(0)) {
-    //      println("SDF case")
-    //      Logger.info("SDF case")
-    //      getDataSDF(jobExecutionId, job_series_id)
-    //
-    //    } else {
     Logger.info("OPS case")
     Logger.info("Executing extraction")
     executeExtraction(jobExecutionId, getJobParameterValues(jobId))
-    //}
-    database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_extraction_date=CURRENT_TIMESTAMP where job_execution_id=" + jobExecutionId)
-    //Logger.info("Computing SDF 2D")
+    val rs = database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_extraction_date=CURRENT_TIMESTAMP where job_execution_id=" + jobExecutionId)
     computeSDF(jobExecutionId)
   }
-
-
 
   def executejob(jobId: Int) = {
     Logger.info("Executing job: " + jobId)
@@ -244,17 +231,15 @@ object ExtractionEngine {
       val filters = getFilters(jobId)
       Logger.info("Executing filtering")
       executeFiltering(jobExecutionId, filters)
-      database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='OK' where job_execution_id=" + jobExecutionId)
+      val r = database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='OK' where job_execution_id=" + jobExecutionId)
+
       database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
       Logger.info("Succesful execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
-      ///// New version execution
-      // TODO
-      //executeJob_v14(jobId)
       "{\"success\": true, \"jobexecutionid\":" + jobExecutionId.toString() + "}"
     } catch {
       case e: Exception => {
         Logger.info("error")
-        Logger.info("Fthisailed execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
+        Logger.info("Finalised execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
         println(e.getMessage())
         println(e.getStackTraceString)
         database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='Error' where job_execution_id=" + jobExecutionId)
@@ -263,36 +248,6 @@ object ExtractionEngine {
       }
     }
   }
-
-  //  def executeJob_v14(jobId : Int) = {
-  //    Logger.info("Executing job v14: "+jobId)
-  //    var jobExecutionId = ""
-  //    try {
-  //      jobExecutionId = insertJobExecution(jobId)
-  //      Logger.info("JobExecutionId inserted:"+jobExecutionId)
-  //      // To be redone? database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
-  //      val initialDataSeries = obtainInitialData_v14(jobId, jobExecutionId)
-  //      Logger.info("Obtaining filters")
-  //      val filters = getFilters(jobId)
-  //      Logger.info("Executing filtering")
-  //      executeFiltering_v14(jobExecutionId, initialDataSeries, filters)
-  //      database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='OK' where job_execution_id="+jobExecutionId)
-  //      // To be redone? database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
-  //      Logger.info("Succesful execution jobId:"+jobId+" jobExecutionId:"+jobExecutionId)
-  //      "{\"success\": true, \"jobexecutionid\":"+jobExecutionId.toString()+"}"
-  //    } catch {
-  //      case e : Exception => {
-  //        Logger.info("error")
-  //
-  //        Logger.info("Failed execution jobId:"+jobId+" jobExecutionId:"+jobExecutionId)
-  //        Logger.info(e.getMessage())
-  //        Logger.info(e.getStackTraceString)
-  //        database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='Error' where job_execution_id="+jobExecutionId)
-  //        database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
-  //        "{success: false}"
-  //      }
-  //    }
-  //  }
 
   def insertJobExecution(jobId: Int): String = {
     var resultset = database_eTOXOPS.doQuerySQLInsert(
@@ -312,10 +267,12 @@ object ExtractionEngine {
       " 	job_parameter_value.job_extraction_id = job.job_extraction_id " +
       " 	AND job_id=" + jobId + ";"
     var parametersValues = database_eTOXOPS.doQuerySQL(queryGetParametersValues)
+
     var basket = Map[String, String]()
     while (parametersValues.next()) {
       basket += parametersValues.getString("job_parameter_field") -> parametersValues.getString("job_parameter_value")
     }
+    parametersValues.close()
     basket
   }
 
@@ -326,37 +283,48 @@ object ExtractionEngine {
 
     Logger.info("Query get filters: " + queryGetFilters)
     var filters = database_eTOXOPS.doQuerySQL(queryGetFilters)
-    var filtersList = scala.collection.mutable.LinkedList[Tuple3[String, CompoundFilter, String]]()
+    var filtersList = scala.collection.mutable.LinkedList[Tuple4[String, CompoundFilter, String,String]]()
     while (filters.next()) {
       var filter: CompoundFilter = Class.forName(filters.getString("filter_class")).newInstance.asInstanceOf[CompoundFilter]
       val filtering_id = filters.getString("job_filtering_id")
-      val t = (filters.getString("filter_id"), filter, filtering_id)
+      val t = (filters.getString("filter_id"), filter, filtering_id,filters.getString("filter_description"))
       filtersList = filtersList :+ t
       Logger.info("Filter: " + filters.getString("filter_description"))
     }
+    filters.close()
     filtersList
   }
 
-  def executeFiltering(jobExecutionId: String, filters: scala.collection.mutable.LinkedList[Tuple3[String, CompoundFilter, String]]) =
+  def executeFiltering(jobExecutionId: String, filters: scala.collection.mutable.LinkedList[Tuple4[String, CompoundFilter, String,String]]) =
     {
       Logger.debug("Doing filtering job_id: " + jobExecutionId)
       Logger.info("Filters: " + filters)
       database_eTOXOPS.db withDynSession {
         val q = database_eTOXOPS.GetRAWDataJobExecution(jobExecutionId.toInt)
-        val l = q.buildColl
-        Logger.info("Size: " + l.size)
-
+        println("Filters: " + filters.size)
+        val fnames= filters.map(_._4)
+        var mapini = fnames.map(v => (v, 0)).toMap
+        var i=0
         q.foreach {
+
           case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle, activity_id) =>
             var activity = new Activity(job_execution_id, job_data_raw_id, activity_type, smiles.getOrElse(""))
             var compound = new Compound(activity)
-            for ((filter_id, filter, filtering_id) <- filters) {
+            i=i+1
+            if ((i % 100) == 0) println ("Filtering : "+ i)
+            
+            for ((filter_id, filter, filtering_id,fname) <- filters) {
               var filterPass = filter.filterPass(compound)
+              if (filterPass) {
+                val v = mapini(fname)
+                val prev = (mapini - fname)
+                mapini = prev + (fname -> (v + 1))
+              }
               var query = "insert into job_data_filtered (job_filtering_id,filter_id,job_execution_id,job_data_raw_id,filter_passed) " +
                 "VALUES (" + filtering_id + "," + filter_id + "," + jobExecutionId + "," + activity.job_data_raw_id + "," + filterPass + ")"
               try {
                 var resultset = database_eTOXOPS.doQuerySQLInsert(query)
-                resultset.close()                
+                resultset.close()
               } catch {
                 case e: Exception => {
                   println(e.getMessage())
@@ -370,6 +338,9 @@ object ExtractionEngine {
               }
             }
         }
+
+        println("Fnames "+fnames.size)
+        for ((f, v) <- mapini) println("Filter: " + f + " / " + v)
 
       }
     }

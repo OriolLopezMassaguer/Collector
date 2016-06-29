@@ -54,7 +54,7 @@ object db2JSON {
   }
 
   private def getQueryJSONBase(query: String, jsonlabel: String, limit: String, offset: String) = {
-    db withDynSession {
+    //db withDynSession {
       println("Query: " + query)
       var resultSet = database_eTOXOPS.doQuerySQL(query + " " + limit + " " + offset)
       var metadata = resultSet.getMetaData()
@@ -90,11 +90,11 @@ object db2JSON {
       val v=resultSetCount.getRow().toString()
       resultSetCount.close()
       "{success: true,total: " + v + " , " + jsonlabel + ":[" + json + "] }"
-    }
+    //}
   }
 
   private def getQueryJSONBase2(query: String, jsonlabel: String, limit: String, offset: String) = {
-    db withDynSession {
+    //db withDynSession {
       var resultSet = database_eTOXOPS.doQuerySQL(query + " " + limit + " " + offset)
       var metadata = resultSet.getMetaData()
 
@@ -122,14 +122,9 @@ object db2JSON {
         else
           json.append(lines(i) + ",")
       }
-      //var statement = sqlConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY)
-      //statement.execute(query)
-      //var resultSetCount = statement.getResultSet()
-      //resultSetCount.last()
       resultSet.close()
-      //resultSetCount.close()
       "[" + json + "]"
-    }
+    //}
   }
 
   def getJobsAllJSON = {

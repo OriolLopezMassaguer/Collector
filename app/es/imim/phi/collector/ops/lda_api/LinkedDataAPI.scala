@@ -49,12 +49,12 @@ import es.imim.phi.collector.model._
 object CHEMBLAPI {
 
   def GetCompoundInfo(id: String) = {
-    println("GetCompoundInfo:" + id)
+    //println("GetCompoundInfo:" + id)
     val l = id.split("/")
     val ll = l.toList
     val id2 = ll.reverse.head
     val url = "https://www.ebi.ac.uk/chemblws/compounds/" + id2 + ".json"
-    println(url)
+    //println(url)
     val r = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.urlCall(url)
     //println("Response: " + r)
     if (r != "") {
@@ -65,10 +65,6 @@ object CHEMBLAPI {
       ""
   }
 
-  def test = {
-    val smiles = this.GetCompoundInfo("http://rdf.ebi.ac.uk/resource/chembl/molecule/CHEMBL2074638")
-    println(smiles)
-  }
 }
 
 class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale: Boolean, connURL: String, user: String, password: String, cachedapi: Boolean) {
@@ -78,36 +74,37 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
       k => {
         var conncachedb = DriverManager.getConnection(connURL, user, password)
         val q = "select * from ops_api_cached_calls where call='" + k + "'"
-        val rs = conncachedb.createStatement().executeQuery(q)
+        val st = conncachedb.createStatement()
+        val rs = st.executeQuery(q)
         val v = if (rs.next())
           rs.getString(2)
         else {
           val r = try {
             val v2 = f(k)
-            //println("post f")
-            //println("R: " + v2)
             var insertStatement = conncachedb.prepareStatement("insert into ops_api_cached_calls (call,response,timestamp) values (?,?,?);")
             insertStatement.setString(1, k)
             insertStatement.setString(2, v2)
             val today = new java.util.Date()
             val ts = new java.sql.Timestamp(today.getTime())
             insertStatement.setTimestamp(3, ts)
-            //println("To execute")
             insertStatement.execute()
             insertStatement.close()
-            //println("Execution!")
+            st.close()
+            rs.close()
             v2
           } catch {
             case _: Throwable => {
               val q = "select * from ops_api_cached_calls where call='" + k + "'"
               val rs = conncachedb.createStatement().executeQuery(q)
-              val s=rs.getString(2)
+              val s = rs.getString(2)
               rs.close()
+              st.close()
               s
             }
           }
           r
         }
+        rs.close()
         conncachedb.close()
         v
       })
@@ -138,7 +135,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
   private def urlcall(call: String): String =
     {
       Logger.debug("urlcall Call :[ " + call + " ]")
-      val url = new URL(call);
+      val url = new URL(call)
       val conn = url.openConnection().asInstanceOf[HttpURLConnection]
       conn.setInstanceFollowRedirects(true)
       conn.setDoInput(true)
@@ -230,34 +227,20 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
 
       def getMoleculeFields(forMolecule: JsValue) =
         {
-          //println("ForMolecules:" + forMolecule)
-          //println
           val csdata = (forMolecule \ "exactMatch") match {
             case arrayitems: JsArray => {
               val fields = arrayitems.value.filter(m => convert(m \ "inDataset").equalsIgnoreCase("http://ops.rsc.org"))
               val r: JsValue = if (fields.isEmpty) {
-                //println
-                //println("Excluded")
-                //println(forMolecule)
-                excludedActivities = excludedActivities + 1
                 play.api.libs.json.JsUndefined("Undef")
               } else fields.head
               r
             }
             case obj: JsObject => obj
             case a => {
-              println
-              println("Excluded")
-              //println(forMolecule)
               excludedActivities = excludedActivities + 1
               a
             }
           }
-          //val molEM = (forMolecule \ "exactMatch").asInstanceOf[JsArray].value
-          //val csdata = molEM.filter(m => convert(m \ "inDataset").equalsIgnoreCase("http://ops.rsc.org")).head
-          //val cwdata = molEM.filter(m => convert(m \ "inDataset").equalsIgnoreCase("http://www.conceptwiki.org")).head
-          //println("MW:" + csdata \ "molweight")
-          //println
           val molid = convert(forMolecule \ "_about")
 
           def getSmiles = {
@@ -343,10 +326,8 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
           Logger.debug("Activities obtained: " + is.size)
           println("Excluded activities: " + excludedActivities)
 
-          //println()
-          //val is2 = for (row <- is) yield row
           val is2 = for (row <- is if (row("smiles") != "")) yield row
-          println("Page: " + page)
+          println("Page: " + page + " / " + numPages)
           println("Size: " + is2.size)
 
           database_eTOXOPS.MoveLDAResults2SQL(is2, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")

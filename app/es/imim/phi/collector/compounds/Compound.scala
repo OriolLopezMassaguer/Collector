@@ -117,6 +117,7 @@ import java.io.PrintStream
 
 object CDKutils {
   var smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance())
+  val ro5Descriptor = new RuleOfFiveDescriptor()
 }
 
 object CompoundUtil {
@@ -439,16 +440,8 @@ object CompoundUtil {
 class Compound(activity: es.imim.phi.collector.compounds.Activity) {
   val activ = activity
   val strSmiles = activ.smiles
-  val smilesParser = CDKutils.smilesParser
-  //val moleculeCA = MolImporter.importMol(strSmiles.getBytes())
-  //val strSDF = MolExporter.exportToFormat(moleculeCA, "sdf")
-  val moleculeCDK = smilesParser.parseSmiles(this.strSmiles)
 
-  //  def exportToSDF(filename: String) {
-  //    var out = new FileOutputStream(filename)
-  //    var molExporter = new MolExporter(out, "sdf")
-  //    molExporter.write(moleculeCA)
-  //  }
+  val moleculeCDK = CDKutils.smilesParser.parseSmiles(this.strSmiles)
 
   def containsValidAtoms(validAtoms: Set[String]) =
     {
@@ -460,10 +453,10 @@ class Compound(activity: es.imim.phi.collector.compounds.Activity) {
       b
     }
   def passesRuleOf5 = {
-        val ro5Descriptor = new RuleOfFiveDescriptor()
+        
         var numviolations = 0
         numviolations = try {
-          val calc = ro5Descriptor.calculate(moleculeCDK)
+          val calc = CDKutils.ro5Descriptor.calculate(moleculeCDK)
           Integer.valueOf(calc.getValue().toString())
         } catch {
           case _ : Throwable => 1
