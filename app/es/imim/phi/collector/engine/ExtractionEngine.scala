@@ -142,6 +142,7 @@ object ExtractionEngine {
     database_eTOXOPS.db withDynSession {
       database_eTOXOPS.GetRAWDataJobExecutionForSDF(jobExecutionId.toInt).foreach {
         case (jobExecutionId, job_data_raw_id, cs_id, smiles, sdf2d) => {
+          i=i +1
           if ((i % 100)==0) println("SDF computing : "+i)
           var sdf = CompoundUtil.getSDFFromSmiles(smiles, true)
           val q1 = for (msg <- database_eTOXOPS.job_data_raw_for_sdf if msg.job_data_raw_id === job_data_raw_id)
