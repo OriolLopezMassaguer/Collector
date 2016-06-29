@@ -138,9 +138,11 @@ object ExtractionEngine {
   }
 
   def computeSDF(jobExecutionId: String) = {
+    var i = 0
     database_eTOXOPS.db withDynSession {
       database_eTOXOPS.GetRAWDataJobExecutionForSDF(jobExecutionId.toInt).foreach {
         case (jobExecutionId, job_data_raw_id, cs_id, smiles, sdf2d) => {
+          if ((i % 100)==0) println("SDF computing : "+i)
           var sdf = CompoundUtil.getSDFFromSmiles(smiles, true)
           val q1 = for (msg <- database_eTOXOPS.job_data_raw_for_sdf if msg.job_data_raw_id === job_data_raw_id)
             yield (msg.sdf2d)
@@ -283,11 +285,11 @@ object ExtractionEngine {
 
     Logger.info("Query get filters: " + queryGetFilters)
     var filters = database_eTOXOPS.doQuerySQL(queryGetFilters)
-    var filtersList = scala.collection.mutable.LinkedList[Tuple4[String, CompoundFilter, String,String]]()
+    var filtersList = scala.collection.mutable.LinkedList[Tuple4[String, CompoundFilter, String, String]]()
     while (filters.next()) {
       var filter: CompoundFilter = Class.forName(filters.getString("filter_class")).newInstance.asInstanceOf[CompoundFilter]
       val filtering_id = filters.getString("job_filtering_id")
-      val t = (filters.getString("filter_id"), filter, filtering_id,filters.getString("filter_description"))
+      val t = (filters.getString("filter_id"), filter, filtering_id, filters.getString("filter_description"))
       filtersList = filtersList :+ t
       Logger.info("Filter: " + filters.getString("filter_description"))
     }
@@ -295,25 +297,25 @@ object ExtractionEngine {
     filtersList
   }
 
-  def executeFiltering(jobExecutionId: String, filters: scala.collection.mutable.LinkedList[Tuple4[String, CompoundFilter, String,String]]) =
+  def executeFiltering(jobExecutionId: String, filters: scala.collection.mutable.LinkedList[Tuple4[String, CompoundFilter, String, String]]) =
     {
       Logger.debug("Doing filtering job_id: " + jobExecutionId)
       Logger.info("Filters: " + filters)
       database_eTOXOPS.db withDynSession {
         val q = database_eTOXOPS.GetRAWDataJobExecution(jobExecutionId.toInt)
         println("Filters: " + filters.size)
-        val fnames= filters.map(_._4)
+        val fnames = filters.map(_._4)
         var mapini = fnames.map(v => (v, 0)).toMap
-        var i=0
+        var i = 0
         q.foreach {
 
           case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle, activity_id) =>
             var activity = new Activity(job_execution_id, job_data_raw_id, activity_type, smiles.getOrElse(""))
             var compound = new Compound(activity)
-            i=i+1
-            if ((i % 100) == 0) println ("Filtering : "+ i)
-            
-            for ((filter_id, filter, filtering_id,fname) <- filters) {
+            i = i + 1
+            if ((i % 100) == 0) println("Filtering : " + i)
+
+            for ((filter_id, filter, filtering_id, fname) <- filters) {
               var filterPass = filter.filterPass(compound)
               if (filterPass) {
                 val v = mapini(fname)
@@ -339,7 +341,7 @@ object ExtractionEngine {
             }
         }
 
-        println("Fnames "+fnames.size)
+        println("Fnames " + fnames.size)
         for ((f, v) <- mapini) println("Filter: " + f + " / " + v)
 
       }
