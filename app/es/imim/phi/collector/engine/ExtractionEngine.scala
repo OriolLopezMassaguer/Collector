@@ -303,20 +303,24 @@ object ExtractionEngine {
       Logger.debug("Doing filtering job_id: " + jobExecutionId)
       Logger.info("Filters: " + filters)
       database_eTOXOPS.db withDynSession {
-        val q = database_eTOXOPS.GetRAWDataJobExecution(jobExecutionId.toInt)
+        //val q = database_eTOXOPS.GetRAWDataJobExecution(jobExecutionId.toInt)
+        val q = database_eTOXOPS.GetRAWDataJobExecutionId(jobExecutionId.toInt)
         println("Filters: " + filters.size)
         val fnames = filters.map(_._4)
         var mapini = fnames.map(v => (v, 0)).toMap
         var i = 0
         q.foreach {
 
-          case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle, activity_id) =>
+          //case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle, activity_id) =>
+          case (job_data_raw_id, activity_type, smiles) =>
             val compoundSimple = new CompoundSimple(activity_type, smiles.getOrElse(""))
             //var activity = new Activity(job_execution_id, job_data_raw_id, activity_type, smiles.getOrElse(""))
             //var compound = new Compound(activity)
             i = i + 1
             if ((i % 100) == 0) println("Filtering : " + i)
 
+            if ((i % 1000) == 0) System.gc() 
+              
             for ((filter_id, filter, filtering_id, fname) <- filters) {
               //var filterPass = filter.filterPass(compound)
               val filter = CompoundsFilters.filters(fname)
@@ -328,15 +332,14 @@ object ExtractionEngine {
               }
               var query = "insert into job_data_filtered (job_filtering_id,filter_id,job_execution_id,job_data_raw_id,filter_passed) " +
                 "VALUES (" + filtering_id + "," + filter_id + "," + jobExecutionId + "," + job_data_raw_id + "," + filterPass + ")"
-                
-              
+
               try {
                 //var resultset = database_eTOXOPS.doQuerySQLInsert(query)
 
-                var statement =database_eTOXOPS.sqlConnection.createStatement()
+                var statement = database_eTOXOPS.sqlConnection.createStatement()
                 Logger.debug("doQuerySQLInsert: " + query)
                 statement.execute(query)
-                statement.close()                
+                statement.close()
               } catch {
                 case e: Exception => {
                   println(e.getMessage())

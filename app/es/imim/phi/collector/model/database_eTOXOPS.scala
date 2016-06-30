@@ -329,6 +329,10 @@ object database_eTOXOPS {
   def GetRAWDataJobExecution(job_execution_id: Int) =
     for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id }
       yield rawdata.*
+      
+  def GetRAWDataJobExecutionId(job_execution_id: Int) =
+    for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id }
+      yield (rawdata.job_data_raw_id,rawdata.activity_type,rawdata.smiles)      
 
   def GetFilteredDataJobExecution(job_execution_id: Int) =
     for { filtereddata <- job_data_filtered_vw if filtereddata.job_execution_id === job_execution_id }
