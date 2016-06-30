@@ -122,7 +122,6 @@ object CDKutils {
 
 object CompoundUtil {
 
-  models.chemistry.CompoundUtil.getMWfromSMILES("CCC")
   lazy val noStructureIMGFixed = noStructureIMG
   def noStructureIMG = {
     val f = new File(resourceDir + "/no_structure.png")
@@ -343,7 +342,7 @@ object CompoundUtil {
 
   def getSDFFromSMiles_CDK(smi: String) = {
     import org.openscience.cdk.silent.SilentChemObjectBuilder;
-    val sp=CDKutils.smilesParser
+    val sp = CDKutils.smilesParser
     //val sp = new org.openscience.cdk.smiles.SmilesParser(SilentChemObjectBuilder.getInstance())
 
     var smiles = if (smi.contains(".")) {
@@ -353,7 +352,7 @@ object CompoundUtil {
       smi
     }
     val mol = sp.parseSmiles(smiles)
-    
+
     val writer = new StringWriter()
     val molSet = new AtomContainerSet()
     val molecule = mol
@@ -437,6 +436,46 @@ object CompoundUtil {
 
 }
 
+object CompoundsFilters {
+  
+  val validAtoms = Set("H","C","N","O","S","P","Cl","I","Br","F")
+
+  val filters = Map("NoFiltering" -> ((c: CompoundSimple) => true),
+    "LipinskiRo5" -> ((c: CompoundSimple) => c.passesRuleOf5),
+    "ValidateAtoms" -> ((c: CompoundSimple) => c.containsValidAtoms(validAtoms)),
+    "Activity" -> ((c: CompoundSimple) => c.filterByActivityType("Activity")),
+    "IC50" -> ((c: CompoundSimple) => c.filterByActivityType("IC50")),
+    "Inhibition" -> ((c: CompoundSimple) => c.filterByActivityType("Inhibition")),
+    "Ki" -> ((c: CompoundSimple) => c.filterByActivityType("Ki")))
+
+}
+
+class CompoundSimple(activityType: Option[String], smiles: String) {
+  val moleculeCDK = CDKutils.smilesParser.parseSmiles(smiles)
+
+  def passesRuleOf5 = {
+    var numviolations = 0
+    numviolations = try {
+      val ro5Descriptor = new RuleOfFiveDescriptor()
+      val calc = ro5Descriptor.calculate(moleculeCDK)
+      Integer.valueOf(calc.getValue().toString())
+    } catch {
+      case _: Throwable => 1
+    }
+    numviolations < 2
+  }
+  def filterByActivityType(activityTypeFilter: String): Boolean = activityType.getOrElse("") equals activityTypeFilter
+
+  def containsValidAtoms(validAtoms: Set[String]) =
+    {     
+      val listatoms = moleculeCDK.atoms().toList
+      Logger.debug(listatoms.map(atom => atom.getSymbol()).mkString)
+      val b = listatoms.map(atom => validAtoms.contains(atom.getSymbol())).fold(true)(_ && _)
+      Logger.debug(b.toString())
+      b
+    }
+}
+
 class Compound(activity: es.imim.phi.collector.compounds.Activity) {
   val activ = activity
   val strSmiles = activ.smiles
@@ -453,20 +492,17 @@ class Compound(activity: es.imim.phi.collector.compounds.Activity) {
       b
     }
   def passesRuleOf5 = {
-        
-        var numviolations = 0
-        numviolations = try {
-          val calc = CDKutils.ro5Descriptor.calculate(moleculeCDK)
-          Integer.valueOf(calc.getValue().toString())
-        } catch {
-          case _ : Throwable => 1
-        }
-        numviolations < 2    
+
+    var numviolations = 0
+    numviolations = try {
+      val calc = CDKutils.ro5Descriptor.calculate(moleculeCDK)
+      Integer.valueOf(calc.getValue().toString())
+    } catch {
+      case _: Throwable => 1
+    }
+    numviolations < 2
   }
 
-  def filterByActivityType(activityType: String): Boolean = {
-    //Logger.info("activity Type  $" + activityType + "$ / $" + activ.activity_type.getOrElse("") + "$")   
-    activ.activity_type.getOrElse("") equals activityType
-  }
+  def filterByActivityType(activityType: String): Boolean = activ.activity_type.getOrElse("") equals activityType
 
 }

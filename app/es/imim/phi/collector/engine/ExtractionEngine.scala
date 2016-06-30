@@ -142,8 +142,8 @@ object ExtractionEngine {
     database_eTOXOPS.db withDynSession {
       database_eTOXOPS.GetRAWDataJobExecutionForSDF(jobExecutionId.toInt).foreach {
         case (jobExecutionId, job_data_raw_id, cs_id, smiles, sdf2d) => {
-          i=i +1
-          if ((i % 100)==0) println("SDF computing : "+i)
+          i = i + 1
+          if ((i % 100) == 0) println("SDF computing : " + i)
           var sdf = CompoundUtil.getSDFFromSmiles(smiles, true)
           val q1 = for (msg <- database_eTOXOPS.job_data_raw_for_sdf if msg.job_data_raw_id === job_data_raw_id)
             yield (msg.sdf2d)
@@ -311,32 +311,41 @@ object ExtractionEngine {
         q.foreach {
 
           case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle, activity_id) =>
-            var activity = new Activity(job_execution_id, job_data_raw_id, activity_type, smiles.getOrElse(""))
-            var compound = new Compound(activity)
+            val compoundSimple = new CompoundSimple(activity_type, smiles.getOrElse(""))
+            //var activity = new Activity(job_execution_id, job_data_raw_id, activity_type, smiles.getOrElse(""))
+            //var compound = new Compound(activity)
             i = i + 1
             if ((i % 100) == 0) println("Filtering : " + i)
 
             for ((filter_id, filter, filtering_id, fname) <- filters) {
-              var filterPass = filter.filterPass(compound)
+              //var filterPass = filter.filterPass(compound)
+              val filter = CompoundsFilters.filters(fname)
+              var filterPass = filter(compoundSimple)
               if (filterPass) {
                 val v = mapini(fname)
                 val prev = (mapini - fname)
                 mapini = prev + (fname -> (v + 1))
               }
               var query = "insert into job_data_filtered (job_filtering_id,filter_id,job_execution_id,job_data_raw_id,filter_passed) " +
-                "VALUES (" + filtering_id + "," + filter_id + "," + jobExecutionId + "," + activity.job_data_raw_id + "," + filterPass + ")"
+                "VALUES (" + filtering_id + "," + filter_id + "," + jobExecutionId + "," + job_data_raw_id + "," + filterPass + ")"
+                
+              
               try {
-                var resultset = database_eTOXOPS.doQuerySQLInsert(query)
-                resultset.close()
+                //var resultset = database_eTOXOPS.doQuerySQLInsert(query)
+
+                var statement =database_eTOXOPS.sqlConnection.createStatement()
+                Logger.debug("doQuerySQLInsert: " + query)
+                statement.execute(query)
+                statement.close()                
               } catch {
                 case e: Exception => {
                   println(e.getMessage())
-                  Logger.info("Failed execution jobExecutionId:" + jobExecutionId)
-                  Logger.debug("Doing filtering job_id: " + jobExecutionId)
-                  Logger.info("Filters: " + filters)
+                  //Logger.info("Failed execution jobExecutionId:" + jobExecutionId)
+                  //Logger.debug("Doing filtering job_id: " + jobExecutionId)
+                  //Logger.info("Filters: " + filters)
                   Logger.info(query)
-                  Logger.info(e.getMessage())
-                  Logger.info(e.getStackTraceString)
+                  //Logger.info(e.getMessage())
+                  //Logger.info(e.getStackTraceString)
                 }
               }
             }
