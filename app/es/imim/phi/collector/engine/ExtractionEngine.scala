@@ -72,7 +72,7 @@ object ExtractionEngine {
   var opsAPI: OPSLDAScala = null
   var cachedapi: Boolean = false
   var bucketAPISize = -1
-  var version = "1.4.3"
+  var version = "1.4.4"
 
   def initEngine(home_path: String) = {
     Logger.info("Initializing collector " + this.version)

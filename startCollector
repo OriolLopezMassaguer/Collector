@@ -25,6 +25,7 @@ ps -eaf | grep play | grep collector > /dev/null
 if [ $? -ne 0 ]; then
   rm $COLLECTOR_HOME/target/universal/stage/RUNNING_PID
 fi
+$COLLECTOR_HOME/rm.sh	
 $COLLECTOR_HOME/target/universal/stage/bin/collector -Dhttp.port=9001 -Djava.awt.headless=true -Djavax.net.ssl.trustStore=$COLLECTOR_HOME/certs/cacerts & 
 #-Dlogback.configurationFile=$COLLECTOR_HOME/conf/application-logger_cl.xml &
 # -Dlogger.resource=$COLLECTOR_HOME/conf/application-logger1.xml &
