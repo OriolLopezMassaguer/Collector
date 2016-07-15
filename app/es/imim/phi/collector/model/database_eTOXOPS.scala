@@ -326,25 +326,33 @@ object database_eTOXOPS {
     for { rawdata <- job_data_raw_for_sdf if rawdata.job_execution_id === job_execution_id && rawdata.smiles.isNotNull }
       yield rawdata.*
 
-  def GetRAWDataJobExecution(job_execution_id: Int) =
-    for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id }
-      yield rawdata.*
-      
+  def GetRAWDataJobExecution(job_execution_id: Int, activityType: Option[String]) =
+    activityType match {
+      case None => for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id } yield rawdata.*
+      case Some(activity) => for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id && rawdata.activity_type === activityType } yield rawdata.*
+    }
+
   def GetRAWDataJobExecutionId(job_execution_id: Int) =
     for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id }
-      yield (rawdata.job_data_raw_id,rawdata.activity_type,rawdata.smiles)      
+      yield (rawdata.job_data_raw_id, rawdata.activity_type, rawdata.smiles)
 
-  def GetFilteredDataJobExecution(job_execution_id: Int) =
-    for { filtereddata <- job_data_filtered_vw if filtereddata.job_execution_id === job_execution_id }
-      yield filtereddata.*
+  def GetFilteredDataJobExecution(job_execution_id: Int, activityType: Option[String]) =
+    activityType match {
+      case None => for { filtereddata <- job_data_filtered_vw if filtereddata.job_execution_id === job_execution_id } yield filtereddata.*
+      case Some(activity) => for { filtereddata <- job_data_filtered_vw if filtereddata.job_execution_id === job_execution_id && filtereddata.activity_type === activityType } yield filtereddata.*
+    }
 
-  def GetRAWDataAgJobExecution(job_execution_id: Int) =
-    for { rawdata <- job_data_raw_ag_vw if rawdata.job_execution_id === job_execution_id }
-      yield rawdata.*
+  def GetRAWDataAgJobExecution(job_execution_id: Int, activityType: Option[String]) =
+    activityType match {
+      case None => for { rawdata <- job_data_raw_ag_vw if rawdata.job_execution_id === job_execution_id } yield rawdata.*
+      case Some(activity) => for { rawdata <- job_data_raw_ag_vw if rawdata.job_execution_id === job_execution_id && rawdata.activity_type === activityType } yield rawdata.*
+    }
 
-  def GetFilteredDataAgJobExecution(job_execution_id: Int) =
-    for { filtereddata <- job_data_filtered_ag_vw if filtereddata.job_execution_id === job_execution_id }
-      yield filtereddata.*
+  def GetFilteredDataAgJobExecution(job_execution_id: Int, activityType: Option[String]) =
+    activityType match {
+      case None => for { filtereddata <- job_data_filtered_ag_vw if filtereddata.job_execution_id === job_execution_id } yield filtereddata.*
+      case Some(activity) => for { filtereddata <- job_data_filtered_ag_vw if filtereddata.job_execution_id === job_execution_id && filtereddata.activity_type === activityType } yield filtereddata.*
+    }
 
   def GetRAWDataJobExecutionSmiles(job_execution_id: Int) =
     for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id.bind }
@@ -549,36 +557,19 @@ object database_eTOXOPS {
     res
   }
 
-  //  def GetStatisticsForJobExecutionId(job_execution_id: Int) = {
-  //    //    var qAll = Q.query[(Int), (Int, Int)]("    select count(distinct job_data_raw_id), count(distinct smiles) " +
-  //    //      "    		 from job_data_raw" +
-  //    //      "    		 WHERE job_execution_id = ?")
-  //
-  //    var qAllnew = Q.query[(Int), (Int, Int)](" SELECT  activities_raw, compounds_raw " +
-  //      " FROM job_execution_vw_mater" +
-  //      " WHERE job_execution_id = ?")
-  //    var qq = qAllnew(job_execution_id).list
-  //    var res = List(Map("job_execution_id" -> job_execution_id, "filter" -> "raw", "activities" -> qq(0)._1, "compounds" -> qq(0)._2))
-  //
-  //    database_eTOXOPS.GetFiltersForJobExecutionId(job_execution_id).foreach { rec =>
-  //      {
-  //        
-  //        var q = Q.query[(Int, Int), (Int, Int)]("select  count(distinct job_data_raw_id), count(distinct smiles) from" +
-  //          "   		 (select job_data_raw_id, job_execution_id,activity_id, smiles,  bool_and(filter_passed) passed" +
-  //          "    		 from job_data_statistics_base_vw" +
-  //          "    		 WHERE curation_order <=  ? and job_execution_id = ?" +
-  //          "    		 group by job_data_raw_id, job_execution_id,activity_id, smiles" +
-  //          "    		 order by job_data_raw_id) t " +
-  //          "	where passed=true")
-  //        val l = q(rec._6, job_execution_id).list
-  //        Logger.info("Filter: " + job_execution_id + " " + rec)
-  //        for(r<-l)
-  //          println(r)
-  //        res = res :+ Map("job_execution_id" -> job_execution_id, "filter" -> rec._4.toString(), "activities" -> l(0)._1, "compounds" -> l(0)._2)
-  //      }
-  //    }
-  //    res
-  //  }
+
+  def GetStatisticsByTypeForJobExecutionIdJSON(job_execution_id: Int) = {
+
+    var qAllnew = Q.query[(Int), (String, Int)](
+      " select activity_type ,count(*) activities_count " +
+        " from job_data_raw_vw where job_execution_id=? " +
+        " group by activity_type" +
+        " order by activity_type")
+
+    var qq = qAllnew(job_execution_id).list
+
+    qq
+  }
 
   def GetStatisticsForJobExecutionIdJSON(job_execution_id: Int) = {
     var lmps = GetStatisticsForJobExecutionOldId(job_execution_id)

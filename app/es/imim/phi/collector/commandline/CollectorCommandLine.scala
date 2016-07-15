@@ -55,10 +55,10 @@ object CollectorCommandLine {
     val mats = for (a <- Json.parse(matchesString).asInstanceOf[JsArray].value) yield (a.asInstanceOf[JsObject])
     for (mat <- mats) yield (objToMap(mat))
   }
-  def getSDFForUnitprot(uniprot_accession: String, filename: String) = {
+  def getSDFForUnitprot(uniprot_accession: String, filename: String,activityType:Option[String]) = {
     val job_id = newJobByUniprotAccession("eTOX-job", uniprot_accession, "3")
     val job_execution_id = executeJob(job_id)
-    exportExecutionDataComps(job_execution_id.toString, "sdf", filename, true)
+    exportExecutionDataComps(job_execution_id.toString, "sdf", filename, true,activityType)
   }
 
   def newJob(job_description: String, urltarget: String, target_label: String, protocol_id: String) = {
@@ -106,21 +106,21 @@ object CollectorCommandLine {
     }
   }
 
-  def exportExecutionDataActs(job_execution_id: String, format: String, filename: String, filtered: Boolean) = {
+  def exportExecutionDataActs(job_execution_id: String, format: String, filename: String, filtered: Boolean,activityType:Option[String]) = {
     println("Exporting job execution")
     println("	job execution id: " + job_execution_id)
     var export = format match {
-      case "sdf" => exportData.exportexecutiondata_filename(job_execution_id.toInt, filtered, false, "sdf", filename)
-      case "csv" => exportData.exportexecutiondata_filename(job_execution_id.toInt, filtered, false, "csv", filename)
+      case "sdf" => exportData.exportexecutiondata_filename(job_execution_id.toInt, filtered, false, "sdf", filename,activityType)
+      case "csv" => exportData.exportexecutiondata_filename(job_execution_id.toInt, filtered, false, "csv", filename,activityType)
     }
   }
 
-  def exportExecutionDataComps(job_execution_id: String, format: String, filename: String, filtered: Boolean) = {
+  def exportExecutionDataComps(job_execution_id: String, format: String, filename: String, filtered: Boolean,activityType:Option[String]) = {
     println("Exporting job execution")
     println("	job execution id: " + job_execution_id)
     var export = format match {
-      case "sdf" => exportData.exportexecutiondata_filename(job_execution_id.toInt, filtered, true, "sdf", filename)
-      case "csv" => exportData.exportexecutiondata_filename(job_execution_id.toInt, filtered, true, "csv", filename)
+      case "sdf" => exportData.exportexecutiondata_filename(job_execution_id.toInt, filtered, true, "sdf", filename,activityType)
+      case "csv" => exportData.exportexecutiondata_filename(job_execution_id.toInt, filtered, true, "csv", filename,activityType)
     }
     //println(export)
   }
@@ -248,8 +248,8 @@ object CollectorCommandLine {
                 val sdfcsv = cf.exportformat
                 val filename = cf.filename
                 actcomps match {
-                  case "activities" => exportExecutionDataActs(job_execution_id.toString, sdfcsv, filename, cf.filtered)
-                  case "compounds" => exportExecutionDataComps(job_execution_id.toString, sdfcsv, filename, cf.filtered)
+                  case "activities" => exportExecutionDataActs(job_execution_id.toString, sdfcsv, filename, cf.filtered,None)
+                  case "compounds" => exportExecutionDataComps(job_execution_id.toString, sdfcsv, filename, cf.filtered,None)
                 }
               }
 
@@ -279,7 +279,7 @@ object CollectorCommandLine {
             case "deletejob" => deleteJob(cf.jobid)
             case "deletejobexecution" => deleteJobExecution(cf.jobexecutionid)
             case "deletejobexecutionsforjobid" => deleteJobExecutions(cf.jobid)
-            case "getsdffromuniprotid" => this.getSDFForUnitprot(cf.uniprotid, cf.filename)
+            case "getsdffromuniprotid" => this.getSDFForUnitprot(cf.uniprotid, cf.filename,None)
             case _ => CommandLineParser.parser.showUsage
           }
         }

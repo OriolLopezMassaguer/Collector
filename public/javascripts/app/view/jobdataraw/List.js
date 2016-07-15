@@ -65,6 +65,20 @@ Ext
 												id : 'Compounds'
 											}, ]
 										},
+										
+										{
+											   xtype:'combo',
+											   fieldLabel:'Activity Type',
+											   name:'activity',
+											   valueField: 'activity',
+											   queryMode:'local',
+											   value: 'All',
+											   store:['All','Potency','AC50','IC50','Inhibition','EC50','Activity','Ki'],
+											   displayField:'activity',
+											   autoSelect:true,
+											   forceSelection:true,
+											   id: 'activity'
+										},
 										{
 											xtype : 'button',
 											text : 'Download as SDF',
@@ -72,27 +86,27 @@ Ext
 											handler : function() {
 
 												console.log('Downloading SDF');
+												
+												var activity = Ext.ComponentQuery.query('#activity');
+												
+												console.log('ActivityType');
+												console.log(activity);
+												console.log(activity[0].getValue());
+												var activityType = activity[0].getValue();
+												
 												var fieldjobexecutionid = Ext.ComponentQuery
 														.query('#jobexecutionid');
 												console
 														.log(fieldjobexecutionid[0]
 																.getValue())
-
+												
 												if (Ext.getCmp('Activities').getValue()) {
-													window
-															.open( '/data/jobdatarawsdf/'
-																	+ fieldjobexecutionid[0]
-																			.getValue())
-												}
-												;
+													window.open( '/data/jobdatarawsdf/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
+												};
 
 												if (Ext.getCmp('Compounds').getValue()) {
-													window
-															.open( '/data/jobdatarawsdfag/'
-																	+ fieldjobexecutionid[0]
-																			.getValue())
-												}
-												;
+													window.open( '/data/jobdatarawsdfag/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
+												};
 
 											}
 										},
@@ -102,24 +116,20 @@ Ext
 											margin: '5 5 5 5',
 											handler : function() {
 												console.log('Downloading CSV');
-												var fieldjobexecutionid = Ext.ComponentQuery
-														.query('#jobexecutionid');
-
+												var fieldjobexecutionid = Ext.ComponentQuery.query('#jobexecutionid');
+												var activity = Ext.ComponentQuery.query('#activity');
+												
+												console.log('ActivityType');
+												console.log(activity);
+												console.log(activity[0].getValue());
+												var activityType = activity[0].getValue();
 												if (Ext.getCmp('Activities').getValue()) {
-													window
-															.open( '/data/jobdatarawcsv/'
-																	+ fieldjobexecutionid[0]
-																			.getValue())
-												}
-												;
+													window.open( '/data/jobdatarawcsv/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
+												};
 
 												if (Ext.getCmp('Compounds').getValue()) {
-													window
-															.open( '/data/jobdatarawcsvag/'
-																	+ fieldjobexecutionid[0]
-																			.getValue())
-												}
-												;
+													window.open( '/data/jobdatarawcsvag/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
+												};
 											}
 										}
 //										{

@@ -122,17 +122,19 @@ Ext.application({
 						items : [ {
 							xtype : "statisticschart",
 							title : "Filtering statistics chart",
-						// flex : 1
 						}, {
 							xtype : "statisticshistogram",
 							title : "Activities histogram",
-						// flex : 1
 						},
 						]
-					}, {
+					}, 
+					{
 						xtype : "statisticsgrid",
 						title : "Filtering statistics grid",
-					}, {
+					}, 
+					
+			
+					{
 						xtype : "jobdatafiltered",
 						title : "Filtered data",
 					}, {

@@ -37,23 +37,25 @@ GET     /data/jobexecutions							controllers.Application.jobexecutionsAll(filte
 GET     /data/jobdataraw							controllers.Application.jobdatadetailed(page:Int,start:Int,limit:Int,filter:String,filtered:Boolean=false)
 GET     /data/jobdatafiltered						controllers.Application.jobdatadetailed(page:Int,start:Int,limit:Int,filter:String,filtered:Boolean=true)
 
-GET     /data/jobdatarawsdf/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=false,format:String="sdf")
-GET     /data/jobdatafilteredsdf/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=false,format:String="sdf")
+GET     /data/jobdatarawsdf/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=false,format:String="sdf",activityType:String)
+GET     /data/jobdatafilteredsdf/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=false,format:String="sdf",activityType:String)
 
-GET     /data/jobdatarawsdfag/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=true,format:String="sdf")
-GET     /data/jobdatafilteredsdfag/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=true,format:String="sdf")
+GET     /data/jobdatarawsdfag/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=true,format:String="sdf",activityType:String)
+GET     /data/jobdatafilteredsdfag/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=true,format:String="sdf",activityType:String)
 
-GET     /data/jobdatarawcsv/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=false,format:String="csv")
-GET     /data/jobdatafilteredcsv/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=false,format:String="csv")
+GET     /data/jobdatarawcsv/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=false,format:String="csv",activityType:String)
+GET     /data/jobdatafilteredcsv/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=false,format:String="csv",activityType:String)
 
-GET     /data/jobdatarawcsvag/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=true,format:String="csv")
-GET     /data/jobdatafilteredcsvag/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=true,format:String="csv")
+GET     /data/jobdatarawcsvag/:job_execution_id	    controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=false,agregated:Boolean=true,format:String="csv",activityType:String)
+GET     /data/jobdatafilteredcsvag/:job_execution_id	controllers.Application.jobdataexport(job_execution_id:Int,filtered:Boolean=true,agregated:Boolean=true,format:String="csv",activityType:String)
 
 GET     /data/jobexec/:job_id						controllers.Application.jobExecAsync(job_id:Int)
 
 GET     /data/jobexecdelete/:job_execution_id		controllers.Application.jobExecutionDelete(job_execution_id:Int)
 
 GET     /data/jobstatistics							controllers.Application.getJobStatistics(page:Int,start:Int,limit:Int,filter:String)
+
+GET     /data/jobstatisticstype							controllers.Application.getJobStatisticsType(page:Int,start:Int,limit:Int,filter:String)
 
 GET     /data/jobstatisticshistogram				controllers.Application.getJobStatisticsHistogram(page:Int,start:Int,limit:Int,filter:String)
 

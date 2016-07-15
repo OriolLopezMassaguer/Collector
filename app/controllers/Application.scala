@@ -61,7 +61,7 @@ import play.api.libs.iteratee.Enumerator
 
 object Application extends Controller {
   //  val s = System.load("/opt/collector/lib/libGraphMolWrap.so")
-  //  val app = PaDELDescriptorApp.getApplication()
+
   var logger = play.api.Logger
   //Logger.info("Home: " + System.getenv("COLLECTOR_HOME"))
   ExtractionEngine.initEngine(System.getenv("COLLECTOR_HOME"))
@@ -133,7 +133,7 @@ object Application extends Controller {
   //  }
 
   def jobexecutionsAll(filter: String) = Action {
-    
+
     Logger.info("Action get job info")
     println("Action get job info")
     Logger.info("Filter: " + filter)
@@ -154,16 +154,23 @@ object Application extends Controller {
     Ok(js)
   }
 
-  def jobdataexport(job_execution_id: Int, filtered: Boolean, agregated: Boolean, format: String) = Action {
+  def jobdataexport(job_execution_id: Int, filtered: Boolean, agregated: Boolean, format: String, activityType: String) = Action {
     Logger.info("Action Download job execution info job execution id:" + job_execution_id)
     Logger.info(if (filtered) "Filtered" else "Not Filtered")
     Logger.info(if (agregated) "Compounds" else "Activities")
     Logger.info(format)
-    val file = exportData.exportexecutiondata(job_execution_id, filtered, agregated, format)
+    Logger.info("Activity Type: '" + activityType + "'")
+    val file = if (activityType == "All") {
+      Logger.info("All case");
+      exportData.exportexecutiondata(job_execution_id, filtered, agregated, format, None)
+    } else {
+      Logger.info("other case");
+      exportData.exportexecutiondata(job_execution_id, filtered, agregated, format, Some(activityType))
+    }
     getFileResultFromFile(file._1, file._2)
   }
 
-  def jobExecAsync(job_id: Int) = Action{
+  def jobExecAsync(job_id: Int) = Action {
     val res: Future[String] = scala.concurrent.Future { ExtractionEngine.executejob(job_id) }
     val futureResult: Future[SimpleResult] = res.map { resst => Ok("PI value computed: " + resst) }
     //futureResult
@@ -203,9 +210,34 @@ object Application extends Controller {
     database_eTOXOPS.db withDynSession {
       //val l = database_eTOXOPS.GetStatisticsForJobExecutionOldId(filterparameters("job_execution_id").toInt)
       //Logger.info("Job Statistics: \n" + Json.toJson(l))
-      val (l,js) = database_eTOXOPS.GetStatisticsForJobExecutionIdJSON(filterparameters("job_execution_id").toInt)
+      val (l, js) = database_eTOXOPS.GetStatisticsForJobExecutionIdJSON(filterparameters("job_execution_id").toInt)
       Ok("{success: true, total: " + l.size + ",jobstatistics:" + js + "}")
       //Ok("")
+    }
+  }
+
+
+  def getJobStatisticsType(page: Int, start: Int, limit: Int, filter: String) = Action {
+    val filterparameters = parseJsonFilters(filter)
+
+    Logger.info("Action job statistics type: ")
+    Logger.info("job execution id: " + filterparameters("job_execution_id"))
+
+    val jeid = filterparameters("job_execution_id")
+    println("JSType")
+    database_eTOXOPS.db withDynSession {
+      //val l = database_eTOXOPS.GetStatisticsByTypeForJobExecutionIdJSON(filterparameters("job_execution_id").toInt)
+      val l = database_eTOXOPS.GetStatisticsByTypeForJobExecutionIdJSON(page)
+      //Ok("{success: true, total: " + l.size + ",jobstatistics:" + js + "}")
+      println("L: " + l)
+      val query =
+        " select activity_type ,count(*) activities_count " +
+          " from job_data_raw_vw where job_execution_id=" + jeid +
+          " group by activity_type" +
+          " order by activity_type"
+      val js = db2JSON.getQueryJSONAll(query, "statsbytype")
+
+      Ok("{success: true, total: " + l.size + "," + js + "}")
     }
   }
 
@@ -255,10 +287,10 @@ object Application extends Controller {
     val sdf = comp.getSDFFromSMiles_CDK("CCCHC")
     Ok("{sdf:" + sdf + "}")
   }
-  
-    def testRDKit = Action {
+
+  def testRDKit = Action {
     val comp = es.imim.phi.collector.compounds.CompoundUtil
-    
+
     println(models.chemistry.CompoundUtil.getMWfromSMILES("CCC"))
     val sdf = comp.getSDFFromSMiles_RDKit("CCCC")
     Ok("{sdf:" + sdf + "}")

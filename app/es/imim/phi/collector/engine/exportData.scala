@@ -37,27 +37,27 @@ object exportData {
 
   var sqlConnection = database_eTOXOPS.sqlConnection
 
-  def queryExport(job_execution_id: Int, filtered: Boolean, agregated: Boolean) = {
+  def queryExport(job_execution_id: Int, filtered: Boolean, agregated: Boolean,activityType:Option[String]) = {
     database_eTOXOPS.db withDynSession {
       (filtered, agregated) match {
-        case (false, false) => database_eTOXOPS.GetRAWDataJobExecution(job_execution_id).selectStatement
-        case (true, false) => database_eTOXOPS.GetFilteredDataJobExecution(job_execution_id).selectStatement
-        case (false, true) => database_eTOXOPS.GetRAWDataAgJobExecution(job_execution_id).selectStatement
-        case (true, true) => database_eTOXOPS.GetFilteredDataAgJobExecution(job_execution_id).selectStatement
+        case (false, false) => database_eTOXOPS.GetRAWDataJobExecution(job_execution_id,activityType).selectStatement
+        case (true, false) => database_eTOXOPS.GetFilteredDataJobExecution(job_execution_id,activityType).selectStatement
+        case (false, true) => database_eTOXOPS.GetRAWDataAgJobExecution(job_execution_id,activityType).selectStatement
+        case (true, true) => database_eTOXOPS.GetFilteredDataAgJobExecution(job_execution_id,activityType).selectStatement
       }
     }
   }
-  def exportexecutiondata_filename(job_execution_id: Int, filtered: Boolean, agregated: Boolean, format: String, filename: String) = {
+  def exportexecutiondata_filename(job_execution_id: Int, filtered: Boolean, agregated: Boolean, format: String, filename: String,activityType:Option[String]) = {
     format match {
-      case "sdf" => exportexecutiondata2SDF_fileName(job_execution_id, filtered, agregated, filename)
-      case "csv" => exportexecutiondata2CSV_fileName(job_execution_id, filtered, agregated, filename)
+      case "sdf" => exportexecutiondata2SDF_fileName(job_execution_id, filtered, agregated, filename,activityType)
+      case "csv" => exportexecutiondata2CSV_fileName(job_execution_id, filtered, agregated, filename,activityType)
     }
   }
 
-  def exportexecutiondata(job_execution_id: Int, filtered: Boolean, agregated: Boolean, format: String) = {
+  def exportexecutiondata(job_execution_id: Int, filtered: Boolean, agregated: Boolean, format: String,activityType:Option[String]) = {
     format match {
-      case "sdf" => exportexecutiondata2SDF(job_execution_id, filtered, agregated)
-      case "csv" => exportexecutiondata2CSV(job_execution_id, filtered, agregated)
+      case "sdf" => exportexecutiondata2SDF(job_execution_id, filtered, agregated,activityType)
+      case "csv" => exportexecutiondata2CSV(job_execution_id, filtered, agregated,activityType)
     }
   }
 
@@ -68,8 +68,8 @@ object exportData {
     fileNamePrefix
   }
 
-  def exportexecutiondata2SDF_fileName(job_execution_id: Int, filtered: Boolean, agregated: Boolean, fileName: String) = {
-    var query = queryExport(job_execution_id, filtered, agregated)
+  def exportexecutiondata2SDF_fileName(job_execution_id: Int, filtered: Boolean, agregated: Boolean, fileName: String,activityType:Option[String]) = {
+    var query = queryExport(job_execution_id, filtered, agregated,activityType:Option[String])
     var out = new PrintStream(fileName)
     var resultSet = database_eTOXOPS.doQuerySQL(query)
     while (resultSet.next) {
@@ -125,13 +125,13 @@ object exportData {
 //    out.close()
 //  }
   
-  def exportexecutiondata2SDF(job_execution_id: Int, filtered: Boolean, agregated: Boolean) = {
+  def exportexecutiondata2SDF(job_execution_id: Int, filtered: Boolean, agregated: Boolean,activityType:Option[String]) = {
     val filename = FileUtils.getNewFilename(fileNamePrefix(job_execution_id, filtered, agregated), ".sdf", ExtractionEngine.exportDataDir)
-    exportexecutiondata2SDF_fileName(job_execution_id, filtered, agregated, filename)
+    exportexecutiondata2SDF_fileName(job_execution_id, filtered, agregated, filename,activityType:Option[String])
   }
 
-  def exportexecutiondata2CSV_fileName(job_execution_id: Int, filtered: Boolean, agregated: Boolean, fileName: String) = {
-    var query = queryExport(job_execution_id, filtered, agregated: Boolean)
+  def exportexecutiondata2CSV_fileName(job_execution_id: Int, filtered: Boolean, agregated: Boolean, fileName: String,activityType:Option[String]) = {
+    var query = queryExport(job_execution_id, filtered, agregated: Boolean,activityType:Option[String])
     Logger.debug("Query to export:\n" + query)
     var out = new PrintStream(fileName)
     database_eTOXOPS.doQuerySQL2Text(query, out)    
@@ -140,9 +140,9 @@ object exportData {
     (fileName, s.reverse.toList.mkString)
   }
 
-  def exportexecutiondata2CSV(job_execution_id: Int, filtered: Boolean, agregated: Boolean) = {
+  def exportexecutiondata2CSV(job_execution_id: Int, filtered: Boolean, agregated: Boolean,activityType:Option[String]) = {
     val filename = FileUtils.getNewFilename(fileNamePrefix(job_execution_id, filtered, agregated), ".csv", ExtractionEngine.exportDataDir)
-    exportexecutiondata2CSV_fileName(job_execution_id, filtered, agregated, filename)
+    exportexecutiondata2CSV_fileName(job_execution_id, filtered, agregated, filename,activityType:Option[String])
   }
 
 }
