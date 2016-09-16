@@ -81,8 +81,8 @@ You must see the following text appear in the screen:
 If you have any problem with the installation, contact us at the following e-mail addresses:
 
    Manuel Pastor  manuel.pastor@upf.edu
-   Oriol Lopez    olopez@imim.es
+   Oriol Lopez    oriol.lopez@upf.edu
 
 
-The source code can be obtained in http://phi.imim.es/collector
+
 
