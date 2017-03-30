@@ -80,7 +80,7 @@ You must see the following text appear in the screen:
 
 If you have any problem with the installation, contact us at the following e-mail addresses:
 
-   Manuel Pastor  manuel.pastor@upf.edu
+   Manuel Pastor    manuel.pastor@upf.edu
    Oriol López Massaguer    oriol.lopez@upf.edu
 
 
