@@ -1,7 +1,7 @@
 /*   
      Collector is a tool for obtaining bioactivity data from the Open PHACTS platform.
      Copyright (C) 2013 UPF
-     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol L. Massaguer(olopez@imim.es). 
+     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol López-Massaguer(oriol.lopez@upf.edu). 
  
     This file is part of Collector.
 
@@ -72,7 +72,7 @@ object ExtractionEngine {
   var opsAPI: OPSLDAScala = null
   var cachedapi: Boolean = false
   var bucketAPISize = -1
-  var version = "1.4.5"
+  var version = "1.4.6"
 
   def initEngine(home_path: String) = {
     Logger.info("Initializing collector " + this.version)
@@ -84,7 +84,7 @@ object ExtractionEngine {
   }
 
   def changeOPSAPIURL(opsapiurl: String) = {
-    this.opsAPI = new OPSLDAScala(opsapiurl, ExtractionEngine.appKey, ExtractionEngine.appId, true, ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword, ExtractionEngine.cachedapi)
+    this.opsAPI = new OPSLDAScala(opsapiurl, ExtractionEngine.appKey, ExtractionEngine.appId, ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword, ExtractionEngine.cachedapi)
   }
 
   def readProperties() {
@@ -134,7 +134,7 @@ object ExtractionEngine {
     Logger.info("Cached Api: " + ExtractionEngine.cachedapi)
     ExtractionEngine.bucketAPISize = defaultProps.getProperty("bucketAPISize").toInt
     Logger.info("Bucket API size: " + ExtractionEngine.bucketAPISize)
-    this.opsAPI = new OPSLDAScala(ExtractionEngine.OPSAPIURL, ExtractionEngine.appKey, ExtractionEngine.appId, true, ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword, ExtractionEngine.cachedapi)
+    this.opsAPI = new OPSLDAScala(ExtractionEngine.OPSAPIURL, ExtractionEngine.appKey, ExtractionEngine.appId, ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword, ExtractionEngine.cachedapi)
   }
 
   def computeSDF(jobExecutionId: String) = {

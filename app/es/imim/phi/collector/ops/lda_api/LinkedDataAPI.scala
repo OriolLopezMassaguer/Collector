@@ -1,7 +1,7 @@
 /*   
      Collector is a tool for obtaining bioactivity data from the Open PHACTS platform.
      Copyright (C) 2013 UPF
-     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol L. Massaguer(olopez@imim.es). 
+     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol López-Massaguer(oriol.lopez@upf.edu). 
  
     This file is part of Collector.
 
@@ -27,7 +27,7 @@ import java.net.URLEncoder
 
 import java.net.URL
 import java.net.HttpURLConnection
-import scala.collection.mutable.LinkedList
+import scala.collection.mutable.MutableList
 import play.api.libs.json.JsArray
 import play.api.libs.json.JsObject
 import org.apache.commons.io.IOUtils
@@ -67,7 +67,9 @@ object CHEMBLAPI {
 
 }
 
-class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale: Boolean, connURL: String, user: String, password: String, cachedapi: Boolean) {
+class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: String, user: String, password: String, cachedapi: Boolean) {
+
+  val extraparams = Map("app_id" -> appId, "app_key" -> appKey, "_format" -> "json")
 
   private def dbMemo: Memo[String, String] = {
     scalaz.Memo.memo[String, String](f =>
@@ -84,16 +86,18 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
         } else {
           val r = try {
             val v2 = f(k)
-            var insertStatement = conncachedb.prepareStatement("insert into ops_api_cached_calls (call,response,timestamp) values (?,?,?);")
-            insertStatement.setString(1, k)
-            insertStatement.setString(2, v2)
-            val today = new java.util.Date()
-            val ts = new java.sql.Timestamp(today.getTime())
-            insertStatement.setTimestamp(3, ts)
-            insertStatement.execute()
-            insertStatement.close()
-            st.close()
-            rs.close()
+            if (v2 != "") {
+              var insertStatement = conncachedb.prepareStatement("insert into ops_api_cached_calls (call,response,timestamp) values (?,?,?);")
+              insertStatement.setString(1, k)
+              insertStatement.setString(2, v2)
+              val today = new java.util.Date()
+              val ts = new java.sql.Timestamp(today.getTime())
+              insertStatement.setTimestamp(3, ts)
+              insertStatement.execute()
+              insertStatement.close()
+              st.close()
+              rs.close()
+            }
             v2
           } catch {
             case _: Throwable => {
@@ -115,24 +119,11 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
       })
   }
 
-  private def extraparams(threescale: Boolean) =
-    if (threescale)
-      Map("app_id" -> appId, "app_key" -> appKey, "_format" -> "json")
-    else
-      Map("_format" -> "json")
-
-  private def buildURL(callPart: String, threescale: Boolean) =
+  private def buildURL(callPart: String) =
     {
-      if (!threescale) {
-        val url = "http://api.openphacts.org" + callPart
-        Logger.debug("buildURL: " + url)
-        url
-
-      } else {
-        val url = coreAPIURL + callPart
-        Logger.debug("buildURL: " + url)
-        url
-      }
+      val url = this.coreAPIURL + callPart
+      Logger.debug("buildURL: " + url)
+      url
     }
 
   private val memoizedurlcall: String => String = this.dbMemo(urlcall _)
@@ -174,13 +165,6 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
       }
     }
 
-  //  private def makeCall_out(urlCall: String, parameters: Map[String, String]) = {
-  //    var params = for ((parameter, value) <- parameters) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
-  //    var call = urlCall + params.mkString("&")
-  //    println("URL: " + call)
-  //    urlcall(call)
-  //  }
-
   def urlCall(call: String) = {
     if (cachedapi)
       memoizedurlcall(call)
@@ -188,22 +172,22 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
       urlcall(call)
   }
 
-  private def makeCall(urlCall: String, parameters: Map[String, String], threescale: Boolean): String = {
-    var params = for ((parameter, value) <- parameters ++ extraparams(threescale)) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
+  private def makeCall(urlCall: String, parameters: Map[String, String]): String = {
+    val pars = parameters ++ extraparams
+    var params = for ((parameter, value) <- pars) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
     var call = urlCall + params.mkString("&")
     println("makeCall URL: " + call)
     Logger.info("makeCall URL: " + call)
-
     this.urlCall(call)
   }
 
   private def makeAPICall(urlpattern: String, threescale: Boolean, params: Map[String, String]): String = {
-    val urlcall = buildURL(urlpattern, threescale)
+    val urlcall = buildURL(urlpattern)
     //println("URLcall: " + urlcall)
     Logger.info("URLcall: " + urlcall)
     Logger.info("Pattern: " + urlpattern)
     Logger.info("Params: " + params)
-    makeCall(urlcall, params, threescale)
+    makeCall(urlcall, params)
   }
   def GetPharmacologyByTargetLDA_count(targetURI: String) = {
     val response = makeAPICall("/target/pharmacology/count?", true, Map("uri" -> targetURI))
@@ -326,7 +310,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
           val items = json \ "result" \ "items"
           val is = items match {
             case arrayitems: JsArray => extractItems(arrayitems)
-            case _ => List()
+            case _                   => List()
           }
           Logger.debug("Activities obtained: " + is.size)
           println("Excluded activities: " + excludedActivities)
@@ -345,20 +329,20 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, threescale:
 
   def CW_Search_Protein(q: String): Seq[Map[String, String]] = CW_process_matches(CW_Search_Protein_RAW(q))
 
-  def CW_process_matches(matchesString: String): LinkedList[Map[String, String]] = {
+  def CW_process_matches(matchesString: String): MutableList[Map[String, String]] = {
 
     def getValues(j: JsValue) = {
       j match {
         case j: JsArray => j
-        case _ => new JsArray(List(j))
+        case _          => new JsArray(List(j))
       }
     }
-    var matchesList = LinkedList[Map[String, String]]()
+    var matchesList = MutableList[Map[String, String]]()
     var js = Json.parse(matchesString)
     val vals = getValues(js \ "result" \ "primaryTopic" \ "result")
     val r = js \ "result" \ "primaryTopic" \ "result"
     if (r.isInstanceOf[JsUndefined])
-      LinkedList()
+      MutableList()
     else {
       var mats = for (a <- vals.value) yield (a.asInstanceOf[JsObject])
       for (mat <- mats) {

@@ -1,7 +1,7 @@
 /*   
      Collector is a tool for obtaining bioactivity dat	a from the Open PHACTS platform.
      Copyright (C) 2013 UPF
-     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol L. Massaguer(olopez@imim.es). 
+     Contributed by Manuel Pastor(manuel.pastor@upf.edu) and Oriol López-Massaguer(oriol.lopez@upf.edu). 
  
     This file is part of Collector.
 
