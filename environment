@@ -25,7 +25,7 @@ export JDK_KEYSTORE_PWD=changeit # JDK default keystore value
 export PGPASSWORD=postgres # password of postgres user
 export COLLECTOR_HOME=/opt/collector # place where collector.tgz is uncompressed
 export JAVA_HOME=$COLLECTOR_HOME/jdk # HOME of JDK. By default points to jdk bundled with collector
-export PG_HOME=/opt/PostgreSQL/9.3 # Location of Postgres installation
+export PG_HOME=/opt/PostgreSQL/9.6 # Location of Postgres installation
 
 # do not modify below this point
 export PGDATABASE=
