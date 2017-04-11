@@ -1,0 +1,8 @@
+﻿select * from job_execution order by job_execution_id desc
+
+--delete from job_execution where job_execution_id=179
+delete from job_data_raw where job_execution_id not in (select job_execution_id from job_execution)
+
+delete from job_data_filtered where job_execution_id not in (select job_execution_id from job_execution)
+
+select * from job order by job_id desc

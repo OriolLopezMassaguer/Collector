@@ -1,0 +1,123 @@
+﻿----------------------------
+-- Curation engine ---------
+----------------------------
+
+insert into job_filtering (job_filtering_id,job_filtering_description) VALUES (1,'LipRo5/Atom Validation + Activity');
+insert into job_filtering (job_filtering_id,job_filtering_description) VALUES (2,'LipRo5/Atom Validation + IC50');
+insert into job_filtering (job_filtering_id,job_filtering_description) VALUES (3,'LipRo5/Atom Validation + Inhibition');
+insert into job_filtering (job_filtering_id,job_filtering_description) VALUES (4,'LipRo5/Atom Validation + Ki');
+
+insert into filter (filter_id,filter_description, filter_class) VALUES (1,'Lipinski Ro5','es.imim.phi.collector.compounds.CompoundFilterRuleOf5');
+-- insert into filter (filter_id,filter_description, filter_class) VALUES (2,'Corina str. gen.','es.imim.phi.collector.compounds.CompoundFilterCorina');
+insert into filter (filter_id,filter_description, filter_class) VALUES (3,'Validate Atoms','es.imim.phi.collector.compounds.CompoundFilterValidAtoms');
+insert into filter (filter_id,filter_description, filter_class) VALUES (4,'Activity','es.imim.phi.collector.compounds.CompoundFilterActivity');
+insert into filter (filter_id,filter_description, filter_class) VALUES (5,'IC50','es.imim.phi.collector.compounds.CompoundFilterIC50');
+insert into filter (filter_id,filter_description, filter_class) VALUES (6,'Inhibition','es.imim.phi.collector.compounds.CompoundFilterInhibition');
+insert into filter (filter_id,filter_description, filter_class) VALUES (7,'Ki','es.imim.phi.collector.compounds.CompoundFilterKi');
+
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (1,4,1);
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (1,1,2); 
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (1,3,3); 
+--insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (1,2,4);
+
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (2,5,1);
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (2,1,2); 
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (2,3,3); 
+--insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (2,2,4);
+
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (3,6,1);
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (3,1,2); 
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (3,3,3); 
+--insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (3,2,4);
+
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (4,7,1);
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (4,1,2); 
+insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (4,3,3); 
+--insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (4,2,4);
+
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('target_cwiki','STRING','target_cwiki');	
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('compound_cwiki','STRING','compound_cwiki');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('activity_id','STRING','activity_id');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('assay_id','STRING','assay_id');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('target_id','STRING','target_id');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('molecule_id','STRING','molecule_id');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('cs_id','STRING','cs_id');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('relation','STRING','relation');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('standard_units','STRING','standard_units');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('standard_value','FLOAT','standard_value');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('activity_value','FLOAT','activity_value');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('activity_type','STRING','activity_type');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('inchi','STRING','inchi');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('inchikey','STRING','inchikey');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('smiles','STRING','smiles');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('ro5violations','FLOAT','ro5violations');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('target_organism','STRING','target_organism');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('assay_organism','STRING','assay_organism');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('pmid','STRING','pmid');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('full_mwt','FLOAT','full_mwt');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('compound_pref_label','STRING','compound_pref_label');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('target_pref_label','STRING','target_pref_label');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('assay_description','STRING','assay_description');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('target_title','STRING','target_title');
+INSERT INTO job_parameter (job_parameterSQL,job_parameterSQLType,job_parameterLDA) VALUES ('job_execution_id','INTEGER','job_execution_id');
+
+---------------------
+-----  Job & Parameters
+---------------------
+
+insert into job_extraction (job_extraction_description) VALUES ('Potassium voltage-gated channel subfamily H member 2 (Homo sapiens): WP 3/4 Shortlist');
+insert into job_extraction (job_extraction_description) VALUES ('ATP-binding cassette sub-family G member 2 (Homo sapiens): WP 3/4 Shortlist');
+insert into job_extraction (job_extraction_description) VALUES ('Retinoic acid receptor alpha (Homo sapiens): WP 3/4 Shortlist');
+insert into job_extraction (job_extraction_description) VALUES ('KCNQ1');
+
+insert into job_parameter_value (job_extraction_id,job_parameter_id,job_parameter_value) VALUES (1,1,'http://www.conceptwiki.org/concept/d2a9dbd1-78fb-4f2f-adba-9be028a15bd1');
+--d2a9dbd1-78fb-4f2f-adba-9be028a15bd1
+
+insert into job_parameter_value (job_extraction_id,job_parameter_id,job_parameter_value) VALUES (2,1,'http://www.conceptwiki.org/concept/4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5');
+ --4f20b1a7-b0f6-437b-b23f-16d7ec6d96b5
+ 
+insert into job_parameter_value (job_extraction_id,job_parameter_id,job_parameter_value) VALUES (3,1,'http://www.conceptwiki.org/concept/51dd31a8-1089-43e2-ba6c-5ce8e0a53165');
+ --51dd31a8-1089-43e2-ba6c-5ce8e0a53165
+-- targets ivan
+-- Potassium voltage-gated channel subfamily H member 2 (Homo sapiens)
+-- Voltage-dependent L-type calcium channel subunit alpha-1C (Homo sapiens)
+-- KCNQ1 // Potassium voltage-gated channel subfamily KQT member 1 (Homo sapiens)
+
+insert into job_parameter_value (job_extraction_id,job_parameter_id,job_parameter_value) VALUES (4,1,'http://www.conceptwiki.org/concept/4d5b75f1-2ab3-45af-8e44-e7b0b250ba25');
+ 
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('Potassium voltage-gated channel filt Activity',1,1);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('ATP-binding cassette filt Activity',2,1);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('Retinoic acid receptor alpha filt Activity',3,1);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('KNCQ1 filt Activity',4,1);
+
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('Potassium voltage-gated channel filt IC50',1,2);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('ATP-binding cassette filt IC50',2,2);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('Retinoic acid receptor alpha filt IC50',3,2);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('KNCQ1 filt IC50',4,2);
+
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('Potassium voltage-gated channel filt Inhibition',1,3);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('ATP-binding cassette filt Inhibition',2,3);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('Retinoic acid receptor alpha filt Inhibition',3,3);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('KNCQ1 filt Inhibition',4,3);
+
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('Potassium voltage-gated channel filt Ki',1,4);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('ATP-binding cassette filt Ki',2,4);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('Retinoic acid receptor alpha filt Ki',3,4);
+insert into job (job_description,job_extraction_id,job_filtering_id) values ('KNCQ1 filt Ki',4,4);
+
+-----------------------
+-- otros tests
+-----------------------
+
+-- insert into job_filtering (job_filtering_id,job_filtering_description) VALUES (5,'Activity');
+-- insert into job_filtering (job_filtering_id,job_filtering_description) VALUES (6,'IC50');
+-- insert into job_filtering (job_filtering_id,job_filtering_description) VALUES (7,'Inhibition');
+-- insert into job_filtering (job_filtering_id,job_filtering_description) VALUES (8,'Ki');
+-- insert into job (job_description,job_extraction_id,job_filtering_id) values ('Potassium voltage-gated channel Activity filt Activity',1,5);
+-- insert into job (job_description,job_extraction_id,job_filtering_id) values ('Potassium voltage-gated channel Activity filt IC50',1,6);
+-- insert into job (job_description,job_extraction_id,job_filtering_id) values ('Potassium voltage-gated channel Activity filt Inhibition',1,7);
+-- insert into job (job_description,job_extraction_id,job_filtering_id) values ('Potassium voltage-gated channel Activity filt Ki',1,8);
+-- insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (5,4,1);
+-- insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (6,5,1);
+-- insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (7,6,1);
+-- insert into job_filtering_filter (job_filtering_id, filter_id,curation_order) VALUES (8,7,1);
