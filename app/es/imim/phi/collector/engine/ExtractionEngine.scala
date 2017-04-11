@@ -72,7 +72,8 @@ object ExtractionEngine {
   var opsAPI: OPSLDAScala = null
   var cachedapi: Boolean = false
   var bucketAPISize = -1
-  var version = "1.4.6"
+  var version = "1.4.7"
+  var CDKit = true
 
   def initEngine(home_path: String) = {
     Logger.info("Initializing collector " + this.version)
@@ -134,6 +135,13 @@ object ExtractionEngine {
     Logger.info("Cached Api: " + ExtractionEngine.cachedapi)
     ExtractionEngine.bucketAPISize = defaultProps.getProperty("bucketAPISize").toInt
     Logger.info("Bucket API size: " + ExtractionEngine.bucketAPISize)
+    ExtractionEngine.CDKit = defaultProps.getProperty("toolkitSDF") match {
+      case "RDKit" => false
+      case _       => true
+    }
+
+    Logger.info("CDKit: " + ExtractionEngine.CDKit)
+
     this.opsAPI = new OPSLDAScala(ExtractionEngine.OPSAPIURL, ExtractionEngine.appKey, ExtractionEngine.appId, ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword, ExtractionEngine.cachedapi)
   }
 
@@ -144,7 +152,7 @@ object ExtractionEngine {
         case (jobExecutionId, job_data_raw_id, cs_id, smiles, sdf2d) => {
           i = i + 1
           if ((i % 100) == 0) println("SDF computing : " + i)
-          var sdf = CompoundUtil.getSDFFromSmiles(smiles, true)
+          var sdf = CompoundUtil.getSDFFromSmiles(smiles, ExtractionEngine.CDKit)
           val q1 = for (msg <- database_eTOXOPS.job_data_raw_for_sdf if msg.job_data_raw_id === job_data_raw_id)
             yield (msg.sdf2d)
           q1.update(Option(sdf))
@@ -319,8 +327,8 @@ object ExtractionEngine {
             i = i + 1
             if ((i % 100) == 0) println("Filtering : " + i)
 
-            if ((i % 1000) == 0) System.gc() 
-              
+            if ((i % 1000) == 0) System.gc()
+
             for ((filter_id, filter, filtering_id, fname) <- filters) {
               //var filterPass = filter.filterPass(compound)
               val filter = CompoundsFilters.filters(fname)

@@ -22,6 +22,9 @@
 
 package es.imim.phi.collector.compounds
 
+import es.imim.phi.collector.engine.ExtractionEngine
+import java.sql.DriverManager
+
 import es.imim.phi.collector.engine.FileUtils
 import scala.sys.process._
 import org.openscience.cdk.smiles.SmilesParser
@@ -114,6 +117,7 @@ import java.awt.image.RenderedImage
 import java.nio.file.FileSystems
 import play.api.libs.json.Json
 import java.io.PrintStream
+import scalaz.Memo
 
 object CDKutils {
   var smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance())
@@ -148,6 +152,7 @@ object CompoundUtil {
         getIMGFromSMiles_CDK(sm)
       else
         getIMGFromSMiles_RDKit(sm)
+
       case None => noStructureIMG
     }
   }
@@ -234,12 +239,67 @@ object CompoundUtil {
     //    imageString
   }
 
+  private def dbMemo: Memo[String, String] = {
+    scalaz.Memo.memo[String, String](f =>
+      k => {
+
+        var conncachedb = DriverManager.getConnection(ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword)
+        val q = "select * from ops_api_cached_calls where call='" + k + "'"
+        val st = conncachedb.createStatement()
+        val rs = st.executeQuery(q)
+        val v = if (rs.next()) {
+          val str = rs.getString(2)
+          st.close()
+          rs.close()
+          str
+        } else {
+          val r = try {
+            val v2 = f(k)
+            if (v2 != "") {
+              var insertStatement = conncachedb.prepareStatement("insert into ops_api_cached_calls (call,response,timestamp) values (?,?,?);")
+              insertStatement.setString(1, k)
+              insertStatement.setString(2, v2)
+              val today = new java.util.Date()
+              val ts = new java.sql.Timestamp(today.getTime())
+              insertStatement.setTimestamp(3, ts)
+              insertStatement.execute()
+              insertStatement.close()
+              st.close()
+              rs.close()
+            }
+            v2
+          } catch {
+            case _: Throwable => {
+              val q = "select * from ops_api_cached_calls where call='" + k + "'"
+              val st2 = conncachedb.createStatement()
+              val rs = st2.executeQuery(q)
+              val s = rs.getString(2)
+              rs.close()
+              st.close()
+              st2.close()
+              s
+            }
+          }
+          r
+        }
+        rs.close()
+        conncachedb.close()
+        v
+      })
+  }
+
+  val getSDFFromSMiles_CDK_memoed = (smi: String) => this.dbMemo(getSDFFromSMiles_CDK _)
+
   def getSDFFromSmiles(smile: Option[String], cdk: Boolean): String = {
     smile match {
-      case Some(sm) => if (cdk)
-        getSDFFromSMiles_CDK(sm)
-      else
-        getSDFFromSMiles_RDKit(sm)
+      case Some(sm) =>
+        if (cdk)
+          getSDFFromSMiles_CDK(sm)
+        else //getSDFFromSMiles_RDKit(sm){
+        {
+          println("Computing SDF RDKit ...")
+          models.chemistry.CompoundUtil.getSDFFromSMILES(sm)
+        }
 
     }
   }
@@ -437,8 +497,8 @@ object CompoundUtil {
 }
 
 object CompoundsFilters {
-  
-  val validAtoms = Set("H","C","N","O","S","P","Cl","I","Br","F")
+
+  val validAtoms = Set("H", "C", "N", "O", "S", "P", "Cl", "I", "Br", "F")
 
   val filters = Map("NoFiltering" -> ((c: CompoundSimple) => true),
     "LipinskiRo5" -> ((c: CompoundSimple) => c.passesRuleOf5),
@@ -467,7 +527,7 @@ class CompoundSimple(activityType: Option[String], smiles: String) {
   def filterByActivityType(activityTypeFilter: String): Boolean = activityType.getOrElse("") equals activityTypeFilter
 
   def containsValidAtoms(validAtoms: Set[String]) =
-    {     
+    {
       val listatoms = moleculeCDK.atoms().toList
       Logger.debug(listatoms.map(atom => atom.getSymbol()).mkString)
       val b = listatoms.map(atom => validAtoms.contains(atom.getSymbol())).fold(true)(_ && _)
