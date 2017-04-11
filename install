@@ -34,12 +34,12 @@ else
 fi
 
 # Creating collector database
-psql --echo-queries < $COLLECTOR_HOME/database/create_database_v1.4.sql
+psql --echo-queries < $COLLECTOR_HOME/database/create_database_v1.4.7.sql
 
 # creating the schema and populating it
 export PGDATABASE=collector
-$PG_HOME/bin/psql -q < $COLLECTOR_HOME/database/schema_v1.4.sql
-$PG_HOME/bin/psql -q < $COLLECTOR_HOME/database/initial_data_v1.4.sql
+$PG_HOME/bin/psql -q < $COLLECTOR_HOME/database/schema_v1.4.7.sql
+$PG_HOME/bin/psql -q < $COLLECTOR_HOME/database/initial_data_v1.4.7.sql
 
 # import certificate
 $JAVA_HOME/bin/keytool -delete -alias ops_dev -keystore $JAVA_HOME/jre/lib/security/cacerts -noprompt -storepass $JDK_KEYSTORE_PWD
