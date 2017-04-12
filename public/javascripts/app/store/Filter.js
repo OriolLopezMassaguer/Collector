@@ -26,8 +26,7 @@ Ext.define('AM.store.Filter', {
     remoteFilter: true,
     proxy: {
         type: 'ajax',
-        //url:   AM.config.Settings.hostAppServer+'/data/filtersforstring',
-        url:   '/data/filtersforstring',
+        url:   AM.config.Settings.hostAppServer+'/data/filtersforstring',        
         reader: {
             type: 'json',
             root: 'filters',

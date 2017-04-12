@@ -25,8 +25,7 @@ Ext.define('AM.store.Job', {
     model: 'AM.model.Job',
     proxy: {
         type: 'ajax',
-        //url:   AM.config.Settings.hostAppServer+'/data/job',
-        url:  '/data/job',
+        url:   AM.config.Settings.hostAppServer+'/data/job',
         reader: {
             type: 'json',
             root: 'jobs',

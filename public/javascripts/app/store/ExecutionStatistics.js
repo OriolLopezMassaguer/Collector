@@ -30,7 +30,7 @@ Ext.define('AM.store.ExecutionStatistics', {
     },
     proxy: {
 	  type: 'ajax',
-	  url:  '/data/jobstatistics',
+	  url:  AM.config.Settings.hostAppServer+'/data/jobstatistics',
 	  reader: {
 		  type: 'json',
 		  root: 'jobstatistics',

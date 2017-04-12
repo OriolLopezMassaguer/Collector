@@ -677,16 +677,6 @@ object database_eTOXOPS {
     }
   }
 
-  def GetURLForCBN(job_execution_id: Int) = {
-    var urls = List[String]()
-    database_eTOXOPS.db withDynSession {
-      //update2015
-      //urls = database_eTOXOPS.GetCSIDForJobexecutionFiltered(job_execution_id).to[List]()      
-    }
-    Logger.info("Sending to CBN : " + urls.toSet.take(100).size + " compounds")
-    ExtractionEngine.URLCBN + urls.toSet.take(ExtractionEngine.numcompoundsCBN.toInt).mkString(",")
-  }
-
   def GetFilteringProtocolForString(protocol: String) = {
     Logger.info("Filtering protocol for:" + protocol)
     val q = "select job_filtering_id,job_filtering_description from job_filtering where job_filtering_description like'%" + protocol + "%'"

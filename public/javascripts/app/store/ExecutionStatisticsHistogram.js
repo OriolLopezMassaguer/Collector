@@ -27,8 +27,7 @@ Ext.define('AM.store.ExecutionStatisticsHistogram', {
 
     proxy: {
 	  type: 'ajax',
-	  //url:   AM.config.Settings.hostAppServer+'/data/jobstatisticshistogram',
-	  url:   '/data/jobstatisticshistogram',
+	  url:   AM.config.Settings.hostAppServer+'/data/jobstatisticshistogram',
 	  reader: {
 		  type: 'json',
 		  root: 'jobstatisticshistogram',

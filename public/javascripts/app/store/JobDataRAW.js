@@ -27,8 +27,7 @@ Ext.define('AM.store.JobDataRAW', {
     autoLoad: false,
     proxy: {
         type: 'ajax',
-        //url:  AM.config.Settings.hostAppServer+'/data/jobdataraw',
-        url:  '/data/jobdataraw',
+        url:  AM.config.Settings.hostAppServer+'/data/jobdataraw',        
         reader: {
             type: 'json',
             root: 'jobdatadetailed',

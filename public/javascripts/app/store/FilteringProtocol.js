@@ -26,8 +26,7 @@ Ext.define('AM.store.FilteringProtocol', {
     remoteFilter: true,
     proxy: {
         type: 'ajax',
-        //url: AM.config.Settings.hostAppServer+'/data/protocolsforstring',
-        url: '/data/protocolsforstring',
+        url: AM.config.Settings.hostAppServer+'/data/protocolsforstring',
         reader: {
             type: 'json',
             root: 'protocols',

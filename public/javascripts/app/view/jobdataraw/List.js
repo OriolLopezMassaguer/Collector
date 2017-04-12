@@ -101,11 +101,11 @@ Ext
 																.getValue())
 												
 												if (Ext.getCmp('Activities').getValue()) {
-													window.open( '/data/jobdatarawsdf/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
+													window.open( AM.config.Settings.hostAppServer+'/data/jobdatarawsdf/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
 												};
 
 												if (Ext.getCmp('Compounds').getValue()) {
-													window.open( '/data/jobdatarawsdfag/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
+													window.open( AM.config.Settings.hostAppServer+'/data/jobdatarawsdfag/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
 												};
 
 											}
@@ -124,40 +124,14 @@ Ext
 												console.log(activity[0].getValue());
 												var activityType = activity[0].getValue();
 												if (Ext.getCmp('Activities').getValue()) {
-													window.open( '/data/jobdatarawcsv/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
+													window.open( AM.config.Settings.hostAppServer+'/data/jobdatarawcsv/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
 												};
 
 												if (Ext.getCmp('Compounds').getValue()) {
-													window.open( '/data/jobdatarawcsvag/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
+													window.open( AM.config.Settings.hostAppServer+'/data/jobdatarawcsvag/' + fieldjobexecutionid[0].getValue() +'?activityType='+ activityType);
 												};
 											}
-										}
-//										{
-//											xtype : 'button',
-//											text : 'View in CBN',
-//											margin : '5 5 5 5',
-//											handler : function() {											
-//												console.log("View data in CBN");
-//												var fieldjobexecutionid = Ext.ComponentQuery.query('#jobexecutionid');
-//											    Ext.Ajax.request({
-//											        //url: AM.config.Settings.hostAppServer+'/data/jobcbnlinkout/'+fieldjobexecutionid[0].getValue(),
-//											        url: '/data/jobcbnlinkoutraw/'+fieldjobexecutionid[0].getValue(),
-//											        success: function(response, opts) {
-//											        	console.log('CBN link!');	        	
-//											            var obj = Ext.decode(response.responseText)
-//											            console.log(response.responseText)
-//											            console.log(obj)
-//											            console.log(obj.url)
-//											            window.open(obj.url)	            
-//											        },
-//											        failure: function(response, opts) {
-//											            console.log('server-side failure with status code ' + response.status);
-//											        }
-//											    });
-//											},
-//										}
-										
-										
+										}																	
 										]
 							},
 

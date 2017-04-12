@@ -27,8 +27,7 @@ Ext.define('AM.store.JobDataFiltered', {
     autoLoad: false, 
     proxy: {
         type: 'ajax',
-        //url:  AM.config.Settings.hostAppServer+'/data/jobdatafiltered',
-        url:  '/data/jobdatafiltered',
+        url:  AM.config.Settings.hostAppServer+'/data/jobdatafiltered',        
         reader: {
             type: 'json',
             root: 'jobdatadetailed',

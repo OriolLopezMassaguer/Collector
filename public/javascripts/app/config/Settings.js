@@ -22,6 +22,6 @@
 
 Ext.define('AM.config.Settings', {
     singleton: true,
-    hostAppServer: ''
+    hostAppServer: '/collector'
 
 });

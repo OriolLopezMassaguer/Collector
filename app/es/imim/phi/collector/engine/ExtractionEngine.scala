@@ -64,8 +64,6 @@ object ExtractionEngine {
   //var filtering_id = ""
   var appBasePath = ""
   var externalToolsBasePath = ""
-  var URLCBN = ""
-  var numcompoundsCBN = ""
   var inputDatadir = ""
   var appKey = ""
   var appId = ""
@@ -123,10 +121,6 @@ object ExtractionEngine {
     Logger.info("export data dir: " + ExtractionEngine.exportDataDir)
     ExtractionEngine.inputDatadir = appBasePath + defaultProps.getProperty("inputDatadir")
     Logger.info("input data dir: " + ExtractionEngine.inputDatadir)
-    ExtractionEngine.URLCBN = defaultProps.getProperty("URLCBN")
-    Logger.info("URL CBN: " + ExtractionEngine.URLCBN)
-    ExtractionEngine.numcompoundsCBN = defaultProps.getProperty("numcompoundsCBN")
-    Logger.info("Number compounds CBN: " + ExtractionEngine.numcompoundsCBN)
     ExtractionEngine.appId = defaultProps.getProperty("appId")
     Logger.info("AppId: " + ExtractionEngine.appId)
     ExtractionEngine.appKey = defaultProps.getProperty("appKey")

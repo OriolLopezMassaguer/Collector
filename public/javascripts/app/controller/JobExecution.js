@@ -97,8 +97,7 @@ Ext.define('AM.controller.JobExecution', {
 		console.log("View data in CBN");
 		var fieldjobexecutionid = Ext.ComponentQuery.query('#jobexecutionid');
 	    Ext.Ajax.request({
-	        //url: AM.config.Settings.hostAppServer+'/data/jobcbnlinkout/'+fieldjobexecutionid[0].getValue(),
-	        url: '/data/jobcbnlinkout/'+fieldjobexecutionid[0].getValue(),
+	        url: AM.config.Settings.hostAppServer+'/data/jobcbnlinkout/'+fieldjobexecutionid[0].getValue(),	        
 	        success: function(response, opts) {
 	        	console.log('CBN link!');	        	
 	            var obj = Ext.decode(response.responseText)
@@ -119,8 +118,7 @@ Ext.define('AM.controller.JobExecution', {
 		    console.log('Deleting job execution'+fieldjobexecutionid[0].getValue());
 		    var jobexecutionstore= Ext.data.StoreManager.lookup('JobExecution');
 		    Ext.Ajax.request({
-		        //url: AM.config.Settings.hostAppServer+'/data/jobexecdelete/'+fieldjobexecutionid[0].getValue(),
-		        url: '/data/jobexecdelete/'+fieldjobexecutionid[0].getValue(),
+		        url: AM.config.Settings.hostAppServer+'/data/jobexecdelete/'+fieldjobexecutionid[0].getValue(),		        
 		        success: function(response, opts) {
 		        	console.log('Delete job execution!');
 		            var obj = Ext.decode(response.responseText);

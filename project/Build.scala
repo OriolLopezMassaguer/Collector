@@ -27,7 +27,7 @@ import PlayKeys._
 
 object ApplicationBuild extends Build {
   val appName = "Collector"
-  val appVersion = "1.4.6"
+  val appVersion = "1.4.7"
 
   val appDependencies = Seq(
     //"org.apache.commons" % "commons-lang3" % "3.1",

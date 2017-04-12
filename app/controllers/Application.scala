@@ -89,7 +89,7 @@ object Application extends Controller {
     val file = new java.io.File(localfilename)
     val fileContent: Enumerator[Array[Byte]] = Enumerator.fromFile(file)
     Logger.info("Result!")
-    SimpleResult(
+    Result(
       header = ResponseHeader(200,
         Map(
           CONTENT_LENGTH -> file.length.toString,
@@ -172,7 +172,7 @@ object Application extends Controller {
 
   def jobExecAsync(job_id: Int) = Action {
     val res: Future[String] = scala.concurrent.Future { ExtractionEngine.executejob(job_id) }
-    val futureResult: Future[SimpleResult] = res.map { resst => Ok("PI value computed: " + resst) }
+    val futureResult: Future[Result] = res.map { resst => Ok("PI value computed: " + resst) }
     //futureResult
     Ok("")
   }
@@ -186,7 +186,7 @@ object Application extends Controller {
   def jobDelete(job_id: Int) = Action {
     Logger.info("Action delete job")
     Logger.info("Job id: " + job_id)
-    var deleteq = database_eTOXOPS.job.where(_.job_id === job_id)
+    var deleteq = database_eTOXOPS.job.filter(_.job_id === job_id)
     Logger.debug(deleteq.deleteStatement)
     database_eTOXOPS.db withDynSession { deleteq.delete }
     Ok("{success: true}")
@@ -194,7 +194,7 @@ object Application extends Controller {
 
   def jobExecutionDelete(job_execution_id: Int) = Action {
     Logger.info("Action delete job execution: " + job_execution_id)
-    val deleteq = database_eTOXOPS.job_execution.where(_.job_execution_id === job_execution_id)
+    val deleteq = database_eTOXOPS.job_execution.filter(_.job_execution_id === job_execution_id)
     Logger.debug(deleteq.deleteStatement)
     //Akka.system.scheduler.scheduleOnce(10 milliseconds) {
     database_eTOXOPS.db withDynSession { deleteq.delete }
@@ -215,7 +215,6 @@ object Application extends Controller {
       //Ok("")
     }
   }
-
 
   def getJobStatisticsType(page: Int, start: Int, limit: Int, filter: String) = Action {
     val filterparameters = parseJsonFilters(filter)
@@ -253,47 +252,17 @@ object Application extends Controller {
       Ok("{success: true, total: " + l.size + ",jobstatisticshistogram:" + Json.toJson(l) + "}")
     }
   }
-  def getURLForCBNFiltered(job_execution_id: Int) = getURLForCBN(job_execution_id, true)
-  def getURLForCBNRAW(job_execution_id: Int) = getURLForCBN(job_execution_id, false)
-
-  def getURLForCBN(job_execution_id: Int, filtered: Boolean) = Action {
-    Logger.info("Action get URLs for CBN")
-    //val cbnurls = database_eTOXOPS.db withDynSession { database_eTOXOPS.GetURLForCBN(job_execution_id) }   "
-    val sql = if (filtered)
-      "select cs_id from job_data_filtered_vw where job_execution_id=" + job_execution_id + " limit " + ExtractionEngine.numcompoundsCBN.toInt
-    else
-      "select cs_id from job_data_vw where job_execution_id=" + job_execution_id + " limit " + ExtractionEngine.numcompoundsCBN.toInt
-    println(sql)
-    val rs = database_eTOXOPS.doQuerySQL(sql)
-    var lurls = scala.collection.mutable.LinkedList[String]()
-    while (rs.next) {
-      println(rs.getString(1))
-      val ur = rs.getString(1)
-      lurls = lurls ++ List(ur)
-      //lurls += ur
-      //lurls=lurlsF+rs.getString(1)
-    }
-    rs.close()
-    println("end query")
-    println(lurls.size)
-    val cbnurls = ExtractionEngine.URLCBN + lurls.toSet.take(ExtractionEngine.numcompoundsCBN.toInt).mkString(",")
-    Logger.debug(cbnurls)
-    println(cbnurls)
-    Ok("{success: true, url:\"" + cbnurls + "\"}")
-  }
-
+  
   def testCDK = Action {
     val comp = es.imim.phi.collector.compounds.CompoundUtil
     val sdf = comp.getSDFFromSMiles_CDK("CCCHC")
-    Ok("{sdf:" + sdf + "}")
+    Ok(sdf)
   }
 
   def testRDKit = Action {
-    val comp = es.imim.phi.collector.compounds.CompoundUtil
-
-    println(models.chemistry.CompoundUtil.getMWfromSMILES("CCC"))
+    val comp = es.imim.phi.collector.compounds.CompoundUtil   
     val sdf = comp.getSDFFromSMiles_RDKit("CCCC")
-    Ok("{sdf:" + sdf + "}")
+    Ok(sdf)
   }
 
   def getFilters(page: Int, start: Int, limit: Int, filter_string: String) = Action {

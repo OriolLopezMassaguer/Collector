@@ -1,3 +1,1362 @@
-2016-06-30 08:14:27,583 - [INFO] - from play in pool-6-thread-1 
+2017-04-12 09:25:06,895 - [INFO] - from play in pool-6-thread-4 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+2017-04-12 09:25:15,750 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2017-04-12 09:25:15,937 - [INFO] - from application in New I/O worker #1 
+Initializing collector 1.4.7
+
+2017-04-12 09:25:15,940 - [INFO] - from application in New I/O worker #1 
+Application path /opt/collector
+
+2017-04-12 09:25:15,942 - [INFO] - from application in New I/O worker #1 
+Reading Properties
+
+2017-04-12 09:25:16,615 - [INFO] - from application in New I/O worker #1 
+dbUser: 
+
+2017-04-12 09:25:16,616 - [INFO] - from application in New I/O worker #1 
+dbPassword: 
+
+2017-04-12 09:25:16,617 - [INFO] - from application in New I/O worker #1 
+OPS API URL: https://beta.openphacts.org/2.1
+
+2017-04-12 09:25:16,618 - [INFO] - from application in New I/O worker #1 
+export data dir: logs/
+
+2017-04-12 09:25:16,619 - [INFO] - from application in New I/O worker #1 
+input data dir: /opt/collector/input
+
+2017-04-12 09:25:16,620 - [INFO] - from application in New I/O worker #1 
+AppId: 4eb73c98
+
+2017-04-12 09:25:16,621 - [INFO] - from application in New I/O worker #1 
+AppKey: c237c00c011138cbb5c2ccf8279c5cc6
+
+2017-04-12 09:25:16,623 - [INFO] - from application in New I/O worker #1 
+Cached Api: true
+
+2017-04-12 09:25:16,624 - [INFO] - from application in New I/O worker #1 
+Bucket API size: 500
+
+2017-04-12 09:25:16,626 - [INFO] - from application in New I/O worker #1 
+CDKit: false
+
+2017-04-12 09:25:16,971 - [INFO] - from akka.event.slf4j.Slf4jLogger in play-akka.actor.default-dispatcher-2 
+Slf4jLogger started
+
+2017-04-12 09:25:20,201 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Action get all jobs info
+
+2017-04-12 09:25:22,390 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2017-04-12 09:25:22,391 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"121"}]
+
+2017-04-12 09:25:22,392 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2017-04-12 09:25:22,636 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,121))
+
+2017-04-12 09:25:22,638 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:121
+
+2017-04-12 09:25:24,632 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2017-04-12 09:25:24,634 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_execution_id,309))
+
+2017-04-12 09:25:24,720 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action job statistics: 
+
+2017-04-12 09:25:24,729 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+job execution id: 309
+
+2017-04-12 09:25:24,756 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Parsing filters
+
+2017-04-12 09:25:24,761 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+ListBuffer((job_execution_id,309))
+
+2017-04-12 09:25:24,790 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action job execution histogram statistics
+
+2017-04-12 09:25:24,790 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:24,791 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_execution_id,309))
+
+2017-04-12 09:25:24,798 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Action get job execution info job execution id:309
+
+2017-04-12 09:25:24,812 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+getQueryJSONPaging: 
+SELECT * from job_data_filtered_vw where job_execution_id=309 order by job_data_raw_id
+
+2017-04-12 09:25:24,818 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job execution id:309
+
+2017-04-12 09:25:24,820 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Parsing filters
+
+2017-04-12 09:25:24,821 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+ListBuffer((job_execution_id,309))
+
+2017-04-12 09:25:24,821 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Action get job execution info job execution id:309
+
+2017-04-12 09:25:24,821 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+getQueryJSONPaging: 
+SELECT * from job_data_raw_vw where job_execution_id=309 order by job_data_raw_id
+
+2017-04-12 09:25:24,857 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Histogram data:
+
+2017-04-12 09:25:24,912 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+GetFiltersForJobExecutionId query:  SELECT t1.job_id,t1.job_filtering_id,t2.filter_id,t2.filter_description, t2.filter_class,t3.curation_order  FROM job_filtering_filter t3,job_filtering t4, job_execution t6, job t1, filter t2 WHERE (t1.job_filtering_id=t4.job_filtering_id)  AND (t3.filter_id=t2.filter_id) AND (t3.job_filtering_id = t4.job_filtering_id )  AND ((t1.job_id=t6.job_id)  and (t6.job_execution_id=?)) order by curation_order ASC 
+
+2017-04-12 09:25:24,926 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Histogram Q2:
+
+
+2017-04-12 09:25:25,417 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+JSON Histogram Statistics:
+
+2017-04-12 09:25:25,430 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Action get job info
+
+2017-04-12 09:25:25,431 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Filter: [{"property":"job_id","value":"121"}]
+
+2017-04-12 09:25:25,431 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Parsing filters
+
+2017-04-12 09:25:25,431 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+ListBuffer((job_id,121))
+
+2017-04-12 09:25:25,431 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Job id:121
+
+2017-04-12 09:25:25,445 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+{success: true,total: 17, jobstatistics:[{"job_execution_id":"309","activities":"1","bucket":"5","descriptor":"2.0-2.5"},{"job_execution_id":"309","activities":"4","bucket":"6","descriptor":"2.5-3.0"},{"job_execution_id":"309","activities":"11","bucket":"7","descriptor":"3.0-3.5"},{"job_execution_id":"309","activities":"6","bucket":"8","descriptor":"3.5-4.0"},{"job_execution_id":"309","activities":"23","bucket":"9","descriptor":"4.0-4.5"},{"job_execution_id":"309","activities":"39","bucket":"10","descriptor":"4.5-5.0"},{"job_execution_id":"309","activities":"77","bucket":"11","descriptor":"5.0-5.5"},{"job_execution_id":"309","activities":"95","bucket":"12","descriptor":"5.5-6.0"},{"job_execution_id":"309","activities":"167","bucket":"13","descriptor":"6.0-6.5"},{"job_execution_id":"309","activities":"23","bucket":"14","descriptor":"6.5-7.0"},{"job_execution_id":"309","activities":"2","bucket":"15","descriptor":"7.0-7.5"},{"job_execution_id":"309","activities":"3","bucket":"16","descriptor":"7.5-8.0"},{"job_execution_id":"309","activities":"0","bucket":"17","descriptor":"8.0-8.5"},{"job_execution_id":"309","activities":"0","bucket":"18","descriptor":"8.5-9.0"},{"job_execution_id":"309","activities":"6","bucket":"19","descriptor":"9.0-9.5"},{"job_execution_id":"309","activities":"1","bucket":"20","descriptor":"9.5-10.0"},{"job_execution_id":"309","activities":"23","bucket":"21","descriptor":"10.0-10.5"}] }
+
+2017-04-12 09:25:25,503 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Old Filter: 309 (121,6,2,LipinskiRo5,es.imim.phi.collector.compounds.CompoundFilterRuleOf5,1)
+
+2017-04-12 09:25:26,032 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action get job info
+
+2017-04-12 09:25:26,033 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Filter: [{"property":"job_id","value":"105"}]
+
+2017-04-12 09:25:26,033 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:26,033 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_id,105))
+
+2017-04-12 09:25:26,033 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job id:105
+
+2017-04-12 09:25:26,348 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Old Filter: 309 (121,6,4,ValidateAtoms,es.imim.phi.collector.compounds.CompoundFilterValidAtoms,2)
+
+2017-04-12 09:25:26,763 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2017-04-12 09:25:26,763 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"121"}]
+
+2017-04-12 09:25:26,763 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2017-04-12 09:25:26,764 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,121))
+
+2017-04-12 09:25:26,764 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:121
+
+2017-04-12 09:25:27,789 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Action get job info
+
+2017-04-12 09:25:27,789 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Filter: [{"property":"job_id","value":"105"}]
+
+2017-04-12 09:25:27,789 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Parsing filters
+
+2017-04-12 09:25:27,790 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+ListBuffer((job_id,105))
+
+2017-04-12 09:25:27,790 - [INFO] - from application in play-akka.actor.default-dispatcher-3 
+Job id:105
+
+2017-04-12 09:25:32,092 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action get job info
+
+2017-04-12 09:25:32,093 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Filter: [{"property":"job_id","value":"58"}]
+
+2017-04-12 09:25:32,093 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:32,093 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_id,58))
+
+2017-04-12 09:25:32,093 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job id:58
+
+2017-04-12 09:25:33,433 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:33,433 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_execution_id,310))
+
+2017-04-12 09:25:33,433 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action job statistics: 
+
+2017-04-12 09:25:33,434 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+job execution id: 310
+
+2017-04-12 09:25:33,443 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+GetFiltersForJobExecutionId query:  SELECT t1.job_id,t1.job_filtering_id,t2.filter_id,t2.filter_description, t2.filter_class,t3.curation_order  FROM job_filtering_filter t3,job_filtering t4, job_execution t6, job t1, filter t2 WHERE (t1.job_filtering_id=t4.job_filtering_id)  AND (t3.filter_id=t2.filter_id) AND (t3.job_filtering_id = t4.job_filtering_id )  AND ((t1.job_id=t6.job_id)  and (t6.job_execution_id=?)) order by curation_order ASC 
+
+2017-04-12 09:25:33,635 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Parsing filters
+
+2017-04-12 09:25:33,635 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+ListBuffer((job_execution_id,310))
+
+2017-04-12 09:25:33,635 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+Action get job execution info job execution id:310
+
+2017-04-12 09:25:33,635 - [INFO] - from application in play-akka.actor.default-dispatcher-8 
+getQueryJSONPaging: 
+SELECT * from job_data_raw_vw where job_execution_id=310 order by job_data_raw_id
+
+2017-04-12 09:25:33,639 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Parsing filters
+
+2017-04-12 09:25:33,639 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+ListBuffer((job_execution_id,310))
+
+2017-04-12 09:25:33,639 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Action get job execution info job execution id:310
+
+2017-04-12 09:25:33,639 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+getQueryJSONPaging: 
+SELECT * from job_data_filtered_vw where job_execution_id=310 order by job_data_raw_id
+
+2017-04-12 09:25:33,661 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Action job execution histogram statistics
+
+2017-04-12 09:25:33,661 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Parsing filters
+
+2017-04-12 09:25:33,662 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+ListBuffer((job_execution_id,310))
+
+2017-04-12 09:25:33,662 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Job execution id:310
+
+2017-04-12 09:25:33,662 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Histogram data:
+
+2017-04-12 09:25:33,663 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+Histogram Q2:
+
+
+2017-04-12 09:25:33,974 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+JSON Histogram Statistics:
+
+2017-04-12 09:25:33,974 - [INFO] - from application in play-akka.actor.default-dispatcher-5 
+{success: true,total: 17, jobstatistics:[{"job_execution_id":"310","activities":"0","bucket":"5","descriptor":"2.0-2.5"},{"job_execution_id":"310","activities":"0","bucket":"6","descriptor":"2.5-3.0"},{"job_execution_id":"310","activities":"0","bucket":"7","descriptor":"3.0-3.5"},{"job_execution_id":"310","activities":"0","bucket":"8","descriptor":"3.5-4.0"},{"job_execution_id":"310","activities":"0","bucket":"9","descriptor":"4.0-4.5"},{"job_execution_id":"310","activities":"0","bucket":"10","descriptor":"4.5-5.0"},{"job_execution_id":"310","activities":"0","bucket":"11","descriptor":"5.0-5.5"},{"job_execution_id":"310","activities":"0","bucket":"12","descriptor":"5.5-6.0"},{"job_execution_id":"310","activities":"0","bucket":"13","descriptor":"6.0-6.5"},{"job_execution_id":"310","activities":"0","bucket":"14","descriptor":"6.5-7.0"},{"job_execution_id":"310","activities":"0","bucket":"15","descriptor":"7.0-7.5"},{"job_execution_id":"310","activities":"0","bucket":"16","descriptor":"7.5-8.0"},{"job_execution_id":"310","activities":"0","bucket":"17","descriptor":"8.0-8.5"},{"job_execution_id":"310","activities":"0","bucket":"18","descriptor":"8.5-9.0"},{"job_execution_id":"310","activities":"0","bucket":"19","descriptor":"9.0-9.5"},{"job_execution_id":"310","activities":"0","bucket":"20","descriptor":"9.5-10.0"},{"job_execution_id":"310","activities":"0","bucket":"21","descriptor":"10.0-10.5"}] }
+
+2017-04-12 09:25:34,009 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Old Filter: 310 (58,6,2,LipinskiRo5,es.imim.phi.collector.compounds.CompoundFilterRuleOf5,1)
+
+2017-04-12 09:25:34,421 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Action delete job execution: 310
+
+2017-04-12 09:25:34,904 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Old Filter: 310 (58,6,4,ValidateAtoms,es.imim.phi.collector.compounds.CompoundFilterValidAtoms,2)
+
+2017-04-12 09:25:38,677 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action get job info
+
+2017-04-12 09:25:38,677 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Filter: [{"property":"job_id","value":"52"}]
+
+2017-04-12 09:25:38,677 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:38,678 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_id,52))
+
+2017-04-12 09:25:38,678 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job id:52
+
+2017-04-12 09:25:39,442 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action get job info
+
+2017-04-12 09:25:39,442 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Filter: [{"property":"job_id","value":"58"}]
+
+2017-04-12 09:25:39,442 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:39,442 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_id,58))
+
+2017-04-12 09:25:39,442 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job id:58
+
+2017-04-12 09:25:42,769 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action get job info
+
+2017-04-12 09:25:42,769 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Filter: [{"property":"job_id","value":"58"}]
+
+2017-04-12 09:25:42,769 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:42,770 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_id,58))
+
+2017-04-12 09:25:42,770 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job id:58
+
+2017-04-12 09:25:43,542 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Executing job: 58
+
+2017-04-12 09:25:43,547 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+JobExecutionId inserted:311
+
+2017-04-12 09:25:43,570 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Obtaining parameters
+
+2017-04-12 09:25:43,571 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+OPS case
+
+2017-04-12 09:25:43,572 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Executing extraction
+
+2017-04-12 09:25:43,592 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Basket:
+
+2017-04-12 09:25:43,607 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Query for target id new id: http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109
+
+2017-04-12 09:25:43,607 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/count?
+
+2017-04-12 09:25:43,607 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/count?
+
+2017-04-12 09:25:43,607 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109)
+
+2017-04-12 09:25:43,611 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/count?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&app_id=4eb73c98&app_key=c237c00c011138cbb5c2ccf8279c5cc6&_format=json
+
+2017-04-12 09:25:43,655 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:25:43,655 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:25:43,655 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 1)
+
+2017-04-12 09:25:43,655 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=1&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:25:43,661 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action get job info
+
+2017-04-12 09:25:43,661 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Filter: [{"property":"job_id","value":"58"}]
+
+2017-04-12 09:25:43,661 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:43,662 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_id,58))
+
+2017-04-12 09:25:43,662 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job id:58
+
+2017-04-12 09:25:43,774 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Action get job info
+
+2017-04-12 09:25:43,775 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Filter: [{"property":"job_id","value":"58"}]
+
+2017-04-12 09:25:43,775 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Parsing filters
+
+2017-04-12 09:25:43,775 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+ListBuffer((job_id,58))
+
+2017-04-12 09:25:43,775 - [INFO] - from application in play-akka.actor.default-dispatcher-7 
+Job id:58
+
+2017-04-12 09:25:56,191 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:25:57,686 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:25:57,687 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:25:57,688 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:25:57,688 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 2)
+
+2017-04-12 09:25:57,689 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=2&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:26:07,835 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:26:09,424 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:26:09,424 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:26:09,424 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:26:09,424 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 3)
+
+2017-04-12 09:26:09,425 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=3&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:26:20,703 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 490
+
+2017-04-12 09:26:22,061 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 490 records
+
+2017-04-12 09:26:22,062 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:26:22,062 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:26:22,062 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 4)
+
+2017-04-12 09:26:22,062 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=4&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:26:35,841 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 484
+
+2017-04-12 09:26:37,195 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 484 records
+
+2017-04-12 09:26:37,195 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:26:37,195 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:26:37,195 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 5)
+
+2017-04-12 09:26:37,195 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=5&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:26:49,321 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 483
+
+2017-04-12 09:26:49,966 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 483 records
+
+2017-04-12 09:26:49,966 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:26:49,966 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:26:49,966 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 6)
+
+2017-04-12 09:26:49,967 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=6&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:26:59,834 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:27:08,271 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:27:08,271 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:27:08,271 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:27:08,271 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 7)
+
+2017-04-12 09:27:08,272 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=7&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:27:19,556 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:27:21,410 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:27:21,410 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:27:21,410 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:27:21,410 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 8)
+
+2017-04-12 09:27:21,411 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=8&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:27:32,222 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:27:33,723 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:27:33,723 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:27:33,724 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:27:33,724 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 9)
+
+2017-04-12 09:27:33,724 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=9&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:27:44,030 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:27:46,929 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:27:46,930 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:27:46,930 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:27:46,930 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 10)
+
+2017-04-12 09:27:46,930 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=10&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:27:57,344 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:27:59,859 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:27:59,859 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:27:59,859 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:27:59,859 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 11)
+
+2017-04-12 09:27:59,860 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=11&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:28:10,710 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:28:11,772 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:28:11,772 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:28:11,773 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:28:11,773 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 12)
+
+2017-04-12 09:28:11,773 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=12&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:28:22,312 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:28:30,071 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:28:30,072 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:28:30,072 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:28:30,072 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 13)
+
+2017-04-12 09:28:30,072 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=13&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:28:41,330 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:28:45,476 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:28:45,476 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:28:45,476 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:28:45,476 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 14)
+
+2017-04-12 09:28:45,477 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=14&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:28:56,071 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:28:58,876 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:28:58,876 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:28:58,876 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:28:58,876 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 15)
+
+2017-04-12 09:28:58,877 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=15&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:29:09,381 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:29:10,420 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:29:10,421 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:29:10,421 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:29:10,421 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 16)
+
+2017-04-12 09:29:10,422 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=16&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:29:20,672 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:29:25,705 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:29:25,705 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:29:25,705 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:29:25,705 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 17)
+
+2017-04-12 09:29:25,706 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=17&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:29:36,730 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:29:37,349 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:29:37,349 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:29:37,349 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:29:37,349 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 18)
+
+2017-04-12 09:29:37,349 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=18&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:29:47,897 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:29:48,731 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:29:48,732 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:29:48,732 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:29:48,732 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 19)
+
+2017-04-12 09:29:48,732 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=19&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:29:59,210 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:30:00,623 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:30:00,624 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:30:00,624 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:30:00,624 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 20)
+
+2017-04-12 09:30:00,625 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=20&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:30:11,500 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:30:12,017 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:30:12,017 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:30:12,017 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:30:12,017 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 21)
+
+2017-04-12 09:30:12,017 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=21&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:30:22,811 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 499
+
+2017-04-12 09:30:24,655 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 499 records
+
+2017-04-12 09:30:24,656 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:30:24,656 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:30:24,656 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 22)
+
+2017-04-12 09:30:24,657 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=22&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:30:35,380 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:30:36,250 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:30:36,250 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:30:36,250 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:30:36,250 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 23)
+
+2017-04-12 09:30:36,250 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=23&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:30:47,090 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:30:47,828 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:30:47,828 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:30:47,829 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:30:47,829 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 24)
+
+2017-04-12 09:30:47,829 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=24&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:30:58,604 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:30:59,265 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:30:59,265 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:30:59,265 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:30:59,265 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 25)
+
+2017-04-12 09:30:59,266 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=25&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:31:09,779 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 499
+
+2017-04-12 09:31:10,955 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 499 records
+
+2017-04-12 09:31:10,955 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:31:10,955 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:31:10,955 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 26)
+
+2017-04-12 09:31:10,956 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=26&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:31:23,488 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:31:23,669 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:31:23,669 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:31:23,669 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:31:23,669 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 27)
+
+2017-04-12 09:31:23,669 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=27&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:31:36,485 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 498
+
+2017-04-12 09:31:36,630 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 498 records
+
+2017-04-12 09:31:36,631 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:31:36,631 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:31:36,631 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 28)
+
+2017-04-12 09:31:36,631 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=28&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:31:47,563 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:31:47,727 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:31:47,727 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:31:47,727 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:31:47,727 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 29)
+
+2017-04-12 09:31:47,727 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=29&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:31:59,040 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:31:59,233 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:31:59,234 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:31:59,234 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:31:59,234 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 30)
+
+2017-04-12 09:31:59,234 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=30&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:32:10,625 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:32:10,791 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:32:10,791 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:32:10,791 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:32:10,791 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 31)
+
+2017-04-12 09:32:10,791 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=31&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:32:21,961 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 499
+
+2017-04-12 09:32:22,109 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 499 records
+
+2017-04-12 09:32:22,109 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:32:22,110 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:32:22,110 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 32)
+
+2017-04-12 09:32:22,110 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=32&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:32:33,324 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 498
+
+2017-04-12 09:32:33,520 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 498 records
+
+2017-04-12 09:32:33,520 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:32:33,520 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:32:33,520 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 33)
+
+2017-04-12 09:32:33,520 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=33&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:32:44,644 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:32:44,777 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:32:44,777 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:32:44,777 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:32:44,777 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 34)
+
+2017-04-12 09:32:44,778 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=34&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:32:55,592 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:32:55,724 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:32:55,724 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:32:55,724 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:32:55,724 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 35)
+
+2017-04-12 09:32:55,725 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=35&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:33:06,753 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:33:06,915 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:33:06,915 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:33:06,915 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:33:06,915 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 36)
+
+2017-04-12 09:33:06,915 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=36&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:33:17,795 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:33:17,934 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:33:17,934 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:33:17,935 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:33:17,935 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 37)
+
+2017-04-12 09:33:17,935 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=37&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:33:28,651 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:33:28,801 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:33:28,801 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:33:28,801 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:33:28,801 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 38)
+
+2017-04-12 09:33:28,801 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=38&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:33:39,379 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:33:39,524 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:33:39,524 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:33:39,524 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:33:39,525 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 39)
+
+2017-04-12 09:33:39,525 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=39&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:33:49,946 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:33:50,138 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:33:50,138 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:33:50,138 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:33:50,139 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 40)
+
+2017-04-12 09:33:50,139 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=40&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:34:01,203 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:34:01,378 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:34:01,378 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:34:01,378 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:34:01,378 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 41)
+
+2017-04-12 09:34:01,378 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=41&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:34:12,114 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:34:12,247 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:34:12,247 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:34:12,247 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:34:12,247 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 42)
+
+2017-04-12 09:34:12,247 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=42&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:34:23,209 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:34:23,352 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:34:23,352 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:34:23,352 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:34:23,352 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 43)
+
+2017-04-12 09:34:23,353 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=43&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:34:33,922 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:34:34,078 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:34:34,079 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:34:34,079 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:34:34,079 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 44)
+
+2017-04-12 09:34:34,079 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=44&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:34:45,185 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:34:45,326 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:34:45,326 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:34:45,326 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:34:45,326 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 45)
+
+2017-04-12 09:34:45,326 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=45&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:34:56,327 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 499
+
+2017-04-12 09:34:56,481 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 499 records
+
+2017-04-12 09:34:56,482 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:34:56,482 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:34:56,482 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 46)
+
+2017-04-12 09:34:56,482 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=46&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:35:07,447 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:35:07,618 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:35:07,619 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:35:07,619 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:35:07,619 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 47)
+
+2017-04-12 09:35:07,619 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=47&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:35:17,867 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:35:18,011 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:35:18,011 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:35:18,011 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:35:18,011 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 48)
+
+2017-04-12 09:35:18,011 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=48&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:35:28,658 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:35:28,788 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:35:28,788 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:35:28,788 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:35:28,788 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 49)
+
+2017-04-12 09:35:28,788 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=49&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:35:40,082 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:35:40,210 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:35:40,210 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:35:40,210 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:35:40,210 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 50)
+
+2017-04-12 09:35:40,211 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=50&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:35:50,748 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 498
+
+2017-04-12 09:35:50,913 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 498 records
+
+2017-04-12 09:35:50,914 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:35:50,914 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:35:50,914 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 51)
+
+2017-04-12 09:35:50,914 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=51&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:36:01,995 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:36:02,200 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:36:02,201 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:36:02,201 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:36:02,201 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 52)
+
+2017-04-12 09:36:02,201 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=52&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:36:12,904 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 499
+
+2017-04-12 09:36:13,042 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 499 records
+
+2017-04-12 09:36:13,042 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:36:13,042 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:36:13,042 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 53)
+
+2017-04-12 09:36:13,043 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=53&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
+
+2017-04-12 09:36:24,055 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Open PHACTS LDA results 500
+
+2017-04-12 09:36:24,198 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Inserted 500 records
+
+2017-04-12 09:36:24,198 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+URLcall: https://beta.openphacts.org/2.1/target/pharmacology/pages?
+
+2017-04-12 09:36:24,198 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Pattern: /target/pharmacology/pages?
+
+2017-04-12 09:36:24,198 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+Params: Map(uri -> http://www.conceptwiki.org/concept/651bcc3b-cc05-4970-b9d2-45585643e109, _pageSize -> 500, _page -> 54)
+
+2017-04-12 09:36:24,198 - [INFO] - from application in play-akka.actor.default-dispatcher-4 
+makeCall URL: https://beta.openphacts.org/2.1/target/pharmacology/pages?_format=json&uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F651bcc3b-cc05-4970-b9d2-45585643e109&_page=54&_pageSize=500&app_key=c237c00c011138cbb5c2ccf8279c5cc6&app_id=4eb73c98
 

@@ -103,8 +103,7 @@ Ext.define('AM.controller.Job', {
 		console.log(jobexecutionstore);
 		jobexecutionstore.load();
 		Ext.Ajax.request({
-			//url : AM.config.Settings.hostAppServer+'/data/jobexec/' + myValue,
-			url : '/data/jobexec/' + myValue,
+			url : AM.config.Settings.hostAppServer+'/data/jobexec/' + myValue,			
 			timeout : 0,
             success: function(response, opts) {
             	Ext.Msg.alert('Success', 'Job finished!');
@@ -128,8 +127,7 @@ Ext.define('AM.controller.Job', {
 		console.log('Deleting job execution'+fieldjobid[0].getValue());
 		var jobstore= this.getJobStore();
 		Ext.Ajax.request({
-					//url : AM.config.Settings.hostAppServer+'/data/jobdelete/'				+ fieldjobid[0].getValue(),
-					url : '/data/jobdelete/'+ fieldjobid[0].getValue(),							
+					url : AM.config.Settings.hostAppServer+'/data/jobdelete/' + fieldjobid[0].getValue(),											
 					success : function(response, opts) {
 						console.log("Delete JobSuccess!");
 						var obj = Ext.decode(response.responseText);

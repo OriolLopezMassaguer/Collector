@@ -59,9 +59,6 @@ GET     /data/jobstatisticstype							controllers.Application.getJobStatisticsTy
 
 GET     /data/jobstatisticshistogram				controllers.Application.getJobStatisticsHistogram(page:Int,start:Int,limit:Int,filter:String)
 
-GET     /data/jobcbnlinkout/:job_execution_id       controllers.Application.getURLForCBNFiltered(job_execution_id:Int)
-GET     /data/jobcbnlinkoutraw/:job_execution_id       controllers.Application.getURLForCBNRAW(job_execution_id:Int)
-
 GET 	/data/protocolsforstring					controllers.Application.getProtocolsForString(page:Int,start:Int,limit:Int,protocol_string:String)
 GET 	/data/filtersforstring						controllers.Application.getFilters(page:Int,start:Int,limit:Int,filter_string:String)
 
