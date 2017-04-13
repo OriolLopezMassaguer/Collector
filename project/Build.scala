@@ -28,6 +28,8 @@ import PlayKeys._
 object ApplicationBuild extends Build {
   val appName = "Collector"
   val appVersion = "1.4.7"
+  
+  
 
   val appDependencies = Seq(
     //"org.apache.commons" % "commons-lang3" % "3.1",
@@ -43,8 +45,9 @@ object ApplicationBuild extends Build {
     //"org.apache.logging.log4j" % "log4j" % "2.0-beta7",
     //"com.typesafe" % "scalalogging-log4j_2.10" % "1.0.1",
     "org.scalaz" %% "scalaz-core" % "7.1.3",
-    "ch.qos.logback" % "logback-classic" % "1.1.3"
+    "ch.qos.logback" % "logback-classic" % "1.1.3",
     //,    "org.scala-saddle" %% "saddle-core" % "1.3.+"
+    "uk.ac.ebi.uniprot" % "japi" % "1.0.13"
 )
 
   //val main = play.Project(appName, appVersion, appDependencies)
@@ -52,6 +55,7 @@ object ApplicationBuild extends Build {
     version := appVersion,
     scalaVersion := "2.11.8",
     maxErrors := 100,
+    resolvers += "EBI" at "http://www.ebi.ac.uk/~maven/m2repo",
     ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) },
     libraryDependencies ++= appDependencies)
 

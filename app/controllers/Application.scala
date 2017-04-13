@@ -84,6 +84,82 @@ object Application extends Controller {
     pairs.toMap[String, String]
   }
 
+  def getProteinTest = {
+    import uk.ac.ebi.kraken.interfaces.common.Value;
+    import uk.ac.ebi.kraken.interfaces.uniprot._
+    import uk.ac.ebi.kraken.interfaces.uniprot.citationsNew.Citation;
+    import uk.ac.ebi.kraken.interfaces.uniprot.comments.Comment;
+    import uk.ac.ebi.kraken.interfaces.uniprot.comments.CommentType;
+    import uk.ac.ebi.kraken.interfaces.uniprot.dbx.go.Go;
+    import uk.ac.ebi.kraken.interfaces.uniprot.description.Field;
+    import uk.ac.ebi.kraken.interfaces.uniprot.description.FieldType;
+    import uk.ac.ebi.kraken.interfaces.uniprot.description.Name;
+    import uk.ac.ebi.kraken.interfaces.uniprot.description.Section;
+    import uk.ac.ebi.kraken.interfaces.uniprot.features.Feature;
+    import uk.ac.ebi.kraken.interfaces.uniprot.features.FeatureLocation;
+    import uk.ac.ebi.kraken.interfaces.uniprot.features.FeatureType;
+
+    import uk.ac.ebi.uniprot.dataservice.client.Client;
+    import uk.ac.ebi.uniprot.dataservice.client.QueryResult;
+    import uk.ac.ebi.uniprot.dataservice.client.ServiceFactory;
+    import uk.ac.ebi.uniprot.dataservice.client.exception.ServiceException;
+    import uk.ac.ebi.uniprot.dataservice.client.uniprot.QuerySpec;
+    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtField;
+    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtQueryBuilder;
+    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtService;
+    import uk.ac.ebi.uniprot.dataservice.query.Query;
+
+    val serviceFactoryInstance = Client.getServiceFactoryInstance()
+    val uniProtService = serviceFactoryInstance.getUniProtQueryService()
+    uniProtService.start()
+
+    def executeQuery(q: Query) = {
+
+      val searchResult = uniProtService.getEntries(q, null)
+      var entries = Map[String, List[String]]()
+
+      while (searchResult.hasNext()) {
+        val entry = searchResult.next()
+        val accession = entry.getPrimaryUniProtAccession().getValue();
+
+        val values = List(
+          entry.getUniProtId().getValue,
+          entry.getProteinDescription.getRecommendedName.toString(),
+          entry.getProteinDescription.getRecommendedName.getFields.toString())
+
+        println(entry.getUniProtId().getValue)
+        for (o <- entry.getProteinDescription.getRecommendedName.getFields.toArray()) {
+          val e = o.asInstanceOf[Field]
+          println(e.getType)
+          println(e.getValue)
+        }
+
+        entries += (accession -> values)
+      }
+
+      entries
+
+    }
+
+    val query = UniProtQueryBuilder.proteinName("herg")
+    val query2 = UniProtQueryBuilder.accession("Q12809")
+    val query3 = UniProtQueryBuilder.accession("Potassium voltage-gate")
+    val j1 = Json.toJson(executeQuery(query))
+    val j2 = Json.toJson(executeQuery(query))
+    val j3 = Json.toJson(executeQuery(query))
+    val js = JsArray(List(JsObject(List(("query", JsString("q1")), ("res", j1))), JsObject(List(("query", JsString("q2")), ("res", j2))), JsObject(List(("query", JsString("q3")), ("res", j3)))))
+
+    js
+  }
+
+  def getProteinByText(q: String) = {
+    Action { request =>
+
+      
+      Ok(this.getProteinTest)
+    }
+  }
+
   def getFileResultFromFile(localfilename: String, filename: String) = {
     Logger.info("Result!")
     val file = new java.io.File(localfilename)
@@ -252,7 +328,7 @@ object Application extends Controller {
       Ok("{success: true, total: " + l.size + ",jobstatisticshistogram:" + Json.toJson(l) + "}")
     }
   }
-  
+
   def testCDK = Action {
     val comp = es.imim.phi.collector.compounds.CompoundUtil
     val sdf = comp.getSDFFromSMiles_CDK("CCCHC")
@@ -260,7 +336,7 @@ object Application extends Controller {
   }
 
   def testRDKit = Action {
-    val comp = es.imim.phi.collector.compounds.CompoundUtil   
+    val comp = es.imim.phi.collector.compounds.CompoundUtil
     val sdf = comp.getSDFFromSMiles_RDKit("CCCC")
     Ok(sdf)
   }
@@ -318,3 +394,4 @@ object Application extends Controller {
   }
 
 }
+
