@@ -84,7 +84,7 @@ object Application extends Controller {
     pairs.toMap[String, String]
   }
 
-  def getProteinTest = {
+  def getProteinTest(q:String) = {
     import uk.ac.ebi.kraken.interfaces.common.Value;
     import uk.ac.ebi.kraken.interfaces.uniprot._
     import uk.ac.ebi.kraken.interfaces.uniprot.citationsNew.Citation;
@@ -141,13 +141,13 @@ object Application extends Controller {
 
     }
 
-    val query = UniProtQueryBuilder.proteinName("herg")
-    val query2 = UniProtQueryBuilder.accession("Q12809")
-    val query3 = UniProtQueryBuilder.accession("Potassium voltage-gate")
+    val query = UniProtQueryBuilder.proteinName(q)
+    val query2 = UniProtQueryBuilder.accession(q)
+    
     val j1 = Json.toJson(executeQuery(query))
-    val j2 = Json.toJson(executeQuery(query))
-    val j3 = Json.toJson(executeQuery(query))
-    val js = JsArray(List(JsObject(List(("query", JsString("q1")), ("res", j1))), JsObject(List(("query", JsString("q2")), ("res", j2))), JsObject(List(("query", JsString("q3")), ("res", j3)))))
+    val j2 = Json.toJson(executeQuery(query2))
+    
+    val js = JsArray(List(JsObject(List(("query", JsString("q1")), ("res", j1))), JsObject(List(("query", JsString("q2")), ("res", j2))) ))
 
     js
   }
@@ -156,7 +156,7 @@ object Application extends Controller {
     Action { request =>
 
       
-      Ok(this.getProteinTest)
+      Ok(this.getProteinTest(q))
     }
   }
 
