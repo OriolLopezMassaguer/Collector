@@ -114,11 +114,13 @@ object Application extends Controller {
     uniProtService.start()
 
     def executeQuery(q: Query) = {
-
+     val limit=10
+     var i=0
       val searchResult = uniProtService.getEntries(q, null)
       var entries = Map[String, List[String]]()
 
-      while (searchResult.hasNext()) {
+      while (searchResult.hasNext()&& (i<limit)) {
+        i+=1
         val entry = searchResult.next()
         val accession = entry.getPrimaryUniProtAccession().getValue();
 
