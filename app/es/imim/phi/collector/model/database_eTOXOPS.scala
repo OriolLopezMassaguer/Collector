@@ -57,7 +57,8 @@ import es.imim.phi.collector.compounds.CompoundFilter
 object database_eTOXOPS {
   var db: Database = null
   var sqlConnection: java.sql.Connection = null
-
+  db
+  
   class Job(tag: Tag) extends Table[(Int, String, Int, Int)](tag, "job") {
     def job_id = column[Int]("job_id", O.AutoInc)
     def job_description = column[String]("job_description")

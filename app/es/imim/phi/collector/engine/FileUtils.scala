@@ -30,7 +30,7 @@ import scala.collection.immutable.HashSet
 
 object FileUtils {
   def getFile(fileName: String) = {
-    io.Source.fromFile(fileName).getLines().toSet
+    scala.io.Source.fromFile(fileName).getLines().toSet
   }
 
   def readPropertiesFile(file: String) = {

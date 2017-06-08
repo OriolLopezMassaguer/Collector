@@ -101,7 +101,7 @@ object ExtractionEngine {
     ExtractionEngine.dbURL = System.getenv("JDBC_DATABASE_URL")
 
     database_eTOXOPS.db = Database.forURL(ExtractionEngine.dbURL)
-    Class.forName("org.postgresql.Driver");
+    Class.forName("org.postgresql.Driver")    
     var con = DriverManager.getConnection(ExtractionEngine.dbURL)
     database_eTOXOPS.sqlConnection = con
 

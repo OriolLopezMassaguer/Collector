@@ -457,7 +457,7 @@ object CompoundUtil {
   //  }
 
   def grep(file: String, pattern: String) = {
-    val lines = io.Source.fromFile(file).getLines()
+    val lines = scala.io.Source.fromFile(file).getLines()
     val patternfound = lines.map(_.contains(pattern)).reduce(_ || _)
     patternfound
   }
