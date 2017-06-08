@@ -48,36 +48,12 @@ Ext
 					initComponent : function() {
 
 						this.columns = [
-								// {
-								// header : 'job_data_raw_id',
-								// dataIndex : 'job_data_raw_id',
-								// flex : 1
-								// },
 								{
 									header : 'job_execution_id',
 									dataIndex : 'job_execution_id',
 									flex : 1
 								},
-								// {
-								// header : 'target_cwiki',
-								// dataIndex : 'target_cwiki',
-								// flex : 1,
-								// renderer : function(val, meta, record) {
-								// return '<a href="' + val
-								// + '" target="_blank" >' + val
-								// + '</a>';
-								// }
-								// },
-//								{
-//									header : 'compound_cwiki',
-//									dataIndex : 'compound_cwiki',
-//									flex : 1,
-//									renderer : function(val, meta, record) {
-//										return '<a href="' + val
-//												+ '" target="_blank" >' + val
-//												+ '</a>';
-//									}
-//								},
+
 								{
 									header : 'activity_id',
 									dataIndex : 'activity_id',
@@ -109,32 +85,16 @@ Ext
 									}
 								},
 								{
-									header : 'cs_id',
-									dataIndex : 'cs_id',
-									flex : 1,
-									renderer : function(val, meta, record) {
-										return '<a href="'
-												+ val.replace('rdf', 'www')
-												+ '" target="_blank" >'
-												+ val.replace('rdf', 'wwww')
-												+ ' </a>';
-									}
-								},
-								{
-									header : 'cs_image',
-									dataIndex : 'cs_id',
+									header : 'structure',
+									dataIndex : 'molecule_id',
 									width: 250,
 									renderer : function(val, meta, record) {
 										return '<img src="'
-												+ 'http://ops.rsc.org/ImageHandler.ashx?CompoundID='
-												+ val
-														.replace(
-																'http://ops.rsc.org/OPS',
-																'') + '&w='
-												+ '200' + '&h=' + '200' + '">'
-												// + val.replace('rdf', 'wwww')
+										        + val.replace('http://rdf.ebi.ac.uk/resource/chembl/molecule/','https://www.ebi.ac.uk/chembl/compound/displayimage/')										 
+												+ '">'
 												+ '</img>';
 									}
+
 								},
 								{
 									header : 'molecule_id',
