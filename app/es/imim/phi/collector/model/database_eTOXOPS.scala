@@ -58,7 +58,7 @@ object database_eTOXOPS {
   var db: Database = null
   var sqlConnection: java.sql.Connection = null
   db
-  
+
   class Job(tag: Tag) extends Table[(Int, String, Int, Int)](tag, "job") {
     def job_id = column[Int]("job_id", O.AutoInc)
     def job_description = column[String]("job_description")
@@ -329,7 +329,7 @@ object database_eTOXOPS {
 
   def GetRAWDataJobExecution(job_execution_id: Int, activityType: Option[String]) =
     activityType match {
-      case None => for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id } yield rawdata.*
+      case None           => for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id } yield rawdata.*
       case Some(activity) => for { rawdata <- job_data_raw if rawdata.job_execution_id === job_execution_id && rawdata.activity_type === activityType } yield rawdata.*
     }
 
@@ -339,19 +339,19 @@ object database_eTOXOPS {
 
   def GetFilteredDataJobExecution(job_execution_id: Int, activityType: Option[String]) =
     activityType match {
-      case None => for { filtereddata <- job_data_filtered_vw if filtereddata.job_execution_id === job_execution_id } yield filtereddata.*
+      case None           => for { filtereddata <- job_data_filtered_vw if filtereddata.job_execution_id === job_execution_id } yield filtereddata.*
       case Some(activity) => for { filtereddata <- job_data_filtered_vw if filtereddata.job_execution_id === job_execution_id && filtereddata.activity_type === activityType } yield filtereddata.*
     }
 
   def GetRAWDataAgJobExecution(job_execution_id: Int, activityType: Option[String]) =
     activityType match {
-      case None => for { rawdata <- job_data_raw_ag_vw if rawdata.job_execution_id === job_execution_id } yield rawdata.*
+      case None           => for { rawdata <- job_data_raw_ag_vw if rawdata.job_execution_id === job_execution_id } yield rawdata.*
       case Some(activity) => for { rawdata <- job_data_raw_ag_vw if rawdata.job_execution_id === job_execution_id && rawdata.activity_type === activityType } yield rawdata.*
     }
 
   def GetFilteredDataAgJobExecution(job_execution_id: Int, activityType: Option[String]) =
     activityType match {
-      case None => for { filtereddata <- job_data_filtered_ag_vw if filtereddata.job_execution_id === job_execution_id } yield filtereddata.*
+      case None           => for { filtereddata <- job_data_filtered_ag_vw if filtereddata.job_execution_id === job_execution_id } yield filtereddata.*
       case Some(activity) => for { filtereddata <- job_data_filtered_ag_vw if filtereddata.job_execution_id === job_execution_id && filtereddata.activity_type === activityType } yield filtereddata.*
     }
 
@@ -526,6 +526,14 @@ object database_eTOXOPS {
     q(job_execution_id).list
   }
 
+  def time[R](block: => R,message:String): R = {
+    val t0 =java.lang.System.currentTimeMillis()
+    val result = block // call-by-name
+    val t1 =java.lang.System.currentTimeMillis()
+    println("Profiling ++++++++++++++++++++ " + message + " duration " + (t1 - t0) + " ms")
+    result
+  }
+
   def GetStatisticsForJobExecutionOldId(job_execution_id: Int) = {
     //    var qAll = Q.query[(Int), (Int, Int)]("    select count(distinct job_data_raw_id), count(distinct smiles) " +
     //      "    		 from job_data_raw" +
@@ -535,10 +543,12 @@ object database_eTOXOPS {
       " FROM job_execution_vw_mater" +
       " WHERE job_execution_id = ?")
 
-    var qq = qAllnew(job_execution_id).list
+    var qq = time ({qAllnew(job_execution_id).list},"Acts and compounds")
 
+     
     var res = List(Map("job_execution_id" -> job_execution_id.toString, "filter" -> "raw", "activities" -> qq(0)._1.toString, "compounds" -> qq(0)._2.toString))
 
+    time({
     database_eTOXOPS.GetFiltersForJobExecutionId(job_execution_id).foreach { rec =>
       {
         var q = Q.query[(Int, Int), (Int, Int)]("select  count(distinct job_data_raw_id), count(distinct smiles) from" +
@@ -550,14 +560,12 @@ object database_eTOXOPS {
           "	where passed=true")
         val l = q(rec._6, job_execution_id).list
         Logger.info("Old Filter: " + job_execution_id + " " + rec)
-        for (r <- l)
-          println(r)
         res = res :+ Map("job_execution_id" -> job_execution_id.toString, "filter" -> rec._4.toString(), "activities" -> l(0)._1.toString, "compounds" -> l(0)._2.toString)
       }
     }
+    }," Acts comps by filter")
     res
   }
-
 
   def GetStatisticsByTypeForJobExecutionIdJSON(job_execution_id: Int) = {
 
@@ -822,7 +830,7 @@ object database_eTOXOPS {
           t match {
             case java.sql.Types.INTEGER => insertStatement.setInt(pos, Integer.parseInt(v))
             case java.sql.Types.VARCHAR => insertStatement.setString(pos, v)
-            case java.sql.Types.FLOAT => insertStatement.setFloat(pos, java.lang.Float.parseFloat(v))
+            case java.sql.Types.FLOAT   => insertStatement.setFloat(pos, java.lang.Float.parseFloat(v))
           }
         } catch {
           case _: Throwable => insertStatement.setNull(pos, t)
@@ -944,21 +952,21 @@ object database_eTOXOPS {
     println("Updating activity")
     mapping("activity_field") match {
       case ("field", field) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateActivityField(field) _)
-      case _ => Application.logger.error("Activity field not specified")
+      case _                => Application.logger.error("Activity field not specified")
     }
 
     println("Updating activity units ")
     mapping("activity_units") match {
       case ("field", field) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateUnitsField(field) _)
       case ("value", value) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateUnitsValue(value) _)
-      case _ => Application.logger.error("Activity units field or value not specified")
+      case _                => Application.logger.error("Activity units field or value not specified")
     }
 
     println("Updating activity type")
     mapping("activity_type") match {
       case ("field", field) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateActivityTypeField(field) _)
       case ("value", value) => CompleteDataSeriesFieldsFunc(activities_series_id, UpdateActivityTypeValue(value) _)
-      case _ => Application.logger.error("Activity units field or value not specified")
+      case _                => Application.logger.error("Activity units field or value not specified")
     }
   }
 

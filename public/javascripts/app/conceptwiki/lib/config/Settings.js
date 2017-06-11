@@ -23,7 +23,8 @@
 Ext.define('CW.config.Settings', {
     singleton: true,
    
-    searchByTagUrl: 'http://ops.conceptwiki.org/web-ws/concept/search/byTag',
+    //searchByTagUrl: 'http://ops.conceptwiki.org/web-ws/concept/search/byTag',
+    searchByTagUrl: 'http://alpha.openphacts.org:8839/search?query=',
     getConceptUrl: 'http://ops.conceptwiki.org/web-ws/concept/get',
     base_ops_uri: 'http://www.conceptwiki.org/concept/',
     lang_code: "en"

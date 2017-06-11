@@ -59,11 +59,13 @@ GET     /data/jobstatisticstype							controllers.Application.getJobStatisticsTy
 
 GET     /data/jobstatisticshistogram				controllers.Application.getJobStatisticsHistogram(page:Int,start:Int,limit:Int,filter:String)
 
-GET 	/data/protocolsforstring					controllers.Application.getProtocolsForString(page:Int,start:Int,limit:Int,protocol_string:String)
+##GET 	/data/protocolsforstring					controllers.Application.getProtocolsForString(page:Int,start:Int,limit:Int,protocol_string:String)
+GET     /data/protocolsforstring                    controllers.Application.getProteinByText(page:Int,start:Int,limit:Int,protein_string:String)
+
 GET 	/data/filtersforstring						controllers.Application.getFilters(page:Int,start:Int,limit:Int,filter_string:String)
 
 GET 	/data/protocol								controllers.Application.getAllProtocols(page:Int,start:Int,limit:Int)
-GET     /data/getProteinByText                      controllers.Application.getProteinByText(q:String)
+GET     /data/getProteinByText                      controllers.Application.getProteinByText_raw(q:String)
 
 GET     /testCDK									controllers.Application.testCDK
 GET     /testRDKit									controllers.Application.testRDKit

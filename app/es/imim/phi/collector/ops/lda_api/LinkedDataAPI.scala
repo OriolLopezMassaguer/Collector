@@ -128,7 +128,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
 
   private val memoizedurlcall: String => String = this.dbMemo(urlcall _)
 
-  private def urlcall(call: String): String =
+   def urlcall(call: String): String =
     {
       Logger.debug("urlcall Call :[ " + call + " ]")
       val url = new URL(call)
@@ -172,7 +172,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
       urlcall(call)
   }
 
-  private def makeCall(urlCall: String, parameters: Map[String, String]): String = {
+   def makeCall(urlCall: String, parameters: Map[String, String]): String = {
     val pars = parameters ++ extraparams
     var params = for ((parameter, value) <- pars) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
     var call = urlCall + params.mkString("&")
