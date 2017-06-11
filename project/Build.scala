@@ -40,7 +40,8 @@ object ApplicationBuild extends Build {
     "com.typesafe.slick" %% "slick" % "2.1.0",
     "org.scalaz" %% "scalaz-core" % "7.1.3",
     "ch.qos.logback" % "logback-classic" % "1.1.3",
-    "uk.ac.ebi.uniprot" % "japi" % "1.0.13"
+    "uk.ac.ebi.uniprot" % "japi" % "1.0.13",
+    ws
 )
 
   //val main = play.Project(appName, appVersion, appDependencies)
