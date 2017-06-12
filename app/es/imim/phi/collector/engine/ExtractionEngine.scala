@@ -70,7 +70,7 @@ object ExtractionEngine {
   var opsAPI: OPSLDAScala = null
   var cachedapi: Boolean = false
   var bucketAPISize = -1
-  var version = "1.4.7"
+  var version = "1.4.8"
   var CDKit = true
 
   def initEngine(home_path: String) = {
