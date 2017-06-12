@@ -159,55 +159,52 @@ object Application extends Controller {
     Logger.info("protocols obtained \n" + protocols)
     database_eTOXOPS.db withDynSession { Ok(protocols) }
   }
-  def getProteinByText_raw(protein_string: String) = {
-    Action { request =>
 
-      val url = "http://alpha.openphacts.org:8839/search?"
-      val r = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.makeCall(url, Map("query" -> protein_string))
-      //println(r)
+  def getProteinByText_list(protein_string: String) = {
+    val url = "http://alpha.openphacts.org:8839/search?"
+    val r = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.makeCall(url, Map("query" -> protein_string))
+    //println(r)
 
-      import play.api.Play.current
-      import play.api.libs.ws._
-      import play.api.libs.ws.ning.NingAsyncHttpClientConfigBuilder
-      import scala.concurrent.Future
-      import scala.concurrent._
-      import scala.concurrent.duration._
+    import play.api.Play.current
+    import play.api.libs.ws._
+    import play.api.libs.ws.ning.NingAsyncHttpClientConfigBuilder
+    import scala.concurrent.Future
+    import scala.concurrent._
+    import scala.concurrent.duration._
 
-      val url2 = "http://alpha.openphacts.org:8839/search?"
-      import scala.util.{ Success, Failure }
-      val futureResult = WS.url(url2)
-        .withQueryString(("query", "potassium voltage-gated channel subfamily H member 2"))
-        .withHeaders("accept" -> "application/json")
+    val url2 = "http://alpha.openphacts.org:8839/search?"
+    import scala.util.{ Success, Failure }
+    val futureResult = WS.url(url2)
+      .withQueryString(("query", protein_string))
+      .withHeaders("accept" -> "application/json")
+      .get().map(response => Json.parse(response.body))
 
-        .get().map {
-          response =>
-            {
-              Json.parse(response.body)
-            }
-        }
-      val r2 = Await.result(futureResult, 100 seconds)
-      val hits = (r2 \ "hits" \ "hits").as[JsArray]
-      val r3=for (hit <- hits.value) yield {
-        val hito = hit.as[JsObject]
-        for ((field, value) <- hito.fieldSet)
-          println(field + "#" + value)
-
-        val id = (hito \ "_id").as[JsString].value
-        val type_hit = (hito \ "_source" \ "@type").as[JsArray].value(0).as[JsString].value
-        val label = (hito \ "_source" \ "label").as[JsArray].value(0).as[JsString].value
-        //val organism = (hito \ "_source" \ "organism").as[JsArray].value(0).as[JsString].value
-        Map("id" ->id.value, "type"->type_hit,"label"->label)
+    val r2 = Await.result(futureResult, 100 seconds)
+    val hits = (r2 \ "hits" \ "hits").as[JsArray]
+    val r3 = for (hit <- hits.value) yield {
+      val hito = hit.as[JsObject]
+      for ((field, value) <- hito.fieldSet) println(field + "#" + value)
+      val id = (hito \ "_id").as[JsString].value
+      val type_hit = (hito \ "_source" \ "@type").as[JsArray].value(0).as[JsString].value
+      val label = (hito \ "_source" \ "label").as[JsArray].value(0).as[JsString].value
+      val organism = (hito \ "_source" \ "organism").asOpt[JsArray]
+      val org=organism match {
+        case Some(org)=>org.value(0).as[JsString].value
+        case None => ""
       }
-      val r4=r3.filter(m => m("type")=="chembl:Target")
-      Ok(Json.toJson(r4))
+      Map("id" -> id.value, "type" -> type_hit, "label" -> (label + " / "+ org))
     }
+    val r4 = r3.filter(m => m("type") == "chembl:Target")
+    r4.map(println)
+    r4
   }
 
   def getProteinByText(page: Int, start: Int, limit: Int, protein_string: String) = {
+  //def getProteinByText(protein_string: String) = {
     Action { request =>
-
-      this.getProteinByText_raw(protein_string)
-      Ok("")
+      val l = this.getProteinByText_list(protein_string)
+      val s = "{\"success\": true,\"total\": " + l.size + " , \"targets\":" + Json.toJson(l) + " }"
+      Ok(s)
     }
   }
 
@@ -234,7 +231,12 @@ object Application extends Controller {
       Logger.info("Action new Job")
       val params = request.body.asFormUrlEncoded.get
       Logger.info("Job Parameters: " + params)
-      database_eTOXOPS.CreateJob(params("job_description")(0), params("protein_uri")(0), params("target_label")(0), params("protocol_id")(0))
+      
+      for (v <- params)
+      {
+        println(v)
+      }
+      database_eTOXOPS.CreateJob(params("job_description")(0), params("id")(0), params("target_label")(0), params("protocol_id")(0))
       Ok("{success: true}")
     }
   }

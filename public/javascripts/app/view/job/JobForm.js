@@ -42,25 +42,28 @@ Ext.define('AM.view.job.JobForm', {
 				margin : '5 5 5 5',
 				handler : function() {
 					var protocol_id = Ext.ComponentQuery.query('#protocol_id');
-					var targetByNameLookup = Ext.ComponentQuery
-							.query('#targetByNameLookup');
+					//var targetByNameLookup = Ext.ComponentQuery.query('#targetByNameLookup');
+					
+
+					//console.log("Target!!! " + targetByNameLookup[0].getValue());
+					//console.log("Target!!! " + targetByNameLookup[0].rawValue);
+					//targetLabel[0].setValue(targetByNameLookup[0].rawValue);
+					// console.log(cw_dropdown_view.fieldLabel)
+                    // console.log('Init uuid: '+cw_dropdown_view.cwTagUuid);
+					
+					var targetId = Ext.ComponentQuery.query('#protein_id');
 					var targetLabel = Ext.ComponentQuery.query('#targetlabel');
+					targetLabel[0].setValue(targetId[0].rawValue);
+					console.log("Target: " + targetId[0].getValue());
+					console.log("Protocol: " + protocol_id[0].rawValue);
 
-					console
-							.log("Target!!! "
-									+ targetByNameLookup[0].getValue());
-					console.log("Target!!! " + targetByNameLookup[0].rawValue);
-					console.log("Protocol! " + protocol_id[0].rawValue);
-
-					targetLabel[0].setValue(targetByNameLookup[0].rawValue);
+					
 
 					var jobstore = Ext.data.StoreManager.lookup('Job');
 					console.log("Job store" + jobstore);
-					// console.log(cw_dropdown_view.fieldLabel)
-					// console.log('Init uuid: '+cw_dropdown_view.cwTagUuid);
 					var form = this.up('form').getForm();
 					form.submit({
-						url : '/data/newjob',
+						url : '/collector/data/newjob',
 						waitMsg : 'Sending the info...',
 						success : function(form, action) {
 							Ext.Msg.alert('Success', 'Job submitted.');
@@ -94,15 +97,46 @@ Ext.define('AM.view.job.JobForm', {
 		name : 'target_label',
 		itemId : 'targetlabel',
 		hidden : true
-	}, Ext.create('CW.view.ConceptWikiLookup', {
-		xtype : "conceptWikiLookup",
-		layout : 'vbox',
-		title : "Concept wiki",
-		fieldLabel : 'Protein name',
-		itemId : 'targetByNameLookup',
-		name : 'protein_uri',
-		cwTagUuid : 'eeaec894-d856-4106-9fa1-662b1dc6c6f1'
-	}), Ext.create('Ext.form.ComboBox', {
+	}, 
+	
+//	Ext.create('CW.view.ConceptWikiLookup', {
+//		xtype : "conceptWikiLookup",
+//		layout : 'vbox',
+//		title : "Concept wiki",
+//		fieldLabel : 'Protein name',
+//		itemId : 'targetByNameLookup',
+//		name : 'protein_uri',
+//		cwTagUuid : 'eeaec894-d856-4106-9fa1-662b1dc6c6f1'
+//	}), 
+	
+	Ext.create('Ext.form.ComboBox', {
+        itemId : 'protein_id',
+        name : 'id',
+        fieldLabel : 'Choose Target',
+        store : Ext.create('AM.store.FilteringTarget'),
+
+        queryMode : 'remote',
+        queryParam : 'protein_string',
+        
+        
+        displayField : 'label',
+        valueField : 'id',
+        forceSelection : true,
+        allowBlank : false,
+        typeAhead : true,
+        typeAheadDelay : 100,
+        queryDelay : 100,
+        queryCaching : false,
+        width : 600,
+        // labelWidth: 200,
+        matchFieldWidth : true,
+        minChars : 3,
+        //hideTrigger : false,
+        emptyText : 'Start typing...',
+        fieldLabel : 'Target Name',
+    }),
+	
+	Ext.create('Ext.form.ComboBox', {
 		itemId : 'protocol_id',
 		name : 'protocol_id',
 		fieldLabel : 'Choose Protocol',
