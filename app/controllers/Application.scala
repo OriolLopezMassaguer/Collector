@@ -282,7 +282,7 @@ object Application extends Controller {
   //  }
 
   def jobdatadetailed(page: Int, start: Int, limit: Int, filter: String, filtered: Boolean) = Action {
-    Thread.sleep(3000)
+    
     val filterparameters = parseJsonFilters(filter)
     Logger.info("Action get job execution info job execution id:" + filterparameters("job_execution_id"))
 
