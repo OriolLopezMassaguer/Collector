@@ -34,7 +34,7 @@ object db2JSON {
   var sqlConnection = database_eTOXOPS.sqlConnection
 
   def getQueryJSONPaging(query: String, jsonlabel: String, limit: String, offset: String) = {
-    Logger.info("getQueryJSONPaging: \n" + query)
+    //Logger.info("getQueryJSONPaging: \n" + query)
     getQueryJSONBase(query, jsonlabel, " limit " + limit, " offset " + offset)
   }
 
@@ -54,9 +54,9 @@ object db2JSON {
   }
 
   private def getQueryJSONBase(query: String, jsonlabel: String, limit: String, offset: String) = {
-    //db withDynSession {
-      println("Query: " + query)
+    //db withDynSession {      
       var resultSet = database_eTOXOPS.doQuerySQL(query + " " + limit + " " + offset)
+      println(query + " " + limit + " " + offset)
       var metadata = resultSet.getMetaData()
 
       var i = 1

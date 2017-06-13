@@ -279,7 +279,10 @@ object Application extends Controller {
   //  }
 
   def jobdatadetailed(page: Int, start: Int, limit: Int, filter: String, filtered: Boolean) = Action {
+    import scala.concurrent.duration._
+    println("Sleeping")
     Thread.sleep(3000)
+    println("Wake up")
     val filterparameters = parseJsonFilters(filter)
     Logger.info("Action get job execution info job execution id:" + filterparameters("job_execution_id"))
 
@@ -334,19 +337,28 @@ object Application extends Controller {
     //}
     Ok("{success: true}")
   }
+  def time[R](block: => R, message: String): R = {
+    val t0 = java.lang.System.currentTimeMillis()
+    val result = block // call-by-name
+    val t1 = java.lang.System.currentTimeMillis()
+    println("Profiling ++++++++++++++++++++ " + message + " duration " + (t1 - t0) + " ms")
+    result
+  }
 
   def getJobStatistics(page: Int, start: Int, limit: Int, filter: String) = Action {
     val filterparameters = parseJsonFilters(filter)
     Logger.info("Action job statistics: ")
     Logger.info("job execution id: " + filterparameters("job_execution_id"))
     val job_execution_id = filterparameters("job_execution_id")
-    val q = "select statistics from job_execution where job_execution_id='" + job_execution_id + "'"
-    val st = database_eTOXOPS.sqlConnection.createStatement()
-    val rs = st.executeQuery(q)
-    rs.next()
-    val str = rs.getString(1)
-    // println("Statistics: " + str)
-    val js = Json.parse(str)
+    val js=time({
+      val q = "select statistics from job_execution where job_execution_id='" + job_execution_id + "'"
+      val st = database_eTOXOPS.sqlConnection.createStatement()
+      val rs = st.executeQuery(q)
+      rs.next()
+      val str = rs.getString(1)
+      println("Statistics: " + str)
+      Json.parse(str)
+    }, "Statistics profile")
     Ok(js \ "statistics")
   }
 
@@ -356,13 +368,13 @@ object Application extends Controller {
     val filterparameters = parseJsonFilters(filter)
     val job_execution_id = filterparameters("job_execution_id")
     Logger.info("Job execution id:" + job_execution_id)
-    val q = "select statistics from job_execution where job_execution_id='" + job_execution_id + "'"
+    val js=time({val q = "select statistics from job_execution where job_execution_id='" + job_execution_id + "'"
     val st = database_eTOXOPS.sqlConnection.createStatement()
     val rs = st.executeQuery(q)
     rs.next()
     val str = rs.getString(1)
-    // println("Statistics: " + str)
-    val js = Json.parse(str)
+    println("Histogram: " + str)
+     Json.parse(str)}, "Histogram profile")
 
     Ok(js \ "histogram")
   }
