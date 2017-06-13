@@ -682,7 +682,7 @@ object database_eTOXOPS {
     }, "Update global statistics")
     //println("To get statistics")
     database_eTOXOPS.db withDynSession {
-      val js1= GetJobExecutionDataForHistogram_JSON(job_execution_id.toInt)
+      val js1 = GetJobExecutionDataForHistogram_JSON(job_execution_id.toInt)
       val js2 = GetStatisticsForJobExecutionIdJSON(job_execution_id.toInt)
 
       //println(js1)
@@ -700,13 +700,13 @@ object database_eTOXOPS {
     }
   }
   def RefreshAllJobsStatistics = {
-    database_eTOXOPS.db withDynSession {
-      val list_jobs = this.job_execution.list
-      for (execution <- list_jobs) {
-        val job_execution_id = execution._1
-        println("Refreshing: " + job_execution_id)
-        this.RefreshJobExecutionStatistics(job_execution_id.toString())
-      }
+    val q = "select job_execution_id from job_execution where statistics is  null"
+    val st = database_eTOXOPS.sqlConnection.createStatement()
+    val rs = st.executeQuery(q)
+    while (rs.next()) {
+      val job_execution_id = rs.getString(1)
+      println(job_execution_id)
+      time({this.RefreshJobExecutionStatistics(job_execution_id.toString())},"Refresh global time")
     }
   }
 
