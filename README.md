@@ -11,7 +11,7 @@ Collector was intended to be installed locally and implements a local database f
 
 Installation of Collector version 1.4.8
 
-April 2017
+June 2017
 
 Before you start
 ----------------
