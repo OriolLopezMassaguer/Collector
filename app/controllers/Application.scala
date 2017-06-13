@@ -282,7 +282,7 @@ object Application extends Controller {
   //  }
 
   def jobdatadetailed(page: Int, start: Int, limit: Int, filter: String, filtered: Boolean) = Action {
-    
+
     val filterparameters = parseJsonFilters(filter)
     Logger.info("Action get job execution info job execution id:" + filterparameters("job_execution_id"))
 
@@ -348,13 +348,13 @@ object Application extends Controller {
     val rs = st.executeQuery(q)
     rs.next()
     val str = rs.getString(1)
-    println("Statistics: " + str)
+    // println("Statistics: " + str)
     val js = Json.parse(str)
     Ok(js \ "statistics")
   }
 
   def getJobStatisticsHistogram(page: Int, start: Int, limit: Int, filter: String) = Action {
-    
+
     Logger.info("Action job execution histogram statistics")
     val filterparameters = parseJsonFilters(filter)
     val job_execution_id = filterparameters("job_execution_id")
@@ -364,9 +364,9 @@ object Application extends Controller {
     val rs = st.executeQuery(q)
     rs.next()
     val str = rs.getString(1)
-    println("Statistics: " + str)
+    // println("Statistics: " + str)
     val js = Json.parse(str)
-    
+
     Ok(js \ "histogram")
   }
 
