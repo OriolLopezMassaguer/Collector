@@ -350,8 +350,6 @@ object Application extends Controller {
     val str = rs.getString(1)
     println("Statistics: " + str)
     val js = Json.parse(str)
-    println(js \ "statistics")
-    println(js \ "histogram")
     Ok(js \ "statistics")
   }
 
@@ -368,8 +366,6 @@ object Application extends Controller {
     val str = rs.getString(1)
     println("Statistics: " + str)
     val js = Json.parse(str)
-    println(js \ "statistics")
-    println(js \ "histogram")
     
     Ok(js \ "histogram")
   }
