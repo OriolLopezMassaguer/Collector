@@ -65,6 +65,10 @@ GET     /data/targetforstring                      controllers.Application.getPr
 GET 	/data/filtersforstring						controllers.Application.getFilters(page:Int,start:Int,limit:Int,filter_string:String)
 
 GET 	/data/protocol								controllers.Application.getAllProtocols(page:Int,start:Int,limit:Int)
+<<<<<<< HEAD
+=======
+#GET     /data/getProteinByText                      controllers.Application.getProteinByText(q:String)
+>>>>>>> new search by text implementation
 
 GET     /testCDK									controllers.Application.testCDK
 GET     /testRDKit									controllers.Application.testRDKit
