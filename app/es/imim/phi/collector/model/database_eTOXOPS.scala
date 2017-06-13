@@ -687,7 +687,7 @@ object database_eTOXOPS {
 
       //println(js1)
       //println(js2)
-      val js = "{\"statistics\":" + js1 + ",\"histogram\":" + js2 + "}"
+      val js = "{\"statistics\":" + js2 + ",\"histogram\":" + js1 + "}"
 
       var querySQL = "update job_execution set statistics=? where job_execution_id=?"
       var updateStatement = sqlConnection.prepareStatement(querySQL)

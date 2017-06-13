@@ -84,75 +84,81 @@ object Application extends Controller {
     pairs.toMap[String, String]
   }
 
-//  def getProteinTest(q: String) = {
-//    import uk.ac.ebi.kraken.interfaces.common.Value;
-//    import uk.ac.ebi.kraken.interfaces.uniprot._
-//    import uk.ac.ebi.kraken.interfaces.uniprot.citationsNew.Citation;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.comments.Comment;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.comments.CommentType;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.dbx.go.Go;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.description.Field;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.description.FieldType;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.description.Name;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.description.Section;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.features.Feature;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.features.FeatureLocation;
-//    import uk.ac.ebi.kraken.interfaces.uniprot.features.FeatureType;
-//
-//    import uk.ac.ebi.uniprot.dataservice.client.Client;
-//    import uk.ac.ebi.uniprot.dataservice.client.QueryResult;
-//    import uk.ac.ebi.uniprot.dataservice.client.ServiceFactory;
-//    import uk.ac.ebi.uniprot.dataservice.client.exception.ServiceException;
-//    import uk.ac.ebi.uniprot.dataservice.client.uniprot.QuerySpec;
-//    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtField;
-//    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtQueryBuilder;
-//    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtService;
-//    import uk.ac.ebi.uniprot.dataservice.query.Query;
-//
-//    val serviceFactoryInstance = Client.getServiceFactoryInstance()
-//    val uniProtService = serviceFactoryInstance.getUniProtQueryService()
-//    uniProtService.start()
-//
-//    def executeQuery(q: Query) = {
-//      val limit = 10
-//      var i = 0
-//      val searchResult = uniProtService.getEntries(q, null)
-//      var entries = Map[String, List[String]]()
-//
-//      while (searchResult.hasNext() && (i < limit)) {
-//        i += 1
-//        val entry = searchResult.next()
-//        val accession = entry.getPrimaryUniProtAccession().getValue();
-//
-//        val values = List(
-//          entry.getUniProtId().getValue,
-//          entry.getProteinDescription.getRecommendedName.toString(),
-//          entry.getProteinDescription.getRecommendedName.getFields.toString())
-//
-//        println(entry.getUniProtId().getValue)
-//        for (o <- entry.getProteinDescription.getRecommendedName.getFields.toArray()) {
-//          val e = o.asInstanceOf[Field]
-//          println(e.getType)
-//          println(e.getValue)
-//        }
-//
-//        entries += (accession -> values)
-//      }
-//
-//      entries
-//
-//    }
-//
-//    val query = UniProtQueryBuilder.proteinName(q)
-//    val query2 = UniProtQueryBuilder.accession(q)
-//
-//    val j1 = Json.toJson(executeQuery(query))
-//    val j2 = Json.toJson(executeQuery(query2))
-//
-//    val js = JsArray(List(JsObject(List(("query", JsString("q1")), ("res", j1))), JsObject(List(("query", JsString("q2")), ("res", j2)))))
-//
-//    js
-//  }
+  //  def getProteinTest(q: String) = {
+  //    import uk.ac.ebi.kraken.interfaces.common.Value;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot._
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.citationsNew.Citation;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.comments.Comment;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.comments.CommentType;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.dbx.go.Go;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.description.Field;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.description.FieldType;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.description.Name;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.description.Section;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.features.Feature;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.features.FeatureLocation;
+  //    import uk.ac.ebi.kraken.interfaces.uniprot.features.FeatureType;
+  //
+  //    import uk.ac.ebi.uniprot.dataservice.client.Client;
+  //    import uk.ac.ebi.uniprot.dataservice.client.QueryResult;
+  //    import uk.ac.ebi.uniprot.dataservice.client.ServiceFactory;
+  //    import uk.ac.ebi.uniprot.dataservice.client.exception.ServiceException;
+  //    import uk.ac.ebi.uniprot.dataservice.client.uniprot.QuerySpec;
+  //    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtField;
+  //    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtQueryBuilder;
+  //    import uk.ac.ebi.uniprot.dataservice.client.uniprot.UniProtService;
+  //    import uk.ac.ebi.uniprot.dataservice.query.Query;
+  //
+  //    val serviceFactoryInstance = Client.getServiceFactoryInstance()
+  //    val uniProtService = serviceFactoryInstance.getUniProtQueryService()
+  //    uniProtService.start()
+  //
+  //    def executeQuery(q: Query) = {
+  //      val limit = 10
+  //      var i = 0
+  //      val searchResult = uniProtService.getEntries(q, null)
+  //      var entries = Map[String, List[String]]()
+  //
+  //      while (searchResult.hasNext() && (i < limit)) {
+  //        i += 1
+  //        val entry = searchResult.next()
+  //        val accession = entry.getPrimaryUniProtAccession().getValue();
+  //
+  //        val values = List(
+  //          entry.getUniProtId().getValue,
+  //          entry.getProteinDescription.getRecommendedName.toString(),
+  //          entry.getProteinDescription.getRecommendedName.getFields.toString())
+  //
+  //        println(entry.getUniProtId().getValue)
+  //        for (o <- entry.getProteinDescription.getRecommendedName.getFields.toArray()) {
+  //          val e = o.asInstanceOf[Field]
+  //          println(e.getType)
+  //          println(e.getValue)
+  //        }
+  //
+  //        entries += (accession -> values)
+  //      }
+  //
+  //      entries
+  //
+  //    }
+  //
+  //    val query = UniProtQueryBuilder.proteinName(q)
+  //    val query2 = UniProtQueryBuilder.accession(q)
+  //
+  //    val j1 = Json.toJson(executeQuery(query))
+  //    val j2 = Json.toJson(executeQuery(query2))
+  //
+  //    val js = JsArray(List(JsObject(List(("query", JsString("q1")), ("res", j1))), JsObject(List(("query", JsString("q2")), ("res", j2)))))
+  //
+  //    js
+  //  }
+
+  def refreshStatistics = Action {
+    database_eTOXOPS.RefreshAllJobsStatistics
+    Ok("Statistics Computed")
+  }
+  
   def getProtocolsForString(page: Int, start: Int, limit: Int, protocol_string: String) = Action {
     Logger.info("Action get Protocols for string: " + protocol_string)
     val protocols = database_eTOXOPS.GetFilteringProtocolForString(protocol_string: String)
@@ -188,11 +194,11 @@ object Application extends Controller {
       val type_hit = (hito \ "_source" \ "@type").as[JsArray].value(0).as[JsString].value
       val label = (hito \ "_source" \ "label").as[JsArray].value(0).as[JsString].value
       val organism = (hito \ "_source" \ "organism").asOpt[JsArray]
-      val org=organism match {
-        case Some(org)=>org.value(0).as[JsString].value
-        case None => ""
+      val org = organism match {
+        case Some(org) => org.value(0).as[JsString].value
+        case None      => ""
       }
-      Map("id" -> id.value, "type" -> type_hit, "label" -> (label + " / "+ org))
+      Map("id" -> id.value, "type" -> type_hit, "label" -> (label + " / " + org))
     }
     val r4 = r3.filter(m => m("type") == "chembl:Target")
     r4.map(println)
@@ -200,7 +206,7 @@ object Application extends Controller {
   }
 
   def getProteinByText(page: Int, start: Int, limit: Int, protein_string: String) = {
-  //def getProteinByText(protein_string: String) = {
+    //def getProteinByText(protein_string: String) = {
     Action { request =>
       val l = this.getProteinByText_list(protein_string)
       val s = "{\"success\": true,\"total\": " + l.size + " , \"targets\":" + Json.toJson(l) + " }"
@@ -231,9 +237,8 @@ object Application extends Controller {
       Logger.info("Action new Job")
       val params = request.body.asFormUrlEncoded.get
       Logger.info("Job Parameters: " + params)
-      
-      for (v <- params)
-      {
+
+      for (v <- params) {
         println(v)
       }
       database_eTOXOPS.CreateJob(params("job_description")(0), params("id")(0), params("target_label")(0), params("protocol_id")(0))
@@ -335,17 +340,21 @@ object Application extends Controller {
 
   def getJobStatistics(page: Int, start: Int, limit: Int, filter: String) = Action {
     val filterparameters = parseJsonFilters(filter)
-
     Logger.info("Action job statistics: ")
     Logger.info("job execution id: " + filterparameters("job_execution_id"))
-    database_eTOXOPS.db withDynSession {
-
-      val js = database_eTOXOPS.GetStatisticsForJobExecutionIdJSON(filterparameters("job_execution_id").toInt)
-      Ok(js)
-      //Ok("")
-    }
+    val job_execution_id=filterparameters("job_execution_id")
+    val q = "select statistics from job_execution where job_execution_id='" + job_execution_id + "'"
+    val st = database_eTOXOPS.sqlConnection.createStatement()
+    val rs = st.executeQuery(q)
+    rs.next()
+    val str = rs.getString(1)
+    println(str)
+    val js=Json.parse(str)
+    println(js \ "statistics")
+    println(js \ "histogram")
+    Ok(str)
   }
-  
+
   def getJobStatisticsHistogram(page: Int, start: Int, limit: Int, filter: String) = Action {
     Thread.sleep(2000)
     Logger.info("Action job execution histogram statistics")
@@ -384,7 +393,6 @@ object Application extends Controller {
       Ok("{success: true, total: " + l.size + "," + js + "}")
     }
   }
-
 
   def testCDK = Action {
     val comp = es.imim.phi.collector.compounds.CompoundUtil
