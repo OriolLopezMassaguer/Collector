@@ -40,7 +40,7 @@ object ApplicationBuild extends Build {
     "com.typesafe.slick" %% "slick" % "2.1.0",
     "org.scalaz" %% "scalaz-core" % "7.1.3",
     "ch.qos.logback" % "logback-classic" % "1.1.3",
-    "uk.ac.ebi.uniprot" % "japi" % "1.0.13",
+    //"uk.ac.ebi.uniprot" % "japi" % "1.0.13",
     ws
 )
 
@@ -49,7 +49,7 @@ object ApplicationBuild extends Build {
     version := appVersion,
     scalaVersion := "2.11.8",
     maxErrors := 100,
-    resolvers += "EBI" at "http://www.ebi.ac.uk/~maven/m2repo",
+    //resolvers += "EBI" at "http://www.ebi.ac.uk/~maven/m2repo",
     ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) },
     libraryDependencies ++= appDependencies)
 

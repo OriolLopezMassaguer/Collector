@@ -526,10 +526,10 @@ object database_eTOXOPS {
     q(job_execution_id).list
   }
 
-  def time[R](block: => R,message:String): R = {
-    val t0 =java.lang.System.currentTimeMillis()
+  def time[R](block: => R, message: String): R = {
+    val t0 = java.lang.System.currentTimeMillis()
     val result = block // call-by-name
-    val t1 =java.lang.System.currentTimeMillis()
+    val t1 = java.lang.System.currentTimeMillis()
     println("Profiling ++++++++++++++++++++ " + message + " duration " + (t1 - t0) + " ms")
     result
   }
@@ -543,12 +543,10 @@ object database_eTOXOPS {
       " FROM job_execution_vw_mater" +
       " WHERE job_execution_id = ?")
 
-    var qq = time ({qAllnew(job_execution_id).list},"Acts and compounds")
+    var qq = time({ qAllnew(job_execution_id).list }, "Acts and compounds")
 
-     
     var res = List(Map("job_execution_id" -> job_execution_id.toString, "filter" -> "raw", "activities" -> qq(0)._1.toString, "compounds" -> qq(0)._2.toString))
 
-    time({
     database_eTOXOPS.GetFiltersForJobExecutionId(job_execution_id).foreach { rec =>
       {
         var q = Q.query[(Int, Int), (Int, Int)]("select  count(distinct job_data_raw_id), count(distinct smiles) from" +
@@ -558,12 +556,12 @@ object database_eTOXOPS {
           "    		 group by job_data_raw_id, job_execution_id,activity_id, smiles" +
           "    		 order by job_data_raw_id) t " +
           "	where passed=true")
-        val l = q(rec._6, job_execution_id).list
+        val l = time({ q(rec._6, job_execution_id).list }, "Acts and compounds for " + rec._6 + " / " + job_execution_id)
         Logger.info("Old Filter: " + job_execution_id + " " + rec)
         res = res :+ Map("job_execution_id" -> job_execution_id.toString, "filter" -> rec._4.toString(), "activities" -> l(0)._1.toString, "compounds" -> l(0)._2.toString)
       }
     }
-    }," Acts comps by filter")
+
     res
   }
 
@@ -594,7 +592,14 @@ object database_eTOXOPS {
 
         "{" + l.mkString(",") + "}"
       })
-    (lmps, "[" + l2.mkString(",") + "]")
+    val js = "[" + l2.mkString(",") + "]"
+    "{success: true, total: " + l2.size + ",jobstatistics:" + js + "}"
+  }
+
+  def GetJobExecutionDataForHistogram_JSON(job_execution_id: Int) = {
+    var lmps = GetJobExecutionDataForHistogram(job_execution_id)
+    //(lmps, Json.toJson(lmps).toString())
+    "{success: true, total: " + lmps.size + ",jobstatisticshistogram:" + Json.toJson(lmps) + "}"
   }
 
   def GetJobExecutionDataForHistogram(job_execution_id: Int) = {
@@ -635,45 +640,74 @@ object database_eTOXOPS {
     val activities_type_for_histogram = List("AC50", "Kd", "Potency", "IC50", "Activity", "Ki", "EC50", "Potency")
     val pq = (qlog, 6.0, 18.0, num_bucks, 0.5)
 
-    println(getqlog("6.0", "18.0", num_bucks.toString, "0.5"))
+    //println(getqlog("6.0", "18.0", num_bucks.toString, "0.5"))
 
     Logger.info("Histogram data:")
-    database_eTOXOPS.db withDynSession {
+    time({
+      database_eTOXOPS.db withDynSession {
 
-      val min_value = pq._2
-      val max_value = pq._3
-      val buckets = pq._4 + 1
-      val bucket_size = pq._5
+        val min_value = pq._2
+        val max_value = pq._3
+        val buckets = pq._4 + 1
+        val bucket_size = pq._5
 
-      val bucks = (Range(0, buckets).map(a => a * bucket_size)) zip (Range(1, buckets + 1).map(_ * bucket_size))
-      val buckStr = bucks.map(a => a._1.toString() + "-" + a._2.toString())
-      val mp = ((Range(1, buckets + 1) zip buckStr).toMap).withDefaultValue("")
-      println(mp)
-      val qq = pq._1(pq._2, pq._3, pq._4, pq._5)
-      Logger.info("Histogram Q2:\n")
-      var l = qq(job_execution_id).list
+        val bucks = (Range(0, buckets).map(a => a * bucket_size)) zip (Range(1, buckets + 1).map(_ * bucket_size))
+        val buckStr = bucks.map(a => a._1.toString() + "-" + a._2.toString())
+        val mp = ((Range(1, buckets + 1) zip buckStr).toMap).withDefaultValue("")
+        //println(mp)
+        val qq = pq._1(pq._2, pq._3, pq._4, pq._5)
+        Logger.info("Histogram Q2:\n")
+        var l = qq(job_execution_id).list
 
-      println(mp.keys.toList.sorted)
-      var res =
-        for ((activities, bucket, descriptor) <- l)
-          yield (Map(
-          "job_execution_id" -> job_execution_id.toString(),
-          "activities" -> activities.toString,
-          "bucket" -> bucket.toString,
-          "descriptor" -> mp(bucket).toString()))
+        //println(mp.keys.toList.sorted)
+        var res =
+          for ((activities, bucket, descriptor) <- l)
+            yield (Map(
+            "job_execution_id" -> job_execution_id.toString(),
+            "activities" -> activities.toString,
+            "bucket" -> bucket.toString,
+            "descriptor" -> mp(bucket).toString()))
 
-      res
-    }
+        res
+      }
+    }, "Profiling histogram")
   }
 
   def RefreshJobExecutionStatistics(job_execution_id: String) = {
-    doQuerySQL("delete from job_execution_vw_mater where job_execution_id=" + job_execution_id)
-    doQuerySQL("insert into job_execution_vw_mater select * from job_execution_vw where job_execution_id=" + job_execution_id +
-      " and job_execution_id not in (select job_execution_id from job_execution_vw_mater where job_execution_id=" + job_execution_id + ")")
 
-    //sqlConnection.doQuerySQL("delete from job_execution_vw_mater where job_execution_id=" + job_execution_id)
-    //sqlConnection.doQuerySQL("insert into job_execution_vw_mater select * from job_execution_vw where job_execution_id=" + job_execution_id +
-    //  " and job_execution_id not in (select job_execution_id from job_execution_vw_mater where job_execution_id=" + job_execution_id + ")")
+    doQuerySQL("delete from job_execution_vw_mater where job_execution_id=" + job_execution_id)
+    time({
+      doQuerySQL("insert into job_execution_vw_mater select * from job_execution_vw where job_execution_id=" + job_execution_id +
+        " and job_execution_id not in (select job_execution_id from job_execution_vw_mater where job_execution_id=" + job_execution_id + ")")
+    }, "Update global statistics")
+    //println("To get statistics")
+    database_eTOXOPS.db withDynSession {
+      val js1= GetJobExecutionDataForHistogram_JSON(job_execution_id.toInt)
+      val js2 = GetStatisticsForJobExecutionIdJSON(job_execution_id.toInt)
+
+      //println(js1)
+      //println(js2)
+      val js = "{\"statistics\":" + js1 + ",\"histogram\":" + js2 + "}"
+
+      var querySQL = "update job_execution set statistics=? where job_execution_id=?"
+      var updateStatement = sqlConnection.prepareStatement(querySQL)
+
+      updateStatement.setString(1, js)
+      updateStatement.setInt(2, job_execution_id.toInt)
+
+      updateStatement.execute()
+
+    }
+  }
+  def RefreshAllJobsStatistics = {
+    database_eTOXOPS.db withDynSession {
+      val list_jobs = this.job_execution.list
+      for (execution <- list_jobs) {
+        val job_execution_id = execution._1
+        println("Refreshing: " + job_execution_id)
+        this.RefreshJobExecutionStatistics(job_execution_id.toString())
+      }
+    }
   }
 
   def GetFilterClassForFilterDescription(filter_description: String) = {
