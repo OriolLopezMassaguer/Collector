@@ -9,7 +9,7 @@ Collector implements a flexible collection of filters for selecting the target, 
 
 Collector was intended to be installed locally and implements a local database for keeping record of the data extracted. The application provides a web based user a command line user interface. 
 
-Installation of Collector version 1.4.7
+Installation of Collector version 1.4.8
 
 April 2017
 
@@ -66,7 +66,7 @@ If the installation completed successfully you can test it executing directly co
 
 You must see the following text appear in the screen:
 
-	Collector v1.4.7
+	Collector v1.4.8
 	Collector Commands:
 
 	ListProtocols

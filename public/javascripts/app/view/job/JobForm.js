@@ -63,7 +63,7 @@ Ext.define('AM.view.job.JobForm', {
 					console.log("Job store" + jobstore);
 					var form = this.up('form').getForm();
 					form.submit({
-						url : '/collector/data/newjob',
+						url : 'data/newjob',
 						waitMsg : 'Sending the info...',
 						success : function(form, action) {
 							Ext.Msg.alert('Success', 'Job submitted.');

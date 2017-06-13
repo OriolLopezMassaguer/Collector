@@ -27,10 +27,8 @@ import PlayKeys._
 
 object ApplicationBuild extends Build {
   val appName = "Collector"
-  val appVersion = "1.4.7"
-
-  
-
+  val appVersion = "1.4.8"
+ 
   val appDependencies = Seq(
      "com.google.guava" % "guava" % "19.0",
      "org.openscience.cdk" % "cdk-bundle" % "1.5.13",

@@ -24,15 +24,15 @@ Ext.Loader.setConfig({
 	disableCaching : false,
 	enabled : true,
 	paths : {
-		CW : 'collector/js/app/conceptwiki/lib',
-		AM : 'collector/js/app'
+		CW : 'js/app/conceptwiki/lib',
+		AM : 'js/app'
 	}
 });
 
 Ext.application({
-	prefix : 'collector/',
+	prefix : '',
 	name : 'AM',
-	appFolder : 'collector/js/app',
+	appFolder : 'js/app',
 	//requires : [ 'AM.config.Settings' ],
 	controllers : [ 'AM.controller.Job', 'AM.controller.JobExecution',
 			'AM.controller.JobDataRAW', 'AM.controller.JobDataFiltered',
@@ -56,7 +56,7 @@ Ext.application({
 				items : [ {
 					xtype : 'image',
 					//src : AM.config.Settings.hostAppServer + '/js/logo.png',
-					src : 'collector/assets/images/logo.png',
+					src : 'assets/images/logo.png',
 					id : 'logo',
 					anchor : '100%',
 					height : 98,
