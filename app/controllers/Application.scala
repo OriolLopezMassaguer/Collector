@@ -194,19 +194,12 @@ object Application extends Controller {
       val type_hit = (hito \ "_source" \ "@type").as[JsArray].value(0).as[JsString].value
       val label = (hito \ "_source" \ "label").as[JsArray].value(0).as[JsString].value
       val organism = (hito \ "_source" \ "organism").asOpt[JsArray]
-<<<<<<< HEAD
+
       val org = organism match {
         case Some(org) => org.value(0).as[JsString].value
         case None      => ""
       }
       Map("id" -> id.value, "type" -> type_hit, "label" -> (label + " / " + org))
-=======
-      val org=organism match {
-        case Some(org)=>org.value(0).as[JsString].value
-        case None => ""
-      }
-      Map("id" -> id.value, "type" -> type_hit, "label" -> (label + " / "+ org))
->>>>>>> new search by text implementation
     }
     val r4 = r3.filter(m => m("type") == "chembl:Target")
     r4.map(println)
@@ -214,11 +207,6 @@ object Application extends Controller {
   }
 
   def getProteinByText(page: Int, start: Int, limit: Int, protein_string: String) = {
-<<<<<<< HEAD
-    //def getProteinByText(protein_string: String) = {
-=======
-  //def getProteinByText(protein_string: String) = {
->>>>>>> new search by text implementation
     Action { request =>
       val l = this.getProteinByText_list(protein_string)
       val s = "{\"success\": true,\"total\": " + l.size + " , \"targets\":" + Json.toJson(l) + " }"
@@ -249,16 +237,7 @@ object Application extends Controller {
       Logger.info("Action new Job")
       val params = request.body.asFormUrlEncoded.get
       Logger.info("Job Parameters: " + params)
-<<<<<<< HEAD
 
-      for (v <- params) {
-=======
-      
-      for (v <- params)
-      {
->>>>>>> new search by text implementation
-        println(v)
-      }
       database_eTOXOPS.CreateJob(params("job_description")(0), params("id")(0), params("target_label")(0), params("protocol_id")(0))
       Ok("{success: true}")
     }
