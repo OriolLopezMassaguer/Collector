@@ -593,13 +593,13 @@ object database_eTOXOPS {
         "{" + l.mkString(",") + "}"
       })
     val js = "[" + l2.mkString(",") + "]"
-    "{success: true, total: " + l2.size + ",jobstatistics:" + js + "}"
+    "{\"success\": \"true\", \"total\": " + l2.size + ",\"jobstatistics\":" + js + "}"
   }
 
   def GetJobExecutionDataForHistogram_JSON(job_execution_id: Int) = {
     var lmps = GetJobExecutionDataForHistogram(job_execution_id)
     //(lmps, Json.toJson(lmps).toString())
-    "{success: true, total: " + lmps.size + ",jobstatisticshistogram:" + Json.toJson(lmps) + "}"
+    "{\"success\": \"true\", \"total\": " + lmps.size + ",\"jobstatisticshistogram\":" + Json.toJson(lmps) + "}"
   }
 
   def GetJobExecutionDataForHistogram(job_execution_id: Int) = {
@@ -700,6 +700,7 @@ object database_eTOXOPS {
     }
   }
   def RefreshAllJobsStatistics = {
+    ExtractionEngine.initEngine(System.getenv("COLLECTOR_HOME"))
     val q = "select job_execution_id from job_execution where statistics is  null"
     val st = database_eTOXOPS.sqlConnection.createStatement()
     val rs = st.executeQuery(q)

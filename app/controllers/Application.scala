@@ -158,7 +158,7 @@ object Application extends Controller {
     database_eTOXOPS.RefreshAllJobsStatistics
     Ok("Statistics Computed")
   }
-  
+
   def getProtocolsForString(page: Int, start: Int, limit: Int, protocol_string: String) = Action {
     Logger.info("Action get Protocols for string: " + protocol_string)
     val protocols = database_eTOXOPS.GetFilteringProtocolForString(protocol_string: String)
@@ -342,32 +342,36 @@ object Application extends Controller {
     val filterparameters = parseJsonFilters(filter)
     Logger.info("Action job statistics: ")
     Logger.info("job execution id: " + filterparameters("job_execution_id"))
-    val job_execution_id=filterparameters("job_execution_id")
+    val job_execution_id = filterparameters("job_execution_id")
     val q = "select statistics from job_execution where job_execution_id='" + job_execution_id + "'"
     val st = database_eTOXOPS.sqlConnection.createStatement()
     val rs = st.executeQuery(q)
     rs.next()
     val str = rs.getString(1)
-    println(str)
-    val js=Json.parse(str)
+    println("Statistics: " + str)
+    val js = Json.parse(str)
     println(js \ "statistics")
     println(js \ "histogram")
-    Ok(str)
+    Ok(js \ "statistics")
   }
 
   def getJobStatisticsHistogram(page: Int, start: Int, limit: Int, filter: String) = Action {
-    Thread.sleep(2000)
+    
     Logger.info("Action job execution histogram statistics")
     val filterparameters = parseJsonFilters(filter)
     val job_execution_id = filterparameters("job_execution_id")
     Logger.info("Job execution id:" + job_execution_id)
-    database_eTOXOPS.db withDynSession {
-      //val l = database_eTOXOPS.GetJobExecutionDataForHistogram(job_execution_id.toInt)
-      val json = database_eTOXOPS.GetJobExecutionDataForHistogram_JSON(job_execution_id.toInt)
-      //Logger.info("JSON Histogram Statistics:")
-      //Logger.info("{success: true,total: " + l2.size + ", jobstatistics:" + Json.toJson(l) + " }")
-      Ok(json)
-    }
+    val q = "select statistics from job_execution where job_execution_id='" + job_execution_id + "'"
+    val st = database_eTOXOPS.sqlConnection.createStatement()
+    val rs = st.executeQuery(q)
+    rs.next()
+    val str = rs.getString(1)
+    println("Statistics: " + str)
+    val js = Json.parse(str)
+    println(js \ "statistics")
+    println(js \ "histogram")
+    
+    Ok(js \ "histogram")
   }
 
   def getJobStatisticsType(page: Int, start: Int, limit: Int, filter: String) = Action {
