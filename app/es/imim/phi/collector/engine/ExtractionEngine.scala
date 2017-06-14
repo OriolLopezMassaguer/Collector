@@ -230,7 +230,7 @@ object ExtractionEngine {
     try {
       jobExecutionId = insertJobExecution(jobId)
       Logger.info("JobExecutionId inserted:" + jobExecutionId)
-      //database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
+      database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
       obtainInitialData(jobId, jobExecutionId)
       Logger.info("Obtaining filters")
       val filters = getFilters(jobId)
@@ -239,6 +239,7 @@ object ExtractionEngine {
       val r = database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='OK' where job_execution_id=" + jobExecutionId)
 
       database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
+      database_eTOXOPS.refreshMaterializedView
       Logger.info("Succesful execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
       "{\"success\": true, \"jobexecutionid\":" + jobExecutionId.toString() + "}"
     } catch {
@@ -319,7 +320,7 @@ object ExtractionEngine {
             //var activity = new Activity(job_execution_id, job_data_raw_id, activity_type, smiles.getOrElse(""))
             //var compound = new Compound(activity)
             i = i + 1
-            if ((i % 100) == 0) println("Filtering : " + i)
+            if ((i % 1000) == 0) println("Filtering : " + i)
 
             if ((i % 1000) == 0) System.gc()
 

@@ -698,10 +698,11 @@ object database_eTOXOPS {
       updateStatement.execute()
 
     }
+  }
     //Refresh materialized view  
+  def refreshMaterializedView={
     val q = "refresh materialized view concurrently job_data_filtered_vw_mater with data;"
     time({ doQuerySQL(q) }, "Profling materialized view refresh")
-
   }
 
   def RefreshAllJobsStatistics = {
