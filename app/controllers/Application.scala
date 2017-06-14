@@ -281,7 +281,7 @@ object Application extends Controller {
   def jobdatadetailed(page: Int, start: Int, limit: Int, filter: String, filtered: Boolean) = Action {
     import scala.concurrent.duration._
     println("Sleeping")
-    Thread.sleep(3000)
+    //Thread.sleep(3000)
     println("Wake up")
     val filterparameters = parseJsonFilters(filter)
     Logger.info("Action get job execution info job execution id:" + filterparameters("job_execution_id"))

@@ -211,7 +211,7 @@ object database_eTOXOPS {
 
   //val job_data_raw_cc = TableQuery[Job_data_raw_cc]
 
-  class Job_data_filtered_vw(tag: Tag) extends Table[(Int, Int, String, String, String, String, String, String, String, String, String, String, String, String, String, String, Float, String, String, String)](tag, "job_data_filtered_vw") {
+  class Job_data_filtered_vw(tag: Tag) extends Table[(Int, Int, String, String, String, String, String, String, String, String, String, String, String, String, String, String, Float, String, String, String)](tag, "job_data_filtered_vw_mater") {
     def job_execution_id = column[Int]("job_execution_id")
     def job_data_raw_id = column[Int]("job_data_raw_id", O.PrimaryKey) // This is the primary key column
     //def target_cwiki = column[String]("target_cwiki")
@@ -698,7 +698,12 @@ object database_eTOXOPS {
       updateStatement.execute()
 
     }
+    //Refresh materialized view  
+    val q = "refresh materialized view concurrently job_data_filtered_vw_mater with data;"
+    time({ doQuerySQL(q) }, "Profling materialized view refresh")
+
   }
+
   def RefreshAllJobsStatistics = {
     ExtractionEngine.initEngine(System.getenv("COLLECTOR_HOME"))
     val q = "select job_execution_id from job_execution where statistics is  null"
@@ -707,7 +712,7 @@ object database_eTOXOPS {
     while (rs.next()) {
       val job_execution_id = rs.getString(1)
       println(job_execution_id)
-      time({this.RefreshJobExecutionStatistics(job_execution_id.toString())},"Refresh global time")
+      time({ this.RefreshJobExecutionStatistics(job_execution_id.toString()) }, "Refresh global time")
     }
   }
 

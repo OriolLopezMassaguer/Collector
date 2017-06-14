@@ -200,7 +200,7 @@ object db2JSON {
           getQueryJSONPaging("SELECT * from job_data_raw_vw where job_execution_id=" + job_execution_id + " order by job_data_raw_id",
             "jobdatadetailed", limit.toString(), offset.toString())
         case true =>
-          getQueryJSONPaging("SELECT * from job_data_filtered_vw where job_execution_id=" + job_execution_id + " order by job_data_raw_id",
+          getQueryJSONPaging("SELECT * from job_data_filtered_vw_mater where job_execution_id=" + job_execution_id + " order by job_data_raw_id",
             "jobdatadetailed", limit.toString(), offset.toString())
       }
 

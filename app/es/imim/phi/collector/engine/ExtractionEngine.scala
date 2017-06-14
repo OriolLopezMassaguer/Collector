@@ -230,7 +230,7 @@ object ExtractionEngine {
     try {
       jobExecutionId = insertJobExecution(jobId)
       Logger.info("JobExecutionId inserted:" + jobExecutionId)
-      database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
+      //database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
       obtainInitialData(jobId, jobExecutionId)
       Logger.info("Obtaining filters")
       val filters = getFilters(jobId)
@@ -248,7 +248,7 @@ object ExtractionEngine {
         println(e.getMessage())
         println(e.getStackTraceString)
         database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='Error' where job_execution_id=" + jobExecutionId)
-        database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
+        //database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
         "{success: false}"
       }
     }

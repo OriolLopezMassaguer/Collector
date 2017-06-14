@@ -295,12 +295,8 @@ object CompoundUtil {
       case Some(sm) =>
         if (cdk)
           getSDFFromSMiles_CDK(sm)
-        else //getSDFFromSMiles_RDKit(sm){
-        {
-          println("Computing SDF RDKit ...")
+        else //getSDFFromSMiles_RDKit(sm){        
           models.chemistry.CompoundUtil.getSDFFromSMILES(sm)
-        }
-
     }
   }
 
