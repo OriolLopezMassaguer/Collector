@@ -81,13 +81,13 @@ Ext.define('AM.controller.Job', {
 	executeJob : function() {
 		console.log(" Execute!!!!");
 		var je = this.getJobExecutionStore();
-//		var task = new Ext.util.DelayedTask(function(){
-//			console.log("Filter Job Delayed");	
-//			je.load();
-//			task.delay(10000);
-//		});
-//		
-//		task.delay(10000);
+		var task = new Ext.util.DelayedTask(function(){
+			console.log("Filter Job Delayed");	
+			je.load();
+			task.delay(10000);
+		});
+		
+		task.delay(10000);
 		
 		var grid = Ext.ComponentQuery.query('#jobgrid')[0];
 		console.log(grid);
