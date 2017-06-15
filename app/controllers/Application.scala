@@ -280,12 +280,10 @@ object Application extends Controller {
 
   def jobdatadetailed(page: Int, start: Int, limit: Int, filter: String, filtered: Boolean) = Action {
     import scala.concurrent.duration._
-    println("Sleeping")
-    //Thread.sleep(3000)
-    println("Wake up")
-    val filterparameters = parseJsonFilters(filter)
-    Logger.info("Action get job execution info job execution id:" + filterparameters("job_execution_id"))
 
+    val filterparameters = parseJsonFilters(filter)
+    //Logger.info("Action get job execution info job execution id:" + filterparameters("job_execution_id"))
+    Logger.info("Get Job data detailed for jobid : "+ filterparameters("job_execution_id") + (if (filtered) "Filtered" else "RAW"))
     val js = db2JSON.getJobDataDetailedJSON(filterparameters("job_execution_id").toInt, limit, start, filtered)
     Ok(js)
   }
@@ -309,7 +307,7 @@ object Application extends Controller {
   def jobExecAsync(job_id: Int) = Action {
     val res: Future[String] = scala.concurrent.Future { ExtractionEngine.executejob(job_id) }
     val futureResult: Future[Result] = res.map { resst => Ok("PI value computed: " + resst) }
-    //futureResult
+    println("Job Async executed")
     Ok("")
   }
 

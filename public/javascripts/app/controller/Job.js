@@ -106,8 +106,8 @@ Ext.define('AM.controller.Job', {
 			url : AM.config.Settings.hostAppServer+'/data/jobexec/' + myValue,			
 			timeout : 0,
             success: function(response, opts) {
-            	Ext.Msg.alert('Success', 'Job finished!');
-            	console.log("Job finished!");
+            	Ext.Msg.alert('Success', 'Job launched');
+            	console.log("Job launched");
             	jobexecutionstore.load();
             },
             failure: function(response, opts) {

@@ -101,7 +101,7 @@ object ExtractionEngine {
     ExtractionEngine.dbURL = System.getenv("JDBC_DATABASE_URL")
 
     database_eTOXOPS.db = Database.forURL(ExtractionEngine.dbURL)
-    Class.forName("org.postgresql.Driver")    
+    Class.forName("org.postgresql.Driver")
     var con = DriverManager.getConnection(ExtractionEngine.dbURL)
     database_eTOXOPS.sqlConnection = con
 
@@ -145,7 +145,7 @@ object ExtractionEngine {
       database_eTOXOPS.GetRAWDataJobExecutionForSDF(jobExecutionId.toInt).foreach {
         case (jobExecutionId, job_data_raw_id, cs_id, smiles, sdf2d) => {
           i = i + 1
-          if ((i % 100) == 0) println("SDF computing : " + i)
+          if ((i % 1000) == 0) println("SDF computing " + (if (ExtractionEngine.CDKit) "CDK" else "RDKit") + " : " + i)
           var sdf = CompoundUtil.getSDFFromSmiles(smiles, ExtractionEngine.CDKit)
           val q1 = for (msg <- database_eTOXOPS.job_data_raw_for_sdf if msg.job_data_raw_id === job_data_raw_id)
             yield (msg.sdf2d)
@@ -219,27 +219,42 @@ object ExtractionEngine {
     Logger.info("Obtaining parameters")
     Logger.info("OPS case")
     Logger.info("Executing extraction")
+    updateStatus(jobExecutionId,"Querying")
     executeExtraction(jobExecutionId, getJobParameterValues(jobId))
     val rs = database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_extraction_date=CURRENT_TIMESTAMP where job_execution_id=" + jobExecutionId)
+    updateStatus(jobExecutionId,"Gen. SDF")
     computeSDF(jobExecutionId)
   }
 
+  def updateStatus(jobExecutionId:String,status:String)={
+    println(status)
+    database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='"+status+"' where job_execution_id=" + jobExecutionId)
+    database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
+  }
+  
   def executejob(jobId: Int) = {
     Logger.info("Executing job: " + jobId)
     var jobExecutionId = ""
     try {
       jobExecutionId = insertJobExecution(jobId)
+      
       Logger.info("JobExecutionId inserted:" + jobExecutionId)
+      
       database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
+      
+      
       obtainInitialData(jobId, jobExecutionId)
+      
       Logger.info("Obtaining filters")
       val filters = getFilters(jobId)
       Logger.info("Executing filtering")
+
       executeFiltering(jobExecutionId, filters)
-      val r = database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='OK' where job_execution_id=" + jobExecutionId)
+      
+      updateStatus(jobExecutionId,"OK")
 
       database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
-      database_eTOXOPS.refreshMaterializedView
+      database_eTOXOPS.refreshMaterializedView(jobExecutionId)
       Logger.info("Succesful execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
       "{\"success\": true, \"jobexecutionid\":" + jobExecutionId.toString() + "}"
     } catch {
@@ -247,8 +262,8 @@ object ExtractionEngine {
         Logger.info("error")
         Logger.info("Finalised execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
         println(e.getMessage())
-        println(e.getStackTraceString)
-        database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='Error' where job_execution_id=" + jobExecutionId)
+        println(e.getStackTraceString)        
+         updateStatus(jobExecutionId,"Error")
         //database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
         "{success: false}"
       }
@@ -312,7 +327,10 @@ object ExtractionEngine {
         val fnames = filters.map(_._4)
         var mapini = fnames.map(v => (v, 0)).toMap
         var i = 0
+        this.updateStatus(jobExecutionId, "Filtering")
         q.foreach {
+          
+          
 
           //case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle, activity_id) =>
           case (job_data_raw_id, activity_type, smiles) =>

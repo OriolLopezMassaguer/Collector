@@ -57,7 +57,6 @@ import es.imim.phi.collector.compounds.CompoundFilter
 object database_eTOXOPS {
   var db: Database = null
   var sqlConnection: java.sql.Connection = null
-  db
 
   class Job(tag: Tag) extends Table[(Int, String, Int, Int)](tag, "job") {
     def job_id = column[Int]("job_id", O.AutoInc)
@@ -699,10 +698,16 @@ object database_eTOXOPS {
 
     }
   }
-    //Refresh materialized view  
-  def refreshMaterializedView={
-    val q = "refresh materialized view concurrently job_data_filtered_vw_mater with data;"
-    time({ doQuerySQL(q) }, "Profling materialized view refresh")
+
+  //Refresh materialized view  
+  def refreshMaterializedView(job_execution_id: String) = {
+    //val q = "refresh materialized view concurrently job_data_filtered_vw_mater;"
+    //time({ doQuerySQL(q) }, "Profling materialized view refresh")
+
+    val q = "delete from job_data_filtered_vw_mater where job_execution_id='" + job_execution_id + "'"
+    time({ doQuerySQL(q) }, "Deleting filtered")
+    val q1 = "insert into job_data_filtered_vw_mater select * from job_data_filtered_vw where job_execution_id='" + job_execution_id + "'"
+    time({ doQuerySQL(q1) }, "Inserting filtered")
   }
 
   def RefreshAllJobsStatistics = {
