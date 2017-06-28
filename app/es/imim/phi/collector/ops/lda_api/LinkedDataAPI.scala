@@ -128,7 +128,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
 
   private val memoizedurlcall: String => String = this.dbMemo(urlcall _)
 
-   def urlcall(call: String): String =
+  def urlcall(call: String): String =
     {
       Logger.debug("urlcall Call :[ " + call + " ]")
       val url = new URL(call)
@@ -172,7 +172,16 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
       urlcall(call)
   }
 
-   def makeCall(urlCall: String, parameters: Map[String, String]): String = {
+  def makeCall_RAW(urlCall: String, parameters: Map[String, String]): String = {
+    val pars = parameters
+    var params = for ((parameter, value) <- pars) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
+    var call = urlCall + params.mkString("&")
+    println("makeCall URL: " + call)
+    Logger.info("makeCall URL: " + call)
+    this.urlCall(call)
+  }
+
+  def makeCall(urlCall: String, parameters: Map[String, String]): String = {
     val pars = parameters ++ extraparams
     var params = for ((parameter, value) <- pars) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
     var call = urlCall + params.mkString("&")
@@ -226,15 +235,33 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
             }
             case obj: JsObject => obj
             case a => {
+              println("Excluded: " + forMolecule)
               excludedActivities = excludedActivities + 1
               a
             }
+          }
+
+          def getCompoundInfo(molid: String) = {
+            println("getCompoundInfo:")
+            println("-----"+forMolecule)  
+            
+            val uriMol = (forMolecule \ "_about").as[JsString].value.toString()           
+            println("URI: "+ uriMol)
+            val idMol = uriMol.replace("http://rdf.ebi.ac.uk/resource/chembl/molecule/", "")
+            //val urlCheml= "https://www.ebi.ac.uk/chembl/api/data/molecule.json?molecule_chembl_id="+idMol
+            println(idMol)
+            val response = this.makeCall_RAW("https://www.ebi.ac.uk/chembl/api/data/molecule.json?", Map("molecule_chembl_id" -> idMol))
+            println(response)
+            val json = Json.parse(response)
+            val smiles = json \\ "canonical_smiles"
+            println("SMILES: " + smiles(0))
+            smiles(0).toString()
           }
           val molid = convert(forMolecule \ "_about")
 
           def getSmiles = {
             val smiles = convert(csdata \ "smiles")
-            if (smiles == "") CHEMBLAPI.GetCompoundInfo(molid) else smiles
+            if (smiles == "") getCompoundInfo(molid) else smiles
           }
 
           Map(
@@ -269,8 +296,14 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
         }
 
       def extractItems(array: JsArray) = {
-
+        
         println("Items: " + array.value.size)
+        println
+        println("Extracting:")
+        println("-----------"+ array)
+
+        
+
         (for (item <- array.value)
           yield ({
           //println("Item: " + item)
@@ -299,6 +332,8 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
       }
 
       println("GetPharmaByTarget: " + targetURI)
+      var totalActivities = 0
+      var totalExcluded = 0
 
       for (page <- Range(1, numPages + 1)) yield ({
         val response = makeAPICall("/target/pharmacology/pages?", true, Map("uri" -> targetURI, "_pageSize" -> pageSize.toString, "_page" -> page.toString))
@@ -313,7 +348,9 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
             case _                   => List()
           }
           Logger.debug("Activities obtained: " + is.size)
+          totalActivities += is.size
           println("Excluded activities: " + excludedActivities)
+          totalExcluded += excludedActivities
 
           val is2 = for (row <- is if (row("smiles") != "")) yield row
           println("Page: " + page + " / " + numPages)
@@ -322,6 +359,9 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
           database_eTOXOPS.MoveLDAResults2SQL(is2, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
         }
       })
+
+      println("Activities total: " + totalActivities)
+      println("Excluded total: " + totalExcluded)
       //r.flatten
     }
 

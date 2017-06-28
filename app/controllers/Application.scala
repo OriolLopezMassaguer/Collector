@@ -155,7 +155,7 @@ object Application extends Controller {
   //  }
 
   def refreshStatistics = Action {
-    database_eTOXOPS.RefreshAllJobsStatistics
+    database_eTOXOPS.RefreshAllJobsStatistics(true)
     Ok("Statistics Computed")
   }
 

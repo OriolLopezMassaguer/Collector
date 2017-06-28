@@ -710,9 +710,9 @@ object database_eTOXOPS {
     time({ doQuerySQL(q1) }, "Inserting filtered")
   }
 
-  def RefreshAllJobsStatistics = {
+  def RefreshAllJobsStatistics(force:Boolean=false) = {
     ExtractionEngine.initEngine(System.getenv("COLLECTOR_HOME"))
-    val q = "select job_execution_id from job_execution where statistics is  null"
+    val q = if (force) "select job_execution_id from job_execution" else "select job_execution_id from job_execution where statistics is  null"
     val st = database_eTOXOPS.sqlConnection.createStatement()
     val rs = st.executeQuery(q)
     while (rs.next()) {
