@@ -243,7 +243,7 @@ object CompoundUtil {
     scalaz.Memo.memo[String, String](f =>
       k => {
 
-        var conncachedb = DriverManager.getConnection(ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword)
+        var conncachedb = DriverManager.getConnection(ExtractionEngine.dbURL)
         val q = "select * from ops_api_cached_calls where call='" + k + "'"
         val st = conncachedb.createStatement()
         val rs = st.executeQuery(q)

@@ -199,9 +199,7 @@ object CollectorCommandLine {
       ExtractionEngine.OPSAPIURL,
       ExtractionEngine.appKey,
       ExtractionEngine.appId,
-      ExtractionEngine.dbURL,
-      ExtractionEngine.dbUser,
-      ExtractionEngine.dbPassword,
+      ExtractionEngine.dbURL,      
       false)
     val cfg = CommandLineParser.parser.parse(args, es.imim.phi.collector.commandline.ConfigCollector())
     //println("Configuration: " + cfg)

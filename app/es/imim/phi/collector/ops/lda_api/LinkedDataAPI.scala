@@ -67,14 +67,14 @@ object CHEMBLAPI {
 
 }
 
-class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: String, user: String, password: String, cachedapi: Boolean) {
+class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: String, cachedapi: Boolean) {
 
   val extraparams = Map("app_id" -> appId, "app_key" -> appKey, "_format" -> "json")
 
   private def dbMemo: Memo[String, String] = {
     scalaz.Memo.memo[String, String](f =>
       k => {
-        var conncachedb = DriverManager.getConnection(connURL, user, password)
+        var conncachedb = DriverManager.getConnection(connURL)
         val q = "select * from ops_api_cached_calls where call='" + k + "'"
         val st = conncachedb.createStatement()
         val rs = st.executeQuery(q)

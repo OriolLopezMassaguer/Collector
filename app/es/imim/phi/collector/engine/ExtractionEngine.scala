@@ -54,14 +54,10 @@ import play.api.libs.json._
 
 object ExtractionEngine {
   val logger = Logger
-  var dbUser: String = ""
-  var dbPassword: String = ""
   var dbURL: String = ""
   var OPSAPIURL = ""
   var exportDataDir = ""
-  //var fieldMap = new java.util.HashMap[String, String]
   var sourceQuery = ""
-  //var filtering_id = ""
   var appBasePath = ""
   var externalToolsBasePath = ""
   var inputDatadir = ""
@@ -70,10 +66,11 @@ object ExtractionEngine {
   var opsAPI: OPSLDAScala = null
   var cachedapi: Boolean = false
   var bucketAPISize = -1
-  var version = "1.4.8"
+  var version = "1.4.9"
   var CDKit = true
 
   def initEngine(home_path: String) = {
+
     Logger.info("Initializing collector " + this.version)
     Logger.info("Application path " + home_path)
     appBasePath = home_path
@@ -83,37 +80,20 @@ object ExtractionEngine {
   }
 
   def changeOPSAPIURL(opsapiurl: String) = {
-    this.opsAPI = new OPSLDAScala(opsapiurl, ExtractionEngine.appKey, ExtractionEngine.appId, ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword, ExtractionEngine.cachedapi)
+    this.opsAPI = new OPSLDAScala(opsapiurl, ExtractionEngine.appKey, ExtractionEngine.appId, ExtractionEngine.dbURL, ExtractionEngine.cachedapi)
   }
 
   def readProperties() {
     Logger.info("Reading Properties")
     val defaultProps = FileUtils.readPropertiesFile("conf/collector.properties")
-    //ExtractionEngine.dbURL = defaultProps.getProperty("dbURL")
-    //ExtractionEngine.dbURL="jdbc:"+sys.env("DATABASE_URL")
-
-    //val dbUri = new java.net.URI(System.getenv("DATABASE_URL"))
-    //val username = dbUri.getUserInfo().split(":")(0)
-    //val password = dbUri.getUserInfo().split(":")(0)
-
-    //ExtractionEngine.dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
 
     ExtractionEngine.dbURL = System.getenv("JDBC_DATABASE_URL")
-
+    Logger.info("dbURL: " + ExtractionEngine.dbURL)
     database_eTOXOPS.db = Database.forURL(ExtractionEngine.dbURL)
     Class.forName("org.postgresql.Driver")
+
     var con = DriverManager.getConnection(ExtractionEngine.dbURL)
     database_eTOXOPS.sqlConnection = con
-
-    //
-    //String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
-
-    //return DriverManager.getConnection(dbUrl, username, password);
-
-    //ExtractionEngine.dbUser = defaultProps.getProperty("dbUser")
-    Logger.info("dbUser: " + ExtractionEngine.dbUser)
-    //ExtractionEngine.dbPassword = defaultProps.getProperty("dbPassword")
-    Logger.info("dbPassword: " + ExtractionEngine.dbPassword)
     ExtractionEngine.OPSAPIURL = defaultProps.getProperty("opsLDA_API_URL")
     Logger.info("OPS API URL: " + ExtractionEngine.OPSAPIURL)
     //ExtractionEngine.exportDataDir = appBasePath + defaultProps.getProperty("exportDatadir")
@@ -136,7 +116,7 @@ object ExtractionEngine {
 
     Logger.info("CDKit: " + ExtractionEngine.CDKit)
 
-    this.opsAPI = new OPSLDAScala(ExtractionEngine.OPSAPIURL, ExtractionEngine.appKey, ExtractionEngine.appId, ExtractionEngine.dbURL, ExtractionEngine.dbUser, ExtractionEngine.dbPassword, ExtractionEngine.cachedapi)
+    this.opsAPI = new OPSLDAScala(ExtractionEngine.OPSAPIURL, ExtractionEngine.appKey, ExtractionEngine.appId, ExtractionEngine.dbURL, ExtractionEngine.cachedapi)
   }
 
   def computeSDF(jobExecutionId: String) = {
@@ -219,39 +199,38 @@ object ExtractionEngine {
     Logger.info("Obtaining parameters")
     Logger.info("OPS case")
     Logger.info("Executing extraction")
-    updateStatus(jobExecutionId,"Querying")
+    updateStatus(jobExecutionId, "Querying")
     executeExtraction(jobExecutionId, getJobParameterValues(jobId))
     val rs = database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_extraction_date=CURRENT_TIMESTAMP where job_execution_id=" + jobExecutionId)
-    updateStatus(jobExecutionId,"Gen. SDF")
+    updateStatus(jobExecutionId, "Gen. SDF")
     computeSDF(jobExecutionId)
   }
 
-  def updateStatus(jobExecutionId:String,status:String)={
+  def updateStatus(jobExecutionId: String, status: String) = {
     println(status)
-    database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='"+status+"' where job_execution_id=" + jobExecutionId)
+    database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='" + status + "' where job_execution_id=" + jobExecutionId)
     database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
   }
-  
+
   def executejob(jobId: Int) = {
     Logger.info("Executing job: " + jobId)
     var jobExecutionId = ""
     try {
       jobExecutionId = insertJobExecution(jobId)
-      
+
       Logger.info("JobExecutionId inserted:" + jobExecutionId)
-      
+
       database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
-      
-      
+
       obtainInitialData(jobId, jobExecutionId)
-      
+
       Logger.info("Obtaining filters")
       val filters = getFilters(jobId)
       Logger.info("Executing filtering")
 
       executeFiltering(jobExecutionId, filters)
-      
-      updateStatus(jobExecutionId,"OK")
+
+      updateStatus(jobExecutionId, "OK")
 
       database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
       database_eTOXOPS.refreshMaterializedView(jobExecutionId)
@@ -262,8 +241,8 @@ object ExtractionEngine {
         Logger.info("error")
         Logger.info("Finalised execution jobId:" + jobId + " jobExecutionId:" + jobExecutionId)
         println(e.getMessage())
-        println(e.getStackTraceString)        
-         updateStatus(jobExecutionId,"Error")
+        println(e.getStackTraceString)
+        updateStatus(jobExecutionId, "Error")
         //database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
         "{success: false}"
       }
@@ -329,8 +308,6 @@ object ExtractionEngine {
         var i = 0
         this.updateStatus(jobExecutionId, "Filtering")
         q.foreach {
-          
-          
 
           //case (job_execution_id, job_data_raw_id, assay_id, target_id, molecule_id, cs_id, relation, standard_units, standard_value, activity_type, inchi, inchikey, smiles, ro5violations, target_organism, pmid, full_mwt, compoundpreflabel, assayDescription, targetTitle, activity_id) =>
           case (job_data_raw_id, activity_type, smiles) =>
