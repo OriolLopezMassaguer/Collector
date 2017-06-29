@@ -236,10 +236,14 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
             case obj: JsObject => obj
             case a => {
               println("Excluded: " + forMolecule)
+              println
               excludedActivities = excludedActivities + 1
               a
             }
           }
+          
+          println("CS Data: " + csdata)
+          println
 
           def getCompoundInfo(molid: String) = {
             println("getCompoundInfo:")
@@ -261,7 +265,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
 
           def getSmiles = {
             val smiles = convert(csdata \ "smiles")
-            if (smiles == "") getCompoundInfo(molid) else smiles
+            if (smiles == "") CHEMBLAPI.GetCompoundInfo(molid) else smiles
           }
 
           Map(
@@ -365,6 +369,8 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
       //r.flatten
     }
 
+  
+  
   def CW_Search_Protein_RAW(q: String): String = makeAPICall("/search/byTag?", true, Map("uuid" -> "eeaec894-d856-4106-9fa1-662b1dc6c6f1", "q" -> q))
 
   def CW_Search_Protein(q: String): Seq[Map[String, String]] = CW_process_matches(CW_Search_Protein_RAW(q))
