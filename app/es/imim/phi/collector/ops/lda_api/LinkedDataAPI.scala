@@ -54,15 +54,23 @@ object CHEMBLAPI {
     val ll = l.toList
     val id2 = ll.reverse.head
     val url = "https://www.ebi.ac.uk/chemblws/compounds/" + id2 + ".json"
-    //println(url)
-    val r = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.urlCall(url)
-    //println("Response: " + r)
-    if (r != "") {
-      val json = Json.parse(r)
+    println(url)
+    val response = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.urlCall(url)
+    println("Response: " + response)
+    if (response != "") {
+      val json = Json.parse(response)
       val v = (json \ "compound" \ "smiles")
-      v.asOpt[String].getOrElse("").toString
-    } else
+      val rr = v.asOpt[String].getOrElse("").toString
+      if (rr == "") {
+        println("CHEMBL_nf:")
+        println(response)
+      }
+      rr
+    } else {
+      println("CHEMBL_nf:")
+      println(response)
       ""
+    }
   }
 
 }
@@ -141,6 +149,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
       responseCode match {
         case 404 => {
           println("Empty response")
+          println(url)
           ""
         }
         case 200 => {
@@ -223,34 +232,39 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
       val convertInt = (x: JsValue) => x.asOpt[Int].getOrElse("").toString
       val convertDouble = (x: JsValue) => x.asOpt[Double].getOrElse("").toString
 
-      def getMoleculeFields(forMolecule: JsValue) =
+      def getMoleculeFields(hasMolecule: JsValue) =
         {
-          val csdata = (forMolecule \ "exactMatch") match {
+          val csdata = (hasMolecule \ "exactMatch") match {
             case arrayitems: JsArray => {
               val fields = arrayitems.value.filter(m => convert(m \ "inDataset").equalsIgnoreCase("http://ops.rsc.org"))
+              println("Case JsArray:")
+              println("Fields: " + fields)
               val r: JsValue = if (fields.isEmpty) {
                 play.api.libs.json.JsUndefined("Undef")
               } else fields.head
               r
             }
-            case obj: JsObject => obj
+            case obj: JsObject => {
+              println("Case JsObject" + obj)
+              obj
+            }
             case a => {
-              println("Excluded: " + forMolecule)
-              println
+              println("Case else")
+              println(a)
               excludedActivities = excludedActivities + 1
               a
             }
           }
-          
-          println("CS Data: " + csdata)
-          println
+
+          //println("CS Data: " + csdata)
+          //println
 
           def getCompoundInfo(molid: String) = {
             println("getCompoundInfo:")
-            println("-----"+forMolecule)  
-            
-            val uriMol = (forMolecule \ "_about").as[JsString].value.toString()           
-            println("URI: "+ uriMol)
+            println("-----" + hasMolecule)
+
+            val uriMol = (hasMolecule \ "_about").as[JsString].value.toString()
+            println("URI: " + uriMol)
             val idMol = uriMol.replace("http://rdf.ebi.ac.uk/resource/chembl/molecule/", "")
             //val urlCheml= "https://www.ebi.ac.uk/chembl/api/data/molecule.json?molecule_chembl_id="+idMol
             println(idMol)
@@ -261,11 +275,16 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
             println("SMILES: " + smiles(0))
             smiles(0).toString()
           }
-          val molid = convert(forMolecule \ "_about")
+          val molid = convert(hasMolecule \ "_about")
 
           def getSmiles = {
             val smiles = convert(csdata \ "smiles")
-            if (smiles == "") CHEMBLAPI.GetCompoundInfo(molid) else smiles
+            if (smiles == "") {
+              println("SMILES not found:")
+              println("Searching for: " + molid)
+              CHEMBLAPI.GetCompoundInfo(molid)
+            } else smiles
+
           }
 
           Map(
@@ -278,7 +297,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
             "compound_cwiki" -> "",
             "compound_pref_label" -> "",
             "compound_pref_label_en" -> "",
-            "molecule_id" -> convert(forMolecule \ "_about"),
+            "molecule_id" -> convert(hasMolecule \ "_about"),
             "full_mwt" -> convertDouble(csdata \ "molweight"))
         }
 
@@ -300,19 +319,40 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
         }
 
       def extractItems(array: JsArray) = {
-        
-        println("Items: " + array.value.size)
-        println
-        println("Extracting:")
-        println("-----------"+ array)
 
-        
+        //println("Items: " + array.value.size)
+        //println
 
         (for (item <- array.value)
           yield ({
           //println("Item: " + item)
           //println
-          val molFields = getMoleculeFields(item \ "hasMolecule")
+          val hasMolecule = item \ "hasMolecule"
+          val jo = hasMolecule match {
+            case arrayitems: JsArray => {
+              //println("Array: " + arrayitems)
+              //println("-----------")
+              val l = for (v <- arrayitems.value.seq if !(v \ "exactMatch").isInstanceOf[JsUndefined]) yield ({
+                //println(v)
+                val em = v \ "exactMatch"
+
+                //println("---------EM: " + em)
+                //println("JSU:  " + em.isInstanceOf[JsUndefined])
+                v
+              })
+              val jso = l(0).asInstanceOf[JsObject]
+              //println("-----------")
+              jso
+            }
+            case jsos: JsObject => {
+              //println("Object: " + jsos)
+              jsos
+            }
+          }
+          //println("-------------------")
+          //println("JO: " + jo)
+          //println("-------------------")
+          val molFields = getMoleculeFields(jo)
           //println("Molfields:" + molFields)
           //println
           val assaytargetFields = getAssayFields(item \ "hasAssay")
@@ -338,7 +378,9 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
       println("GetPharmaByTarget: " + targetURI)
       var totalActivities = 0
       var totalExcluded = 0
+      var totalReal = 0
 
+      //for (page <- List(5895, 5896, 5894)) yield ({
       for (page <- Range(1, numPages + 1)) yield ({
         val response = makeAPICall("/target/pharmacology/pages?", true, Map("uri" -> targetURI, "_pageSize" -> pageSize.toString, "_page" -> page.toString))
         if (response == "") {
@@ -353,24 +395,38 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
           }
           Logger.debug("Activities obtained: " + is.size)
           totalActivities += is.size
-          println("Excluded activities: " + excludedActivities)
           totalExcluded += excludedActivities
 
           val is2 = for (row <- is if (row("smiles") != "")) yield row
+
+          val noStructure = is.filter((row => row("smiles") == ""))
+          if (noStructure.size > 0) {
+            println("Page: " + page)
+            println("No structures:")
+            noStructure.map(println)
+          }
+
           println("Page: " + page + " / " + numPages)
           println("Size: " + is2.size)
+          println("Discarted; " + (totalActivities - totalReal))
+          totalReal += is2.size
+          if (is2.size == 0) {
 
-          database_eTOXOPS.MoveLDAResults2SQL(is2, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
+            println
+            println("***********************************")
+            println
+          }
+
+          database_eTOXOPS.MoveLDAResults2SQL(is, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
         }
       })
 
       println("Activities total: " + totalActivities)
-      println("Excluded total: " + totalExcluded)
+
+      println("Activities with Structure: " + totalReal)
       //r.flatten
     }
 
-  
-  
   def CW_Search_Protein_RAW(q: String): String = makeAPICall("/search/byTag?", true, Map("uuid" -> "eeaec894-d856-4106-9fa1-662b1dc6c6f1", "q" -> q))
 
   def CW_Search_Protein(q: String): Seq[Map[String, String]] = CW_process_matches(CW_Search_Protein_RAW(q))
