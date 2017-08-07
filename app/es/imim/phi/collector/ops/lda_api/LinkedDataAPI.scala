@@ -54,21 +54,21 @@ object CHEMBLAPI {
     val ll = l.toList
     val id2 = ll.reverse.head
     val url = "https://www.ebi.ac.uk/chemblws/compounds/" + id2 + ".json"
-    println(url)
+    Logger.debug(url)
     val response = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.urlCall(url)
-    println("Response: " + response)
+    Logger.debug("Response: " + response)
     if (response != "") {
       val json = Json.parse(response)
       val v = (json \ "compound" \ "smiles")
       val rr = v.asOpt[String].getOrElse("").toString
       if (rr == "") {
-        println("CHEMBL_nf:")
-        println(response)
+        Logger.debug("CHEMBL_nf:")
+        Logger.debug(response)
       }
       rr
     } else {
-      println("CHEMBL_nf:")
-      println(response)
+      Logger.debug("CHEMBL_nf:")
+      Logger.debug(response)
       ""
     }
   }
@@ -76,6 +76,7 @@ object CHEMBLAPI {
 }
 
 class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: String, cachedapi: Boolean) {
+  var logger = play.api.Logger
 
   val extraparams = Map("app_id" -> appId, "app_key" -> appKey, "_format" -> "json")
 
@@ -138,7 +139,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
 
   def urlcall(call: String): String =
     {
-      Logger.debug("urlcall Call :[ " + call + " ]")
+      Logger.info("urlcall Call :[ " + call + " ]")
       val url = new URL(call)
       val conn = url.openConnection().asInstanceOf[HttpURLConnection]
       conn.setInstanceFollowRedirects(true)
@@ -148,8 +149,8 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
       val responseCode = conn.getResponseCode()
       responseCode match {
         case 404 => {
-          println("Empty response")
-          println(url)
+          logger.debug("Empty response")
+          logger.debug(url.toString())
           ""
         }
         case 200 => {
@@ -167,7 +168,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
           str
         }
         case _ => {
-          println("Unexpected return: " + conn.getResponseCode())
+          logger.debug("Unexpected return: " + conn.getResponseCode())
           conn.disconnect()
           ""
         }
@@ -185,8 +186,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
     val pars = parameters
     var params = for ((parameter, value) <- pars) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
     var call = urlCall + params.mkString("&")
-    println("makeCall URL: " + call)
-    Logger.info("makeCall URL: " + call)
+    Logger.debug("makeCall URL: " + call)    
     this.urlCall(call)
   }
 
@@ -194,17 +194,15 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
     val pars = parameters ++ extraparams
     var params = for ((parameter, value) <- pars) yield (URLEncoder.encode(parameter, "UTF-8") + "=" + URLEncoder.encode(value, "UTF-8"))
     var call = urlCall + params.mkString("&")
-    println("makeCall URL: " + call)
     Logger.info("makeCall URL: " + call)
     this.urlCall(call)
   }
 
   private def makeAPICall(urlpattern: String, threescale: Boolean, params: Map[String, String]): String = {
     val urlcall = buildURL(urlpattern)
-    //println("URLcall: " + urlcall)
-    Logger.info("URLcall: " + urlcall)
-    Logger.info("Pattern: " + urlpattern)
-    Logger.info("Params: " + params)
+    Logger.debug("URLcall: " + urlcall)
+    Logger.debug("Pattern: " + urlpattern)
+    Logger.debug("Params: " + params)
     makeCall(urlcall, params)
   }
   def GetPharmacologyByTargetLDA_count(targetURI: String) = {
@@ -223,8 +221,8 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
         val numActivities = GetPharmacologyByTargetLDA_count(targetURI)
         val pageSize = es.imim.phi.collector.engine.ExtractionEngine.bucketAPISize
         val numPages = (numActivities / pageSize) + 1
-        println("Activities: " + numActivities)
-        println("Pages: " + numPages)
+        Logger.info("Activities: " + numActivities)
+        Logger.info("Pages: " + numPages)
         (numPages, pageSize)
       }
 
@@ -237,20 +235,21 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
           val csdata = (hasMolecule \ "exactMatch") match {
             case arrayitems: JsArray => {
               val fields = arrayitems.value.filter(m => convert(m \ "inDataset").equalsIgnoreCase("http://ops.rsc.org"))
-              println("Case JsArray:")
-              println("Fields: " + fields)
+              
+              logger.debug("Case JsArray:")
+              logger.debug("Fields: " + fields)
               val r: JsValue = if (fields.isEmpty) {
                 play.api.libs.json.JsUndefined("Undef")
               } else fields.head
               r
             }
             case obj: JsObject => {
-              println("Case JsObject" + obj)
+              logger.debug("Case JsObject" + obj)
               obj
             }
             case a => {
-              println("Case else")
-              println(a)
+              logger.debug("Case else")
+              logger.debug(a.toString())
               excludedActivities = excludedActivities + 1
               a
             }
@@ -280,8 +279,8 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
           def getSmiles = {
             val smiles = convert(csdata \ "smiles")
             if (smiles == "") {
-              println("SMILES not found:")
-              println("Searching for: " + molid)
+              Logger.debug("SMILES not found:")
+              Logger.debug("Searching for: " + molid)
               CHEMBLAPI.GetCompoundInfo(molid)
             } else smiles
 
@@ -375,12 +374,12 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
         })).flatten
       }
 
-      println("GetPharmaByTarget: " + targetURI)
+      Logger.debug("GetPharmaByTarget: " + targetURI)
       var totalActivities = 0
       var totalExcluded = 0
       var totalReal = 0
 
-      //for (page <- List(5895, 5896, 5894)) yield ({
+
       for (page <- Range(1, numPages + 1)) yield ({
         val response = makeAPICall("/target/pharmacology/pages?", true, Map("uri" -> targetURI, "_pageSize" -> pageSize.toString, "_page" -> page.toString))
         if (response == "") {
@@ -401,30 +400,22 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
 
           val noStructure = is.filter((row => row("smiles") == ""))
           if (noStructure.size > 0) {
-            println("Page: " + page)
-            println("No structures:")
+            Logger.debug("Page: " + page)
+            Logger.debug("No structures:")
             noStructure.map(println)
           }
 
-          println("Page: " + page + " / " + numPages)
-          println("Size: " + is2.size)
-          println("Discarted; " + (totalActivities - totalReal))
+          Logger.debug("Page: " + page + " / " + numPages)
+          Logger.debug("Size: " + is2.size)
+          Logger.debug("Discarted: " + (totalActivities - totalReal))
           totalReal += is2.size
-          if (is2.size == 0) {
-
-            println
-            println("***********************************")
-            println
-          }
 
           database_eTOXOPS.MoveLDAResults2SQL(is, jobExecutionId, database_eTOXOPS.sqlConnection, "job_data_raw")
         }
       })
 
-      println("Activities total: " + totalActivities)
-
-      println("Activities with Structure: " + totalReal)
-      //r.flatten
+      Logger.info("Activities total: " + totalActivities)
+      Logger.info("Activities with Structure: " + totalReal)
     }
 
   def CW_Search_Protein_RAW(q: String): String = makeAPICall("/search/byTag?", true, Map("uuid" -> "eeaec894-d856-4106-9fa1-662b1dc6c6f1", "q" -> q))

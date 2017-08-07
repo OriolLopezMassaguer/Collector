@@ -56,7 +56,7 @@ object db2JSON {
   private def getQueryJSONBase(query: String, jsonlabel: String, limit: String, offset: String) = {
     //db withDynSession {      
       var resultSet = database_eTOXOPS.doQuerySQL(query + " " + limit + " " + offset)
-      println(query + " " + limit + " " + offset)
+      Logger.debug(query + " " + limit + " " + offset)
       var metadata = resultSet.getMetaData()
 
       var i = 1

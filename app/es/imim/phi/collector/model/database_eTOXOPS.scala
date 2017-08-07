@@ -323,7 +323,7 @@ object database_eTOXOPS {
     for (msg <- database_eTOXOPS.job_data_raw_for_sdf if msg.job_data_raw_id === job_data_raw_id) yield (msg.sdf2d)
   }
   def GetRAWDataJobExecutionForSDF(job_execution_id: Int) =
-    for { rawdata <- job_data_raw_for_sdf if rawdata.job_execution_id === job_execution_id && rawdata.smiles.isNotNull }
+    for { rawdata <- job_data_raw_for_sdf if rawdata.job_execution_id === job_execution_id && rawdata.smiles.isDefined }
       yield rawdata.*
 
   def GetRAWDataJobExecution(job_execution_id: Int, activityType: Option[String]) =
@@ -529,7 +529,7 @@ object database_eTOXOPS {
     val t0 = java.lang.System.currentTimeMillis()
     val result = block // call-by-name
     val t1 = java.lang.System.currentTimeMillis()
-    println("Profiling ++++++++++++++++++++ " + message + " duration " + (t1 - t0) + " ms")
+    Logger.debug("Profiling ++++++++++++++++++++ " + message + " duration " + (t1 - t0) + " ms")
     result
   }
 
@@ -1042,13 +1042,13 @@ object database_eTOXOPS {
   }
   // fin v1.3
   def deleteDataSeries(data_series_id: Int) = {
-    var deleteq = database_eTOXOPS.activities_series.where(_.activities_series_id === data_series_id)
+    var deleteq = database_eTOXOPS.activities_series.filter(_.activities_series_id === data_series_id)
     database_eTOXOPS.db withDynSession { deleteq.delete }
 
   }
 
   def deleteDataSeries(data_series_description: String) = {
-    var deleteq = database_eTOXOPS.activities_series.where(_.activities_series_description === data_series_description)
+    var deleteq = database_eTOXOPS.activities_series.filter(_.activities_series_description === data_series_description)
     database_eTOXOPS.db withDynSession { deleteq.delete }
 
   }
@@ -1056,14 +1056,13 @@ object database_eTOXOPS {
   def jobDelete(job_id: Int) = {
     Logger.info("Action delete job")
     Logger.info("Job id: " + job_id)
-    var deleteq = database_eTOXOPS.job.where(_.job_id === job_id)
-    //println(deleteq.selectStatement)
+    var deleteq = database_eTOXOPS.job.filter(_.job_id === job_id)    
     database_eTOXOPS.db withDynSession { deleteq.delete }
   }
 
   def jobExecutionDelete(job_execution_id: Int) = {
     Logger.info("Action delete job execution: " + job_execution_id)
-    val deleteq = database_eTOXOPS.job_execution.where(_.job_execution_id === job_execution_id)
+    val deleteq = database_eTOXOPS.job_execution.filter(_.job_execution_id === job_execution_id)
     //println(deleteq.selectStatement)
     Logger.debug(deleteq.deleteStatement)
     database_eTOXOPS.db withDynSession { deleteq.delete }
@@ -1074,7 +1073,7 @@ object database_eTOXOPS {
     database_eTOXOPS.db withDynSession {
       for (je <- this.GetJobExecutions) {
         val jid = je._3
-        val deleteq = database_eTOXOPS.job_execution.where(_.job_execution_id === jid)
+        val deleteq = database_eTOXOPS.job_execution.filter(_.job_execution_id === jid)
         Logger.debug(deleteq.deleteStatement)
         deleteq.delete
       }

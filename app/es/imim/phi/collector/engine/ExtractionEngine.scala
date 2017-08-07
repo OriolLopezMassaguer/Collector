@@ -207,7 +207,6 @@ object ExtractionEngine {
   }
 
   def updateStatus(jobExecutionId: String, status: String) = {
-    println(status)
     database_eTOXOPS.doQuerySQL("update job_execution set job_execution_finish_filtering_date=CURRENT_TIMESTAMP,job_execution_status='" + status + "' where job_execution_id=" + jobExecutionId)
     database_eTOXOPS.RefreshJobExecutionStatistics(jobExecutionId)
   }
