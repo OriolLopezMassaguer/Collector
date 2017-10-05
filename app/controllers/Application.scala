@@ -167,9 +167,16 @@ object Application extends Controller {
   }
 
   def getProteinByText_list(protein_string: String) = {
-    val url = "http://alpha.openphacts.org:8839/search?"
-    val r = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.makeCall(url, Map("query" -> protein_string))
-    //println(r)
+    //val url = "http://alpha.openphacts.org:8839/search?"
+
+    //val r = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.makeCall(url, Map("query" -> protein_string))
+
+    //val urlcall = ExtractionEngine.OPSAPIURL_text + "/search?"
+    //Logger.debug("URLcall: " + urlcall)
+
+    // val r=ExtractionEngine.opsAPI.makeCall(urlcall, Map("query" -> protein_string))
+
+    //val r = es.imim.phi.collector.engine.ExtractionEngine.opsAPI.makeAPICall("/search?", true, Map("query" -> protein_string))
 
     import play.api.Play.current
     import play.api.libs.ws._
@@ -178,38 +185,46 @@ object Application extends Controller {
     import scala.concurrent._
     import scala.concurrent.duration._
 
-    val url2 = "http://alpha.openphacts.org:8839/search?"
+    //val url2 = "http://alpha.openphacts.org:8839/search?"
+    val url2 = ExtractionEngine.OPSAPIURL_text + "/search?"
+    println(url2)
+
     import scala.util.{ Success, Failure }
     val futureResult = WS.url(url2)
-      .withQueryString(("query", protein_string))
+      .withQueryString(("query", protein_string), ("app_key", ExtractionEngine.appKey), ("app_id", ExtractionEngine.appId))
       .withHeaders("accept" -> "application/json")
       .get().map(response => Json.parse(response.body))
 
     val r2 = Await.result(futureResult, 100 seconds)
-    val hits = (r2 \ "hits" \ "hits").as[JsArray]
-    val r3 = for (hit <- hits.value) yield {
-      val hito = hit.as[JsObject]
-      for ((field, value) <- hito.fieldSet) println(field + "#" + value)
-      val id = (hito \ "_id").as[JsString].value
-      val type_hit = (hito \ "_source" \ "@type").as[JsArray].value(0).as[JsString].value
-      val label = (hito \ "_source" \ "label").as[JsArray].value(0).as[JsString].value
-      val organism = (hito \ "_source" \ "organism").asOpt[JsArray]
+    println("Result: " + r2)
 
-      val org = organism match {
-        case Some(org) => org.value(0).as[JsString].value
-        case None      => ""
-      }
-      Map("id" -> id.value, "type" -> type_hit, "label" -> (label + " / " + org))
+    try {
+      val res = (r2 \ "result" \ "primaryTopic" \ "result").as[JsArray].value.seq
+      println
+      println("Result2: " + res)
+      println(res.size)
+      println
+      val r4 = for (v <- res) yield ({
+        println("V loop: " + v)
+        val vo = v.as[JsObject]
+        val url = (vo \ "url").as[JsString].value
+        val prefLabel = (vo \ "prefLabel").as[JsString].value
+        val r = Map("id" -> url, "label" -> prefLabel, "type" -> "")
+        r
+      })
+      r4.filter(m => m("id").contains("target/"))
+    } catch {
+      case e: Exception => List()
     }
-    val r4 = r3.filter(m => m("type") == "chembl:Target")
-    r4.map(println)
-    r4
+
   }
 
   def getProteinByText(page: Int, start: Int, limit: Int, protein_string: String) = {
     Action { request =>
       val l = this.getProteinByText_list(protein_string)
+      
       val s = "{\"success\": true,\"total\": " + l.size + " , \"targets\":" + Json.toJson(l) + " }"
+      println("JsText: "+s)
       Ok(s)
     }
   }
@@ -384,7 +399,7 @@ object Application extends Controller {
     Logger.info("job execution id: " + filterparameters("job_execution_id"))
 
     val jeid = filterparameters("job_execution_id")
-    
+
     database_eTOXOPS.db withDynSession {
       //val l = database_eTOXOPS.GetStatisticsByTypeForJobExecutionIdJSON(filterparameters("job_execution_id").toInt)
       val l = database_eTOXOPS.GetStatisticsByTypeForJobExecutionIdJSON(page)

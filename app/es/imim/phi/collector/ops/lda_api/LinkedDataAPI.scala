@@ -198,7 +198,7 @@ class OPSLDAScala(coreAPIURL: String, appKey: String, appId: String, connURL: St
     this.urlCall(call)
   }
 
-  private def makeAPICall(urlpattern: String, threescale: Boolean, params: Map[String, String]): String = {
+  def makeAPICall(urlpattern: String, threescale: Boolean, params: Map[String, String]): String = {
     val urlcall = buildURL(urlpattern)
     Logger.debug("URLcall: " + urlcall)
     Logger.debug("Pattern: " + urlpattern)

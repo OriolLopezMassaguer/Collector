@@ -56,6 +56,7 @@ object ExtractionEngine {
   val logger = Logger
   var dbURL: String = ""
   var OPSAPIURL = ""
+  var OPSAPIURL_text = ""
   var exportDataDir = ""
   var sourceQuery = ""
   var appBasePath = ""
@@ -66,7 +67,7 @@ object ExtractionEngine {
   var opsAPI: OPSLDAScala = null
   var cachedapi: Boolean = false
   var bucketAPISize = -1
-  var version = "1.5.0"
+  var version = "1.5.1"
   var CDKit = true
 
   def initEngine(home_path: String) = {
@@ -96,6 +97,10 @@ object ExtractionEngine {
     database_eTOXOPS.sqlConnection = con
     ExtractionEngine.OPSAPIURL = defaultProps.getProperty("opsLDA_API_URL")
     Logger.info("OPS API URL: " + ExtractionEngine.OPSAPIURL)
+    
+    ExtractionEngine.OPSAPIURL_text = defaultProps.getProperty("opsLDA_API_URL_text")
+    Logger.info("OPS API URL text: " + ExtractionEngine.OPSAPIURL_text)
+    
     //ExtractionEngine.exportDataDir = appBasePath + defaultProps.getProperty("exportDatadir")
     ExtractionEngine.exportDataDir = "logs/"
     Logger.info("export data dir: " + ExtractionEngine.exportDataDir)
